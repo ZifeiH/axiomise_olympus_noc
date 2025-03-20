@@ -1,0 +1,406 @@
+# ----------------------------------------
+# Jasper Version Info
+# tool      : Jasper 2023.12
+# platform  : Linux 6.8.0-52-generic
+# version   : 2023.12 FCS 64 bits
+# build date: 2023.12.19 17:39:24 UTC
+# ----------------------------------------
+# started   : 2025-03-20 14:46:53 GMT
+# hostname  : MAHESH.(none)
+# pid       : 1153326
+# arguments : '-label' 'session_0' '-console' '//127.0.0.1:41819' '-style' 'windows' '-data' 'AAAA1nicY2RgYLCp////PwMYMFcBCQEGHwZfhiAGVyDpzxAGpOGA8QGUYcPIgApAfCZUkcAGFJqBgRWmGaYEpEGLQZchkSEHCPMZyhniGUoZ8hiKgWQBEOYzFDGUMKQypADF/RmCgaoVgHIZQFGQSDKUzmVIB7L0gCqTgaaAAABoehjU' '-proj' '/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga/ip/mtia/mnemo/main/formal/shrd_crd_mgr/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga/ip/mtia/mnemo/main/formal/shrd_crd_mgr/jgproject/.tmp/.initCmds.tcl' 'shrd_crd_mgr.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2023 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc.
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+Jasper Apps Analysis Session - /home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga/ip/mtia/mnemo/main/formal/shrd_crd_mgr/jgproject/sessionLogs/session_0
+
+INFO: successfully checked out licenses "jasper_pint" and "jasper_fao".
+INFO: reading configuration file "/home/amir/.config/cadence/jasper.conf".
+% #==============================================================================
+% # File Name        : dcnoc.tcl
+% # File Description : TCL file for for running formal setup
+% #==============================================================================
+% 
+% #Disable an enum variable may only be assigned the same enum typed variable or
+% #one of its values error
+% set_message -warning VERI-1348
+INFO (ICD011): Message "VERI-1348" has been changed from "error" to "warning" level.
+% 
+% 
+% # set_parallel_synthesis_mode on
+% # set_parallel_synthesis_num_process 20
+% # set_parallel_synthesis_partition_method dynamic
+% 
+% set ANALYZE_OPTS                  {-sv09 +define+FB_BEH_MODE+FB_BEH_CGC+FORMAL+FB_BEHV_CLKGATE+FB_BEH_CKG+FB_BEH_SIM+ENABLE_SVA_DVR_BIND+JG_ABVIP_STRONG_SEMANTICS+DONT_USE_PEC}
+-sv09 +define+FB_BEH_MODE+FB_BEH_CGC+FORMAL+FB_BEHV_CLKGATE+FB_BEH_CKG+FB_BEH_SIM+ENABLE_SVA_DVR_BIND+JG_ABVIP_STRONG_SEMANTICS+DONT_USE_PEC
+% set ELAB_OPTS                     {-sv09_strong_embedding}
+-sv09_strong_embedding
+% #==============================================================================
+% # Analyze phase
+% #==============================================================================
+% eval "analyze -f /home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f $ANALYZE_OPTS"
+INFO (INL011): Processing "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f".
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/rtl_b/mnm_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/mnm_rtr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/incl/packages/fb_lib_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/rtr_dc_csr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/incl/packages/cmn_csr_axi64_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/d2d_rtr_top_csr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_ram_2p_beh.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_104X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_72X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_64X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_72X1167_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_128X1167_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/rtr_mem.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/global_macros.vh" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_rr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//common/incl/lib/rtl_b/fb_sva_macros.svh" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/std_cell_wrappers/rtl_b/fb_cgc.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_icg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_fifo.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/shrd_buf_ctrl.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_onehot_mux.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/fb_rtr_dw_rr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/shrd_crd_mgr.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/rtr_ca_tx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_multi_ecc_correct.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/noc_ecc_chk.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_reg_pipe.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/csr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/rtr_dc_csr.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice_a.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice_b.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+ERROR (ESW029): The file name argument is missing.
+
+ERROR: problem encountered at line 20 in file shrd_crd_mgr.tcl
+
+% include shrd_crd_mgr.tcl
+%% #==============================================================================
+%% # File Name        : dcnoc.tcl
+%% # File Description : TCL file for for running formal setup
+%% #==============================================================================
+%% 
+%% #Disable an enum variable may only be assigned the same enum typed variable or
+%% #one of its values error
+%% set_message -warning VERI-1348
+INFO (ICD035): Message "VERI-1348" is already set to "warning" level
+%% 
+%% 
+%% # set_parallel_synthesis_mode on
+%% # set_parallel_synthesis_num_process 20
+%% # set_parallel_synthesis_partition_method dynamic
+%% 
+%% set ANALYZE_OPTS                  {-sv09 +define+FB_BEH_MODE+FB_BEH_CGC+FORMAL+FB_BEHV_CLKGATE+FB_BEH_CKG+FB_BEH_SIM+ENABLE_SVA_DVR_BIND+JG_ABVIP_STRONG_SEMANTICS+DONT_USE_PEC}
+-sv09 +define+FB_BEH_MODE+FB_BEH_CGC+FORMAL+FB_BEHV_CLKGATE+FB_BEH_CKG+FB_BEH_SIM+ENABLE_SVA_DVR_BIND+JG_ABVIP_STRONG_SEMANTICS+DONT_USE_PEC
+%% set ELAB_OPTS                     {-sv09_strong_embedding}
+-sv09_strong_embedding
+%% #==============================================================================
+%% # Analyze phase
+%% #==============================================================================
+%% eval "analyze -f /home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga/ip/mtia/mnemo/main/formal/shrd_crd_mgr/shrd_crd_mgr.f $ANALYZE_OPTS"
+INFO (INL011): Processing "-f" file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga/ip/mtia/mnemo/main/formal/shrd_crd_mgr/shrd_crd_mgr.f".
+INFO (INL011): Processing "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f".
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/rtl_b/mnm_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/mnm_rtr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/incl/packages/fb_lib_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/rtr_dc_csr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/incl/packages/cmn_csr_axi64_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/d2d_rtr_top_csr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_ram_2p_beh.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_104X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_72X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_64X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_72X1167_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_128X1167_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/rtr_mem.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/global_macros.vh" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_rr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//common/incl/lib/rtl_b/fb_sva_macros.svh" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/std_cell_wrappers/rtl_b/fb_cgc.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_icg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_fifo.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/shrd_buf_ctrl.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_onehot_mux.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/fb_rtr_dw_rr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/shrd_crd_mgr.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/rtr_ca_tx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_multi_ecc_correct.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/noc_ecc_chk.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_reg_pipe.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/csr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/rtr_dc_csr.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice_a.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice_b.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+ERROR at line 20 in file shrd_crd_mgr.tcl, more info in Tcl-variable errorInfo
+ERROR (ESW029): The file name argument is missing.
+
+
+% include shrd_crd_mgr.tcl
+%% #==============================================================================
+%% # File Name        : dcnoc.tcl
+%% # File Description : TCL file for for running formal setup
+%% #==============================================================================
+%% 
+%% #Disable an enum variable may only be assigned the same enum typed variable or
+%% #one of its values error
+%% set_message -warning VERI-1348
+INFO (ICD035): Message "VERI-1348" is already set to "warning" level
+%% 
+%% 
+%% # set_parallel_synthesis_mode on
+%% # set_parallel_synthesis_num_process 20
+%% # set_parallel_synthesis_partition_method dynamic
+%% 
+%% set ANALYZE_OPTS                  {-sv09 +define+FB_BEH_MODE+FB_BEH_CGC+FORMAL+FB_BEHV_CLKGATE+FB_BEH_CKG+FB_BEH_SIM+ENABLE_SVA_DVR_BIND+JG_ABVIP_STRONG_SEMANTICS+DONT_USE_PEC}
+-sv09 +define+FB_BEH_MODE+FB_BEH_CGC+FORMAL+FB_BEHV_CLKGATE+FB_BEH_CKG+FB_BEH_SIM+ENABLE_SVA_DVR_BIND+JG_ABVIP_STRONG_SEMANTICS+DONT_USE_PEC
+%% set ELAB_OPTS                     {-sv09_strong_embedding}
+-sv09_strong_embedding
+%% #==============================================================================
+%% # Analyze phase
+%% #==============================================================================
+%% eval "analyze -f /home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga/ip/mtia/mnemo/main/formal/shrd_crd_mgr/shrd_crd_mgr.f $ANALYZE_OPTS"
+INFO (INL011): Processing "-f" file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga/ip/mtia/mnemo/main/formal/shrd_crd_mgr/shrd_crd_mgr.f".
+INFO (INL011): Processing "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f".
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/rtl_b/mnm_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/mnm_rtr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/incl/packages/fb_lib_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/rtr_dc_csr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/incl/packages/cmn_csr_axi64_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/d2d_rtr_top_csr_pkg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_ram_2p_beh.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_104X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_72X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_64X107_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_72X1167_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mem_wrapper_mem_2p_128X1167_pipe_0_bw_0.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/rtr_mem.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/incl/packages/global_macros.vh" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_rr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//common/incl/lib/rtl_b/fb_sva_macros.svh" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/std_cell_wrappers/rtl_b/fb_cgc.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_icg.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_fifo.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/shrd_buf_ctrl.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_onehot_mux.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/fb_rtr_dw_rr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/shrd_crd_mgr.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/rtr_ca_tx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_multi_ecc_correct.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/noc_ecc_chk.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/infra_common/main/design/dev/lib_design/common/rtl_b/fb_reg_pipe.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/common/rtl_b/csr_arb.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/csr/csrgen_outputs/ext_host_view/rtl/rtr_dc_csr.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice_a.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice_b.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_rtr_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_rx.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_dnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_d2d_conv_ca_cnoc_top.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+WARNING (WNL074): Ignoring file "/home/amir/Meta/axiomise_olympus_noc/infra_asic_fpga//ip/mtia/mnemo/main/design/mnm_rtr/mnm_rtr_dc_slice/rtl_b/mnm_rtr_dc_slice.sv" in "-f" file "/home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f" as it was not found.
+INFO (INL010): Use "set_message -error WNL066" and "set_message -error WNL074" commands to force the tool to show the ignored errors.
+ERROR at line 20 in file shrd_crd_mgr.tcl, more info in Tcl-variable errorInfo
+ERROR (ESW029): The file name argument is missing.
+
+
+INFO (IPL005): Received request to exit from the console.
+INFO (IPL014): Waiting for the Tcl-thread to exit.
+INFO (IPL018): The peak resident set memory use for this session was 0.378 GB.
+INFO (IPL015): The Tcl-thread exited with status 0.
+INFO (IPL016): Exiting the analysis session with status 0.

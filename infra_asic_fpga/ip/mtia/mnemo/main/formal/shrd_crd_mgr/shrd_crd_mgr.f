@@ -1,0 +1,1 @@
+-f /home/amir/Meta/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f

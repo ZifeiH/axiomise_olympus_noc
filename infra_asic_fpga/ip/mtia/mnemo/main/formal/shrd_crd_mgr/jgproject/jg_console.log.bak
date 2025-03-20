@@ -1,0 +1,59 @@
+2025-03-20 14:46:52.384962 (1153314) main____ INFO    ----------------------------------------
+2025-03-20 14:46:52.385005 (1153314) main____ INFO    Jasper version info
+2025-03-20 14:46:52.385011 (1153314) main____ INFO      tool      : Jasper 2023.12
+2025-03-20 14:46:52.385016 (1153314) main____ INFO      version   : 2023.12 FCS 64 bits
+2025-03-20 14:46:52.385020 (1153314) main____ INFO      build date: 2023.12.19 17:39:24 UTC
+2025-03-20 14:46:52.385022 (1153314) main____ INFO    ----------------------------------------
+2025-03-20 14:46:52.385025 (1153314) main____ INFO    Runtime info:
+2025-03-20 14:46:52.385028 (1153314) main____ INFO      platform  : Linux 6.8.0-52-generic x86_64
+2025-03-20 14:46:52.385033 (1153314) main____ INFO      hostname  : MAHESH
+2025-03-20 14:46:52.385037 (1153314) main____ INFO      pid       : 1153314
+2025-03-20 14:46:52.385040 (1153314) main____ INFO      arguments : '-style' 'windows' '-allow_unsupported_OS' 'shrd_crd_mgr.tcl'
+2025-03-20 14:46:52.385045 (1153314) main____ INFO      locale    : UTF-8
+2025-03-20 14:46:52.385048 (1153314) main____ INFO    ----------------------------------------
+2025-03-20 14:46:52.385050 (1153314) main____ INFO    System resource limits info:
+2025-03-20 14:46:52.385055 (1153314) main____ INFO      virtual memory: unlimited
+2025-03-20 14:46:52.385058 (1153314) main____ INFO      cpu time      : unlimited
+2025-03-20 14:46:52.385064 (1153314) main____ INFO      processes     : 2062216
+2025-03-20 14:46:52.385070 (1153314) main____ INFO      stack size    : 8388608 B
+2025-03-20 14:46:52.385074 (1153314) main____ INFO      core file size: 0 B
+2025-03-20 14:46:52.385077 (1153314) main____ INFO      open files    : 1024
+2025-03-20 14:46:52.385080 (1153314) main____ INFO      file size     : unlimited
+2025-03-20 14:46:52.385083 (1153314) main____ INFO    ----------------------------------------
+2025-03-20 14:46:52.385086 (1153314) main____ INFO    Memory statistics:
+2025-03-20 14:46:52.385090 (1153314) main____ INFO      total physical memory  : 528010596 kB
+2025-03-20 14:46:52.385093 (1153314) main____ INFO      free physical memory   : 479819380 kB
+2025-03-20 14:46:52.385096 (1153314) main____ INFO      committed address space: 75447708 kB
+2025-03-20 14:46:52.385099 (1153314) main____ INFO    ----------------------------------------
+2025-03-20 14:46:52.385553 (1153314) main____ INFO    Important environment variables:
+2025-03-20 14:46:52.385567 (1153314) main____ INFO      DISPLAY            : ':1003'
+2025-03-20 14:46:52.385571 (1153314) main____ INFO      JASPER_INSTALL_DIR : '/usr/local/jasper_2023.12'
+2025-03-20 14:46:52.385574 (1153314) main____ INFO      JASPER_KERNEL_CHECK: '1'
+2025-03-20 14:46:52.385578 (1153314) main____ INFO      JASPER_OS_CHECK    : '0'
+2025-03-20 14:46:52.385581 (1153314) main____ INFO      LANG               : 'en_GB.UTF-8'
+2025-03-20 14:46:52.385585 (1153314) main____ INFO      LM_LICENSE_FILE    : '/usr/local/licenses/jg_license.txt'
+2025-03-20 14:46:52.385587 (1153314) main____ INFO    ----------------------------------------
+2025-03-20 14:46:52.385952 (1153314) lic_core INFO    Initializing license system ...
+2025-03-20 14:46:52.386794 (1153314) lic_core INFO    ... license system initialized.
+2025-03-20 14:46:52.388169 (1153314) lic__man INFO    Claim 'main' for <ui>.
+2025-03-20 14:46:52.388185 (1153314) lic_core INFO    (1) checking out 'jasper_interactive' ...
+2025-03-20 14:46:52.389762 (1153314) lic_core INFO    ... (1) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2025-03-20 14:46:52.389786 (1153314) lic_core INFO    (2) checking out 'jasper_pint' ...
+2025-03-20 14:46:52.394165 (1153314) lic_core INFO    ... (2) checkout succeeded
+2025-03-20 14:46:52.394189 (1153314) lic__man INFO    Claim 'fpv' for <ui>.
+2025-03-20 14:46:52.394197 (1153314) lic_core INFO    (3) checking out 'jasper_fpv' ...
+2025-03-20 14:46:52.394997 (1153314) lic_core INFO    ... (3) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2025-03-20 14:46:52.395012 (1153314) lic_core INFO    (4) checking out 'jasper_fao' ...
+2025-03-20 14:46:52.399539 (1153314) lic_core INFO    ... (4) checkout succeeded
+2025-03-20 14:46:52.399920 (1153314) main____ INFO    Tool inactivity delay is 480000 ms.
+2025-03-20 14:46:52.786310 (1153314) lic__man INFO    Claim 'fpv' for <ui>.
+2025-03-20 14:46:52.878359 (1153314) lic__man INFO    Unclaim 'fpv' for <ui>.
+2025-03-20 14:46:52.878390 (1153314) lic__man INFO    Claim 'fpv' for <ui>.
+2025-03-20 14:46:52.881721 (1153314) session_ INFO    Starting analysis session with session id 'session_0' (launcher: <local>) ...
+2025-03-20 14:46:52.884990 (1153314) session_ INFO    Analysis session with session id 'session_0' started (pid: 1153326)
+2025-03-20 14:46:53.384458 (1153314) session_ INFO    Analysis session 'session_0' connected to the console (host: 127.0.0.1:49450)
+2025-03-20 14:53:12.707868 (1153314) main____ INFO    About to exit: requested from GUI
+2025-03-20 14:53:12.746292 (1153314) session_ INFO    Analysis session 'session_0' disconnected.
+2025-03-20 14:53:12.750070 (1153314) lic_core INFO    (2) checkin jasper_pint
+2025-03-20 14:53:12.750270 (1153314) lic_core INFO    (4) checkin jasper_fao
+2025-03-20 14:53:12.750616 (1153314) main____ INFO    Exiting with status 0.
