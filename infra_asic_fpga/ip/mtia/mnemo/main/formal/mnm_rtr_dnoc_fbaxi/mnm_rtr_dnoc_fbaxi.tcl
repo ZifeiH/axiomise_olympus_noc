@@ -5,24 +5,28 @@
 
 global  MODELDIR
 
-set     RTL_TOP "mnm_rtr_dc_slice_a"
+set      RTL_TOP                   "mnm_rtr_dc_slice_a"
+set      INFRA_ASIC_FPGA_ROOT      $env(INFRA_ASIC_FPGA_ROOT)
 
 if {[info exists ::env(AXIOMISE)]} {
 
     clear   -all
 
-    set     MODELDIR [pwd]
-    
+    set     MODELDIR               [pwd]
+    set     INFRA_ASIC_FPGA_TB      $env(INFRA_ASIC_FPGA_TB)
+
+} else {
+
+    set     INFRA_ASIC_FPGA_TB      $env(INFRA_ASIC_FPGA_ROOT)
+
 }
 
-set      INFRA_ASIC_FPGA_ROOT          $env(INFRA_ASIC_FPGA_ROOT)
-
-include "$INFRA_ASIC_FPGA_ROOT/ip/mtia/mnemo/main/formal/common.tcl"
+include         "$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/formal/common.tcl"
 
 #==============================================================================
 # Analyze phase
 #==============================================================================
-eval "analyze -f $MODELDIR/mnemo_dnoc_fbaxi.f $ANALYZE_OPTS"
+eval "analyze -f $MODELDIR/mnm_rtr_dnoc_fbaxi.f $ANALYZE_OPTS"
 
 #==============================================================================
 # Elaborate phase
