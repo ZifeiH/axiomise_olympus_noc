@@ -1,1 +1,1 @@
--f /home/zifeihuang/MEGA/mtia-axiomise-collab/fbcode/infra_asic_fpga/ip/mtia/mnemo/main/formal/dcnoc/min_filelist.f
+-f $WORKROOT/min_filelist.f
