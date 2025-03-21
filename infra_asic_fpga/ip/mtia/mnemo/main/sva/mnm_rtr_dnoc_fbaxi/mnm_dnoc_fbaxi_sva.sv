@@ -119,6 +119,7 @@ module mnm_rtr_dnoc_fbaxi_sva # (
     localparam  rtr_location_x_coord          = 1;
     localparam  rtr_location_y_coord          = 1;
     localparam  rtr_location_cip_id           = 0;
+    localparam  rtr_slice_id                  = 0;
 
 //------------------------------------------------------------------------------
 //-- General Assumption --
@@ -126,7 +127,8 @@ module mnm_rtr_dnoc_fbaxi_sva # (
 
     `ifdef FORMAL
 
-      `SV_ASSERT  ( FVPH_RTR_FV_am_rtr_location_0_stable,  ##1 $stable(rtr_location));
+      `SV_ASSERT  ( FVPH_RTR_FV_am_rtr_location_stable,  ##1 $stable(rtr_location));
+      `SV_ASSERT  ( FVPH_RTR_FV_am_slice_id_stable    ,  ##1 $stable(slice_id));
  
     `endif
 
@@ -137,8 +139,8 @@ module mnm_rtr_dnoc_fbaxi_sva # (
     `ifdef FORMAL
   
         generate
-            for (genvar num_of_nocs = 0; num_of_nocs<NUM_EW_CNOC; num_of_nocs++ ) begin: cnoc_east_intf_constrains
-                cip_rtr_cnoc_intf_constrains #(
+            for (genvar num_of_nocs = 0; num_of_nocs<NUM_EW_NOC; num_of_nocs++ ) begin: east_intf_constrains
+                mnm_fbaxi_intf_constrains #(
 
                     .SIDE                           (EAST),
                     .num_of_nocs                    (num_of_nocs),
@@ -146,21 +148,22 @@ module mnm_rtr_dnoc_fbaxi_sva # (
                     .RTR_LOCATION_Y_COORD           (rtr_location_y_coord),
                     .RTR_LOCATION_CIP_ID            (rtr_location_cip_id)
 
-                ) mnm_rtr_cnoc_east_intf_constrains (
+                ) mnm_rtr_east_intf_constrains (
 
-                    .d_noc_in                        (slice_d_noc_east_in[num_of_nocs]),
-                    .d_noc_in_valid                  (slice_d_noc_east_in_valid[num_of_nocs]),
-
-                    .d_noc_out                       (slice_d_noc_east_out[num_of_nocs]),
-                    .d_noc_out_valid                 (slice_d_noc_east_out_valid[num_of_nocs]),
+                    .noc_in                         (slice_d_noc_east_in[num_of_nocs]),
+                    .noc_in_valid                   (slice_d_noc_east_in_valid[num_of_nocs]),
+                    .noc_in_credit_release          (slice[num_of_nocs]),
+ 
+                    .noc_out                        (slice_d_noc_east_out[num_of_nocs]),
+                    .noc_out_valid                  (slice_d_noc_east_out_valid[num_of_nocs]),
 
                     .clk                            (clk),
                     .reset_n                        (reset_n)
                 );
 
             end
-            for (genvar num_of_nocs = 0; num_of_nocs<NUM_EW_CNOC; num_of_nocs++ ) begin: cnoc_west_intf_constrains
-                cip_rtr_cnoc_intf_constrains #(
+            for (genvar num_of_nocs = 0; num_of_nocs<NUM_EW_NOC; num_of_nocs++ ) begin: west_intf_constrains
+                mnm_fbaxi_intf_constrains #(
 
                     .SIDE                           (WEST),
                     .num_of_nocs                    (num_of_nocs),
@@ -168,22 +171,22 @@ module mnm_rtr_dnoc_fbaxi_sva # (
                     .RTR_LOCATION_Y_COORD           (rtr_location_y_coord),
                     .RTR_LOCATION_CIP_ID            (rtr_location_cip_id)
 
-                ) mnm_rtr_cnoc_west_intf_constrains (
+                ) mnm_rtr_west_intf_constrains (
 
-                    .d_noc_in                       (slice_d_noc_west_in[num_of_nocs]),
-                    .d_noc_in_valid                 (slice_d_noc_west_in_valid[num_of_nocs]),
-
-                    .d_noc_out                      (slice_d_noc_west_out[num_of_nocs]),
-                    .d_noc_out_valid                (slice_d_noc_west_out_valid[num_of_nocs]),
+                    .noc_in                         (slice_d_noc_west_in[num_of_nocs]),
+                    .noc_in_valid                   (slice_d_noc_west_in_valid[num_of_nocs]),
+  
+                    .noc_out                        (slice_d_noc_west_out[num_of_nocs]),
+                    .noc_out_valid                  (slice_d_noc_west_out_valid[num_of_nocs]),
 
                     .clk                            (clk),
                     .reset_n                        (reset_n)
                 );
             end
 
-            for (genvar num_of_nocs = 0; num_of_nocs<NUM_NS_CNOC; num_of_nocs++ ) begin: cnoc_north_intf_constrains
+            for (genvar num_of_nocs = 0; num_of_nocs<NUM_NS_NOC; num_of_nocs++ ) begin: north_intf_constrains
 
-                cip_rtr_cnoc_intf_constrains #(
+                mnm_fbaxi_intf_constrains #(
 
                     .SIDE                           (NORTH),
                     .num_of_nocs                    (num_of_nocs),
@@ -191,13 +194,13 @@ module mnm_rtr_dnoc_fbaxi_sva # (
                     .RTR_LOCATION_Y_COORD           (rtr_location_y_coord),
                     .RTR_LOCATION_CIP_ID            (rtr_location_cip_id)
 
-                ) mnm_rtr_cnoc_north_intf_constrains (
+                ) mnm_rtr_north_intf_constrains (
 
-                    .d_noc_in                       (slice_d_noc_north_in[num_of_nocs]),
-                    .d_noc_in_valid                 (slice_d_noc_north_in_valid[num_of_nocs]),
+                    .noc_in                         (slice_d_noc_north_in[num_of_nocs]),
+                    .noc_in_valid                   (slice_d_noc_north_in_valid[num_of_nocs]),
 
-                    .d_noc_out                      (slice_d_noc_north_out[num_of_nocs]),
-                    .d_noc_out_valid                (slice_d_noc_north_out_valid[num_of_nocs]),
+                    .noc_out                        (slice_d_noc_north_out[num_of_nocs]),
+                    .noc_out_valid                  (slice_d_noc_north_out_valid[num_of_nocs]),
 
                     .clk                            (clk),
                     .reset_n                        (reset_n)
@@ -205,9 +208,9 @@ module mnm_rtr_dnoc_fbaxi_sva # (
 
             end
 
-            for (genvar num_of_nocs = 0; num_of_nocs<NUM_NS_CNOC; num_of_nocs++ ) begin: cnoc_south_intf_constrains
+            for (genvar num_of_nocs = 0; num_of_nocs<NUM_NS_NOC; num_of_nocs++ ) begin: south_intf_constrains
 
-                cip_rtr_cnoc_intf_constrains #(
+                mnm_fbaxi_intf_constrains #(
 
                     .SIDE                           (SOUTH),
                     .num_of_nocs                    (num_of_nocs),
@@ -215,13 +218,13 @@ module mnm_rtr_dnoc_fbaxi_sva # (
                     .RTR_LOCATION_Y_COORD           (rtr_location_y_coord),
                     .RTR_LOCATION_CIP_ID            (rtr_location_cip_id)
 
-                ) mnm_rtr_cnoc_south_intf_constrains (
+                ) mnm_rtr_south_intf_constrains (
 
-                    .d_noc_in                       (slice_d_noc_south_in[num_of_nocs]),
-                    .d_noc_in_valid                 (slice_d_noc_south_in_valid[num_of_nocs]),
+                    .noc_in                         (slice_d_noc_south_in[num_of_nocs]),
+                    .noc_in_valid                   (slice_d_noc_south_in_valid[num_of_nocs]),
 
-                    .d_noc_out                      (slice_d_noc_south_out[num_of_nocs]),
-                    .d_noc_out_valid                (slice_d_noc_south_out_valid[num_of_nocs]),
+                    .noc_out                        (slice_d_noc_south_out[num_of_nocs]),
+                    .noc_out_valid                  (slice_d_noc_south_out_valid[num_of_nocs]),
 
                     .clk                            (clk),
                     .reset_n                        (reset_n)
