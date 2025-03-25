@@ -12,7 +12,7 @@ if {[info exists ::env(AXIOMISE)]} {
 
     clear   -all
 
-    set     MODELDIR               [pwd]
+    set     MODELDIR                [pwd]
     set     INFRA_ASIC_FPGA_TB      $env(INFRA_ASIC_FPGA_TB)
 
 } else {
@@ -21,17 +21,17 @@ if {[info exists ::env(AXIOMISE)]} {
 
 }
 
-include         "$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/formal/common.tcl"
+include    "$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/formal/common.tcl"
 
 #==============================================================================
 # Analyze phase
 #==============================================================================
-eval "analyze -f $MODELDIR/mnm_rtr_dnoc_fbaxi.f $ANALYZE_OPTS"
+eval       "analyze -f $MODELDIR/mnm_rtr_dnoc_fbaxi.f $ANALYZE_OPTS"
 
 #==============================================================================
 # Elaborate phase
 #==============================================================================
-eval "elaborate -disable_auto_bbox -top $RTL_TOP $ELAB_OPTS -bbox_m DW_ecc"
+eval       "elaborate -disable_auto_bbox -top $RTL_TOP $ELAB_OPTS -bbox_m DW_ecc"
 
 set_prove_time_limit 12h
 
