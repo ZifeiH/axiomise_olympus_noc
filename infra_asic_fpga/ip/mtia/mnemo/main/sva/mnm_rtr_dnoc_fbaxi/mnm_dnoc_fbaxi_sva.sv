@@ -17,45 +17,27 @@ module mnm_dnoc_fbaxi_sva # (
     input   logic                                                                                CORE_MEM_RST,
     input   logic                                                                                clk,
     input   rtr_dc_csr_pkg::registers_for_default_struct                                         csr_in,
-    output  rtr_dc_csr_pkg::registers_for_default_inputs_struct                                  csr_out,
+    input   rtr_dc_csr_pkg::registers_for_default_inputs_struct                                  csr_out,
     input   mnm_pkg::data_noc_t                                     [NUM_LANES-1:0]              noc_in,
     input   logic                                                   [NUM_LANES-1:0]              noc_in_async_crd_release,
-    output  logic                                                   [NUM_LANES-1:0][VCID_W-1:0]  noc_in_credit_release_id,
-    output  logic                                                   [NUM_LANES-1:0]              noc_in_credit_release_valid,
+    input   logic                                                   [NUM_LANES-1:0][VCID_W-1:0]  noc_in_credit_release_id,
+    input   logic                                                   [NUM_LANES-1:0]              noc_in_credit_release_valid,
     input   logic                                                   [NUM_LANES-1:0]              noc_in_valid,
-    output  mnm_pkg::data_noc_t                                     [NUM_LANES-1:0]              noc_out,
+    input   mnm_pkg::data_noc_t                                     [NUM_LANES-1:0]              noc_out,
     input   logic                                                   [NUM_LANES-1:0]              noc_out_async_crd_release,
     input   logic                                                   [NUM_LANES-1:0][VCID_W-1:0]  noc_out_credit_release_id,
     input   logic                                                   [NUM_LANES-1:0]              noc_out_credit_release_valid,
-    output  logic                                                   [NUM_LANES-1:0]              noc_out_valid,
+    input   logic                                                   [NUM_LANES-1:0]              noc_out_valid,
     input   mnm_pkg::mnm_grid_location_t                                                         rtr_location,
     input   logic                                                                                soc_reset_n
+
+
 ); 
 
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_HCB_DNOC-1:0]               slice_d_noc_hcb_in;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_HCB_DNOC-1:0]               slice_d_noc_hcb_in_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_HCB_DNOC-1:0]               slice_d_noc_hcb_out;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_HCB_DNOC-1:0]               slice_d_noc_hcb_out_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_LLC_DNOC-1:0]               slice_d_noc_llc_in;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_LLC_DNOC-1:0]               slice_d_noc_llc_in_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_LLC_DNOC-1:0]               slice_d_noc_llc_out;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_LLC_DNOC-1:0]               slice_d_noc_llc_out_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC-1:0]                slice_d_noc_north_in;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC-1:0]                slice_d_noc_north_in_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC-1:0]                slice_d_noc_north_out;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC-1:0]                slice_d_noc_north_out_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC-1:0]                slice_d_noc_east_in;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC-1:0]                slice_d_noc_east_in_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC-1:0]                slice_d_noc_east_out;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC-1:0]                slice_d_noc_east_out_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC-1:0]                slice_d_noc_south_in;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC-1:0]                slice_d_noc_south_in_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC-1:0]                slice_d_noc_south_out;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC-1:0]                slice_d_noc_south_out_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC-1:0]                slice_d_noc_west_in;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC-1:0]                slice_d_noc_west_in_valid;
-    mnm_pkg::data_noc_t                  [mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC-1:0]                slice_d_noc_west_out;
-    logic                                [mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC-1:0]                slice_d_noc_west_out_valid;
+  wire reset_n;
+  assign reset_n = soc_reset_n;
+
+  credit_cfg_t    [NUM_LANES-1:0] noc_in_config;
 
 //------------------------------------------------------------------------------
 //-- Router location  --
@@ -70,218 +52,286 @@ module mnm_dnoc_fbaxi_sva # (
 //-- Interface Assumption --
 //------------------------------------------------------------------------------
 
-    `ifdef FORMAL
+  logic                       [NUM_VC-1:0][7:0]                                        csr_cfg_dwrr_vc_weights   ;
+  logic                       [NUM_LANES-1:0][NUM_LANES-1:0][7:0]                      csr_cfg_dwrr_src_weights  ;
+  logic                       [NUM_LANES-1:0][NUM_VC-1:0][RX_DEPTH_W-1:0]              csr_cfg_vc_rsvd_max_th    ;
+  logic                       [NUM_LANES-1:0][NUM_VC-1:0][RX_DEPTH_W-1:0]              csr_cfg_vc_shrd_max_th    ;
+  logic                       [NUM_LANES-1:0][NUM_VC-1:0]                              csr_cfg_vc_group_rsvd_en  ;
+  logic                       [NUM_LANES-1:0][NUM_VC-1:0][RSVD_CRD_GROUP_ID_W-1:0]     csr_cfg_vc_group_rsvd_id  ;
+  logic                       [NUM_LANES-1:0][NUM_VC-1:0][NUM_SHRD_CRD_GROUPS-1:0]     csr_cfg_vc_group_shrd     ;
+  logic                       [NUM_LANES-1:0][NUM_RSVD_CRD_GROUPS-1:0][RX_DEPTH_W-1:0] csr_cfg_group_rsvd_max_th ;
+  logic                       [NUM_LANES-1:0][NUM_SHRD_CRD_GROUPS-1:0][RX_DEPTH_W-1:0] csr_cfg_group_shrd_max_th ;
+  logic                       [NUM_LANES-1:0][RX_DEPTH_W-1:0]                          csr_cfg_total_shrd_max_th ;
+  logic                       [NUM_LANES-1:0][RX_DEPTH_W-1:0]                          csr_cfg_total_credits     ;
+  logic                       [NUM_VC-1:0]                                             csr_cfg_vc_y_first_routing;
 
-        assign { slice_d_noc_hcb_in  ,
-                 slice_d_noc_llc_in  ,
-                 slice_d_noc_west_in ,
-                 slice_d_noc_south_in,
-                 slice_d_noc_east_in ,
-                 slice_d_noc_north_in} = noc_in;
 
-        assign { slice_d_noc_hcb_in_valid  ,
-                 slice_d_noc_llc_in_valid  ,
-                 slice_d_noc_west_in_valid ,
-                 slice_d_noc_south_in_valid,
-                 slice_d_noc_east_in_valid ,
-                 slice_d_noc_north_in_valid} = noc_in_valid;
+  assign csr_cfg_dwrr_vc_weights     = {csr_in.dwrr_aw_vc_weights, csr_in.dwrr_r_vc_weights};
+  assign csr_cfg_vc_y_first_routing  = {csr_in.vc_routing_direction_cfg.aw_vc_cfg, csr_in.vc_routing_direction_cfg.r_vc_cfg};
+  assign csr_cfg_vc_group_shrd       = {NUM_LANES{ {csr_in.dnoc_wr_vc_group_cfg.vc_shared_groups, csr_in.dnoc_rd_vc_group_cfg.vc_shared_groups}}};
+  assign csr_cfg_vc_group_rsvd_en    = {NUM_LANES{ {csr_in.dnoc_wr_vc_group_cfg.vc_rsvd_group_en, csr_in.dnoc_rd_vc_group_cfg.vc_rsvd_group_en}}};
+  assign csr_cfg_vc_group_rsvd_id    = {NUM_LANES{ {csr_in.dnoc_wr_vc_group_cfg.vc_rsvd_group, csr_in.dnoc_rd_vc_group_cfg.vc_rsvd_group}}};
+  assign csr_cfg_dwrr_src_weights = {
+    csr_in.tx_peg_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.west,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.west,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.south,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.south,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.east,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.east,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.north,
+    csr_in.tx_peg_dwrr_src_weights_dnoc.north,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.west,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.west,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.south,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.south,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.east,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.east,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.north,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.north,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.west,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.west,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.south,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.south,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.east,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.east,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.north,
+    csr_in.tx_llc_dwrr_src_weights_dnoc.north,
+    csr_in.tx_west_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_west_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_west_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_west_dwrr_src_weights_dnoc.west,
+    csr_in.tx_west_dwrr_src_weights_dnoc.west,
+    csr_in.tx_west_dwrr_src_weights_dnoc.south,
+    csr_in.tx_west_dwrr_src_weights_dnoc.south,
+    csr_in.tx_west_dwrr_src_weights_dnoc.east,
+    csr_in.tx_west_dwrr_src_weights_dnoc.east,
+    csr_in.tx_west_dwrr_src_weights_dnoc.north,
+    csr_in.tx_west_dwrr_src_weights_dnoc.north,
+    csr_in.tx_west_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_west_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_west_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_west_dwrr_src_weights_dnoc.west,
+    csr_in.tx_west_dwrr_src_weights_dnoc.west,
+    csr_in.tx_west_dwrr_src_weights_dnoc.south,
+    csr_in.tx_west_dwrr_src_weights_dnoc.south,
+    csr_in.tx_west_dwrr_src_weights_dnoc.east,
+    csr_in.tx_west_dwrr_src_weights_dnoc.east,
+    csr_in.tx_west_dwrr_src_weights_dnoc.north,
+    csr_in.tx_west_dwrr_src_weights_dnoc.north,
+    csr_in.tx_south_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_south_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_south_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_south_dwrr_src_weights_dnoc.west,
+    csr_in.tx_south_dwrr_src_weights_dnoc.west,
+    csr_in.tx_south_dwrr_src_weights_dnoc.south,
+    csr_in.tx_south_dwrr_src_weights_dnoc.south,
+    csr_in.tx_south_dwrr_src_weights_dnoc.east,
+    csr_in.tx_south_dwrr_src_weights_dnoc.east,
+    csr_in.tx_south_dwrr_src_weights_dnoc.north,
+    csr_in.tx_south_dwrr_src_weights_dnoc.north,
+    csr_in.tx_south_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_south_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_south_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_south_dwrr_src_weights_dnoc.west,
+    csr_in.tx_south_dwrr_src_weights_dnoc.west,
+    csr_in.tx_south_dwrr_src_weights_dnoc.south,
+    csr_in.tx_south_dwrr_src_weights_dnoc.south,
+    csr_in.tx_south_dwrr_src_weights_dnoc.east,
+    csr_in.tx_south_dwrr_src_weights_dnoc.east,
+    csr_in.tx_south_dwrr_src_weights_dnoc.north,
+    csr_in.tx_south_dwrr_src_weights_dnoc.north,
+    csr_in.tx_east_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_east_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_east_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_east_dwrr_src_weights_dnoc.west,
+    csr_in.tx_east_dwrr_src_weights_dnoc.west,
+    csr_in.tx_east_dwrr_src_weights_dnoc.south,
+    csr_in.tx_east_dwrr_src_weights_dnoc.south,
+    csr_in.tx_east_dwrr_src_weights_dnoc.east,
+    csr_in.tx_east_dwrr_src_weights_dnoc.east,
+    csr_in.tx_east_dwrr_src_weights_dnoc.north,
+    csr_in.tx_east_dwrr_src_weights_dnoc.north,
+    csr_in.tx_east_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_east_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_east_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_east_dwrr_src_weights_dnoc.west,
+    csr_in.tx_east_dwrr_src_weights_dnoc.west,
+    csr_in.tx_east_dwrr_src_weights_dnoc.south,
+    csr_in.tx_east_dwrr_src_weights_dnoc.south,
+    csr_in.tx_east_dwrr_src_weights_dnoc.east,
+    csr_in.tx_east_dwrr_src_weights_dnoc.east,
+    csr_in.tx_east_dwrr_src_weights_dnoc.north,
+    csr_in.tx_east_dwrr_src_weights_dnoc.north,
+    csr_in.tx_north_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_north_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_north_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_north_dwrr_src_weights_dnoc.west,
+    csr_in.tx_north_dwrr_src_weights_dnoc.west,
+    csr_in.tx_north_dwrr_src_weights_dnoc.south,
+    csr_in.tx_north_dwrr_src_weights_dnoc.south,
+    csr_in.tx_north_dwrr_src_weights_dnoc.east,
+    csr_in.tx_north_dwrr_src_weights_dnoc.east,
+    csr_in.tx_north_dwrr_src_weights_dnoc.north,
+    csr_in.tx_north_dwrr_src_weights_dnoc.north,
+    csr_in.tx_north_dwrr_src_weights_dnoc.peg,
+    csr_in.tx_north_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_north_dwrr_src_weights_dnoc.llc,
+    csr_in.tx_north_dwrr_src_weights_dnoc.west,
+    csr_in.tx_north_dwrr_src_weights_dnoc.west,
+    csr_in.tx_north_dwrr_src_weights_dnoc.south,
+    csr_in.tx_north_dwrr_src_weights_dnoc.south,
+    csr_in.tx_north_dwrr_src_weights_dnoc.east,
+    csr_in.tx_north_dwrr_src_weights_dnoc.east,
+    csr_in.tx_north_dwrr_src_weights_dnoc.north,
+    csr_in.tx_north_dwrr_src_weights_dnoc.north};
+  assign csr_cfg_vc_rsvd_max_th = {
+   csr_in.peg_dnoc_wr_vc_reserved_threshold, csr_in.peg_dnoc_rd_vc_reserved_threshold,
+   csr_in.llc_dnoc_wr_vc_reserved_threshold, csr_in.llc_dnoc_rd_vc_reserved_threshold,
+   csr_in.llc_dnoc_wr_vc_reserved_threshold, csr_in.llc_dnoc_rd_vc_reserved_threshold,
+   csr_in.west_dnoc_wr_vc_reserved_threshold, csr_in.west_dnoc_rd_vc_reserved_threshold,
+   csr_in.west_dnoc_wr_vc_reserved_threshold, csr_in.west_dnoc_rd_vc_reserved_threshold,
+   csr_in.south_dnoc_wr_vc_reserved_threshold, csr_in.south_dnoc_rd_vc_reserved_threshold,
+   csr_in.south_dnoc_wr_vc_reserved_threshold, csr_in.south_dnoc_rd_vc_reserved_threshold,
+   csr_in.east_dnoc_wr_vc_reserved_threshold, csr_in.east_dnoc_rd_vc_reserved_threshold,
+   csr_in.east_dnoc_wr_vc_reserved_threshold, csr_in.east_dnoc_rd_vc_reserved_threshold,
+   csr_in.north_dnoc_wr_vc_reserved_threshold, csr_in.north_dnoc_rd_vc_reserved_threshold,
+   csr_in.north_dnoc_wr_vc_reserved_threshold, csr_in.north_dnoc_rd_vc_reserved_threshold};
+  assign csr_cfg_vc_shrd_max_th = {
+   csr_in.peg_dnoc_wr_vc_shared_threshold, csr_in.peg_dnoc_rd_vc_shared_threshold,
+   csr_in.llc_dnoc_wr_vc_shared_threshold, csr_in.llc_dnoc_rd_vc_shared_threshold,
+   csr_in.llc_dnoc_wr_vc_shared_threshold, csr_in.llc_dnoc_rd_vc_shared_threshold,
+   csr_in.west_dnoc_wr_vc_shared_threshold, csr_in.west_dnoc_rd_vc_shared_threshold,
+   csr_in.west_dnoc_wr_vc_shared_threshold, csr_in.west_dnoc_rd_vc_shared_threshold,
+   csr_in.south_dnoc_wr_vc_shared_threshold, csr_in.south_dnoc_rd_vc_shared_threshold,
+   csr_in.south_dnoc_wr_vc_shared_threshold, csr_in.south_dnoc_rd_vc_shared_threshold,
+   csr_in.east_dnoc_wr_vc_shared_threshold, csr_in.east_dnoc_rd_vc_shared_threshold,
+   csr_in.east_dnoc_wr_vc_shared_threshold, csr_in.east_dnoc_rd_vc_shared_threshold,
+   csr_in.north_dnoc_wr_vc_shared_threshold, csr_in.north_dnoc_rd_vc_shared_threshold,
+   csr_in.north_dnoc_wr_vc_shared_threshold, csr_in.north_dnoc_rd_vc_shared_threshold};
+  assign csr_cfg_group_rsvd_max_th = {
+    csr_in.peg_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.llc_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.llc_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.west_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.west_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.south_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.south_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.east_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.east_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.north_dnoc_credit_groups_threshold.rsvd_group,
+    csr_in.north_dnoc_credit_groups_threshold.rsvd_group};
+  assign csr_cfg_group_shrd_max_th = {
+    csr_in.peg_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.llc_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.llc_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.west_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.west_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.south_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.south_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.east_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.east_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.north_dnoc_credit_groups_threshold.shrd_group,
+    csr_in.north_dnoc_credit_groups_threshold.shrd_group};
+  assign csr_cfg_total_shrd_max_th = {
+    csr_in.peg_dnoc_total_shared_threshold.shrd_total,
+    csr_in.llc_dnoc_total_shared_threshold.shrd_total,
+    csr_in.llc_dnoc_total_shared_threshold.shrd_total,
+    csr_in.west_dnoc_total_shared_threshold.shrd_total,
+    csr_in.west_dnoc_total_shared_threshold.shrd_total,
+    csr_in.south_dnoc_total_shared_threshold.shrd_total,
+    csr_in.south_dnoc_total_shared_threshold.shrd_total,
+    csr_in.east_dnoc_total_shared_threshold.shrd_total,
+    csr_in.east_dnoc_total_shared_threshold.shrd_total,
+    csr_in.north_dnoc_total_shared_threshold.shrd_total,
+    csr_in.north_dnoc_total_shared_threshold.shrd_total};
+  assign csr_cfg_total_credits = {
+    csr_in.peg_dnoc_link_stats.total_credits_available,
+    csr_in.llc_dnoc_link_stats.total_credits_available,
+    csr_in.llc_dnoc_link_stats.total_credits_available,
+    csr_in.west_dnoc_link_stats.total_credits_available,
+    csr_in.west_dnoc_link_stats.total_credits_available,
+    csr_in.south_dnoc_link_stats.total_credits_available,
+    csr_in.south_dnoc_link_stats.total_credits_available,
+    csr_in.east_dnoc_link_stats.total_credits_available,
+    csr_in.east_dnoc_link_stats.total_credits_available,
+    csr_in.north_dnoc_link_stats.total_credits_available,
+    csr_in.north_dnoc_link_stats.total_credits_available};
 
-        assign { slice_d_noc_hcb_out  ,
-                 slice_d_noc_llc_out  ,
-                 slice_d_noc_west_out ,
-                 slice_d_noc_south_out,
-                 slice_d_noc_east_out ,
-                 slice_d_noc_north_out} = noc_out;
+`ifdef FORMAL
 
-        assign { slice_d_noc_hcb_out_valid  ,
-                 slice_d_noc_llc_out_valid  ,
-                 slice_d_noc_west_out_valid ,
-                 slice_d_noc_south_out_valid,
-                 slice_d_noc_east_out_valid ,
-                 slice_d_noc_north_out_valid} = noc_out_valid;
-        
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_stable       , ##1 $stable(rtr_location)                               );
+    `SV_ASSERT (FVPH_RTR_FV_am_vc_y_first_routing_fixed  , csr_cfg_vc_y_first_routing == 11'h1fc                   );
+    `SV_ASSERT (FVPH_RTR_FV_am_dwrr_vc_weights_fixed     , csr_cfg_dwrr_vc_weights    == 88'h0202020202020202020202);
+
         generate
+            
+            begin: dwrr_vc_weights
+            
+            for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: per_lane
+            
+                for (genvar vc = 0 ; vc < NUM_VC ; vc++) begin: per_vc
+            
+                    `SV_ASSERT (FVPH_RTR_FV_am_dwrr_src_weights_fixed  , csr_cfg_dwrr_src_weights[lane][vc] == 8'h02);
+            
+                end 
+            
+            end
+            
+            end
 
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC; noc_num++ ) begin: north_intf_constraints
+            for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: intf_constraints
+
+                assign noc_in_config[lane].vc_rsvd_max     = csr_cfg_vc_rsvd_max_th[lane]    ;
+                assign noc_in_config[lane].vc_shrd_max     = csr_cfg_vc_shrd_max_th[lane]    ;
+                assign noc_in_config[lane].vc_grp_rsvd_en  = csr_cfg_vc_group_rsvd_en[lane]  ;
+                assign noc_in_config[lane].vc_grp_rsvd_id  = csr_cfg_vc_group_rsvd_id[lane]  ;
+                assign noc_in_config[lane].vc_grp_rsvd_max = csr_cfg_group_rsvd_max_th[lane]     ;
+                assign noc_in_config[lane].vc_grp_shrd_max = csr_cfg_group_shrd_max_th[lane] ;
+                assign noc_in_config[lane].vc_grp_shrd     = csr_cfg_vc_group_shrd[lane] ;
+                assign noc_in_config[lane].total_shrd_max  = csr_cfg_total_shrd_max_th[lane] ;
+                assign noc_in_config[lane].total_credits   = csr_cfg_total_credits[lane]     ; 
 
                 mnm_dnoc_fbaxi_intf_constraints #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_north_fbaxi_intf_constraints (
+                    .NUM_VC                           (NUM_VC),
+                    .LANE_NUM                         (lane)
+                ) mnm_dnoc_fbaxi_intf_constraints (
 
-                    .d_noc_in                         (slice_d_noc_north_in[noc_num]),
-                    .d_noc_in_valid                   (slice_d_noc_north_in_valid[noc_num]),
+                    .d_noc_in                         (noc_in[lane]),
+                    .d_noc_in_valid                   (noc_in_valid[lane]),
+                    .csr_cfg                          (noc_in_config[lane]),
 
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC; noc_num++ ) begin: east_intf_constraints
-
-                mnm_dnoc_fbaxi_intf_constraints #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_east_fbaxi_intf_constraints (
-
-                    .d_noc_in                         (slice_d_noc_east_in[noc_num]),
-                    .d_noc_in_valid                   (slice_d_noc_east_in_valid[noc_num]),
+                    .d_noc_out_crd_rel_valid          (noc_out_credit_release_valid[lane]),
+                    .d_noc_out_crd_rel_id             (noc_out_credit_release_id[lane]),
 
                     .clk                              (clk),
                     .reset_n                          (reset_n)
-                );          
+                );                   
                 
             end
 
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC; noc_num++ ) begin: south_intf_constraints
+            for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: intf_checkers
 
-                mnm_dnoc_fbaxi_intf_constraints #(
+                mnm_dnoc_fbaxi_checker #(
                     .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_south_fbaxi_intf_constraints (
+                ) mnm_dnoc_fbaxi_checker (
 
-                    .d_noc_in                         (slice_d_noc_south_in[noc_num]),
-                    .d_noc_in_valid                   (slice_d_noc_south_in_valid[noc_num]),
+                    .d_noc_out                        (noc_out[lane]),
+                    .d_noc_out_valid                  (noc_out_valid[lane]),
 
                     .clk                              (clk),
                     .reset_n                          (reset_n)
-                );          
-                
+
+                ); 
             end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC; noc_num++ ) begin: west_intf_constraints
-
-                mnm_dnoc_fbaxi_intf_constraints #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_west_fbaxi_intf_constraints (
-
-                    .d_noc_in                         (slice_d_noc_west_in[noc_num]),
-                    .d_noc_in_valid                   (slice_d_noc_west_in_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_LLC_DNOC; noc_num++ ) begin: llc_intf_constraints
-
-                mnm_dnoc_fbaxi_intf_constraints #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_llc_fbaxi_intf_constraints (
-
-                    .d_noc_in                         (slice_d_noc_llc_in[noc_num]),
-                    .d_noc_in_valid                   (slice_d_noc_llc_in_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_HCB_DNOC; noc_num++ ) begin: hcb_intf_constraints
-
-                mnm_dnoc_fbaxi_intf_constraints #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_hcb_fbaxi_intf_constraints (
-
-                    .d_noc_in                         (slice_d_noc_hcb_in[noc_num]),
-                    .d_noc_in_valid                   (slice_d_noc_hcb_in_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC; noc_num++ ) begin: north_intf_checker
-
-                mnm_dnoc_fbaxi_intf_checker #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_north_fbaxi_intf_checker (
-
-                    .d_noc_out                        (slice_d_noc_north_out[noc_num]),
-                    .d_noc_out_valid                  (slice_d_noc_north_out_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC; noc_num++ ) begin: east_intf_checker
-
-                mnm_dnoc_fbaxi_intf_checker #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_east_fbaxi_intf_checker (
-
-                    .d_noc_out                        (slice_d_noc_east_out[noc_num]),
-                    .d_noc_out_valid                  (slice_d_noc_east_out_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_NS_DNOC; noc_num++ ) begin: south_intf_checker
-
-                mnm_dnoc_fbaxi_intf_checker #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_south_fbaxi_intf_checker (
-
-                    .d_noc_out                        (slice_d_noc_south_out[noc_num]),
-                    .d_noc_out_valid                  (slice_d_noc_south_out_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_EW_DNOC; noc_num++ ) begin: west_intf_checker
-
-                mnm_dnoc_fbaxi_intf_checker #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_west_fbaxi_intf_checker (
-
-                    .d_noc_out                        (slice_d_noc_west_out[noc_num]),
-                    .d_noc_out_valid                  (slice_d_noc_west_out_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_LLC_DNOC; noc_num++ ) begin: llc_intf_checker
-
-                mnm_dnoc_fbaxi_intf_checker #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_llc_fbaxi_intf_checker (
-
-                    .d_noc_out                        (slice_d_noc_llc_out[noc_num]),
-                    .d_noc_out_valid                  (slice_d_noc_llc_out_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
-            for (genvar noc_num = 0; noc_num < mnm_pkg::MNM_RTR_SLICE_NUM_HCB_DNOC; noc_num++ ) begin: hcb_intf_checker
-
-                mnm_dnoc_fbaxi_intf_checker #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_hcb_fbaxi_intf_checker (
-
-                    .d_noc_out                        (slice_d_noc_hcb_out[noc_num]),
-                    .d_noc_out_valid                  (slice_d_noc_hcb_out_valid[noc_num]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );          
-                
-            end
-
         endgenerate
     `endif
     

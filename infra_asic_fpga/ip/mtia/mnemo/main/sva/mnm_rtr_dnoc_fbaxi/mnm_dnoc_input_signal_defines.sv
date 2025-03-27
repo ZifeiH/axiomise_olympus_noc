@@ -42,14 +42,11 @@
     // logic [mnm_pkg::MNM_DAXI_RUSER_CC_DIR_WIDTH-1:0]                  d_noc_in_rcc_dir;
     // mnm_pkg::amo_opcode_e                                             d_noc_in_rcc_opcode;
     // logic [mnm_pkg::MNM_DAXI_RUSER_CC_LANE_WIDTH-1:0]                 d_noc_in_rcc_lane;
-
-
-    assign d_noc_in_vc                                    = d_noc_in.payload.daxi_combo_aw_w.aw.user.vc;
     
     assign d_noc_in_channel                               = d_noc_in.channel;
     assign d_noc_in_is_aww_channel                        = d_noc_in.channel == mnm_pkg::DNOC_CHANNEL_E_WRITE;
     assign d_noc_in_is_r_channel                          = d_noc_in.channel == mnm_pkg::DNOC_CHANNEL_E_READ ;
-
+    assign d_noc_in_vc                                    = d_noc_in_is_aww_channel ? d_noc_in.payload.daxi_combo_aw_w.aw.user.vc: d_noc_in.payload.daxi_r.user.vc ;
     assign d_noc_in_iid                                   = d_noc_in_is_aww_channel ? d_noc_in.payload.daxi_combo_aw_w.aw.id.iid :
                                                              d_noc_in_is_r_channel   ? d_noc_in.payload.daxi_r.id.iid : 
                                                              '0;
