@@ -12,10 +12,8 @@ module mnm_dnoc_fbaxi_intf_constraints # (
   input     credit_cfg_t                                   csr_cfg,
   input     logic                [$clog2(NUM_VC)-1:0]      d_noc_in_crd_rel_id,
   input     logic                                          d_noc_in_crd_rel_valid,
-
   input     mnm_pkg::data_noc_t                            d_noc_out,
   input     logic                                          d_noc_out_valid,
-  input     credit_cfg_t                                   d_noc_out_cfg,
   input     logic                [$clog2(NUM_VC)-1:0]      d_noc_out_crd_rel_id,
   input     logic                                          d_noc_out_crd_rel_valid,
 
@@ -27,6 +25,9 @@ module mnm_dnoc_fbaxi_intf_constraints # (
   `include "mnm_dnoc_output_signal_defines.sv"
 
     `SV_ASSERT (FVPH_RTR_FV_am_noc_iid_tracking         ,   d_noc_in_iid     == LANE_NUM  );
+    // TODO: need to remove once tb stable
+    `SV_ASSERT (FVPH_RTR_FV_am_noc_rd_vc_valid_range    ,   d_noc_in_is_r_channel   |-> d_noc_in_vc <= 2  );
+    `SV_ASSERT (FVPH_RTR_FV_am_noc_wr_vc_valid_range    ,   d_noc_in_is_aww_channel |-> d_noc_in_vc <= 7  );
     
     `SV_ASSERT(FVPH_RTR_FV_am_group_shrd_fixed         ,    csr_cfg.vc_grp_shrd == 33'h092492449  );
 

@@ -277,60 +277,68 @@ module mnm_dnoc_fbaxi_sva # (
             begin: dwrr_vc_weights
             
             for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: per_lane
-            
-                for (genvar vc = 0 ; vc < NUM_VC ; vc++) begin: per_vc
-            
-                    `SV_ASSERT (FVPH_RTR_FV_am_dwrr_src_weights_fixed  , csr_cfg_dwrr_src_weights[lane][vc] == 8'h02);
-            
-                end 
+                if (!REMOVE_LANE[lane]) begin
+                    for (genvar vc = 0 ; vc < NUM_VC ; vc++) begin: per_vc
+                
+                        `SV_ASSERT (FVPH_RTR_FV_am_dwrr_src_weights_fixed  , csr_cfg_dwrr_src_weights[lane][vc] == 8'h02);
+                
+                    end 
+                end
             
             end
             
             end
 
             for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: intf_constraints
+                if (!REMOVE_LANE[lane]) begin
 
-                assign noc_in_config[lane].vc_rsvd_max     = csr_cfg_vc_rsvd_max_th[lane]    ;
-                assign noc_in_config[lane].vc_shrd_max     = csr_cfg_vc_shrd_max_th[lane]    ;
-                assign noc_in_config[lane].vc_grp_rsvd_en  = csr_cfg_vc_group_rsvd_en[lane]  ;
-                assign noc_in_config[lane].vc_grp_rsvd_id  = csr_cfg_vc_group_rsvd_id[lane]  ;
-                assign noc_in_config[lane].vc_grp_rsvd_max = csr_cfg_group_rsvd_max_th[lane]     ;
-                assign noc_in_config[lane].vc_grp_shrd_max = csr_cfg_group_shrd_max_th[lane] ;
-                assign noc_in_config[lane].vc_grp_shrd     = csr_cfg_vc_group_shrd[lane] ;
-                assign noc_in_config[lane].total_shrd_max  = csr_cfg_total_shrd_max_th[lane] ;
-                assign noc_in_config[lane].total_credits   = csr_cfg_total_credits[lane]     ; 
+                    assign noc_in_config[lane].vc_rsvd_max     = csr_cfg_vc_rsvd_max_th[lane]    ;
+                    assign noc_in_config[lane].vc_shrd_max     = csr_cfg_vc_shrd_max_th[lane]    ;
+                    assign noc_in_config[lane].vc_grp_rsvd_en  = csr_cfg_vc_group_rsvd_en[lane]  ;
+                    assign noc_in_config[lane].vc_grp_rsvd_id  = csr_cfg_vc_group_rsvd_id[lane]  ;
+                    assign noc_in_config[lane].vc_grp_rsvd_max = csr_cfg_group_rsvd_max_th[lane]     ;
+                    assign noc_in_config[lane].vc_grp_shrd_max = csr_cfg_group_shrd_max_th[lane] ;
+                    assign noc_in_config[lane].vc_grp_shrd     = csr_cfg_vc_group_shrd[lane] ;
+                    assign noc_in_config[lane].total_shrd_max  = csr_cfg_total_shrd_max_th[lane] ;
+                    assign noc_in_config[lane].total_credits   = csr_cfg_total_credits[lane]     ; 
 
-                mnm_dnoc_fbaxi_intf_constraints #(
-                    .NUM_VC                           (NUM_VC),
-                    .LANE_NUM                         (lane)
-                ) mnm_dnoc_fbaxi_intf_constraints (
+                    mnm_dnoc_fbaxi_intf_constraints #(
+                        .NUM_VC                          (NUM_VC),
+                        .LANE_NUM                        (lane)
+                    ) mnm_dnoc_fbaxi_intf_constraints (
 
-                    .d_noc_in                         (noc_in[lane]),
-                    .d_noc_in_valid                   (noc_in_valid[lane]),
-                    .csr_cfg                          (noc_in_config[lane]),
-
-                    .d_noc_out_crd_rel_valid          (noc_out_credit_release_valid[lane]),
-                    .d_noc_out_crd_rel_id             (noc_out_credit_release_id[lane]),
-
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
-                );                   
+                        .d_noc_in                        (noc_in[lane]),
+                        .d_noc_in_valid                  (noc_in_valid[lane]),
+                        .csr_cfg                         (noc_in_config[lane]),
+                        .d_noc_in_crd_rel_id             (noc_in_credit_release_id[lane]),
+                        .d_noc_in_crd_rel_valid          (noc_in_credit_release_valid[lane]),
+                        .d_noc_out                       (noc_out[lane]),
+                        .d_noc_out_valid                 (noc_out_valid[lane]),
+                        .d_noc_out_crd_rel_id            (noc_out_credit_release_id[lane]),
+                        .d_noc_out_crd_rel_valid         (noc_out_credit_release_valid[lane]),
+                        
+                        .clk                             (clk),
+                        .reset_n                         (reset_n)
+                    );    
+                end               
                 
             end
 
             for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: intf_checkers
+                if (!REMOVE_LANE[lane]) begin
 
-                mnm_dnoc_fbaxi_checker #(
-                    .NUM_VC                           (NUM_VC)
-                ) mnm_dnoc_fbaxi_checker (
+                    mnm_dnoc_fbaxi_checker #(
+                        .NUM_VC                           (NUM_VC)
+                    ) mnm_dnoc_fbaxi_checker (
 
-                    .d_noc_out                        (noc_out[lane]),
-                    .d_noc_out_valid                  (noc_out_valid[lane]),
+                        .d_noc_out                        (noc_out[lane]),
+                        .d_noc_out_valid                  (noc_out_valid[lane]),
 
-                    .clk                              (clk),
-                    .reset_n                          (reset_n)
+                        .clk                              (clk),
+                        .reset_n                          (reset_n)
 
-                ); 
+                    ); 
+                end
             end
         endgenerate
     `endif

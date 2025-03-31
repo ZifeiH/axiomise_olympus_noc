@@ -32,7 +32,7 @@ eval       "analyze -f $MODELDIR/mnm_rtr_dnoc_fbaxi.f $ANALYZE_OPTS"
 # Elaborate phase
 #==============================================================================
 # eval       "elaborate -disable_auto_bbox -top $RTL_TOP $ELAB_OPTS -bbox_m DW_ecc"
-eval         "elaborate -disable_auto_bbox -top mnm_rtr_ca_dnoc_top -parameter VCID_W 4 -parameter RX_DEPTH_W 8 -parameter SEQN_W 5 -parameter REMOVE_LANE 11'b011000000 -bbox_m DW_ecc"
+eval         "elaborate -disable_auto_bbox -top mnm_rtr_ca_dnoc_top -parameter VCID_W 4 -parameter RX_DEPTH_W 8 -parameter SEQN_W 5 -parameter REMOVE_LANE 11'b000000000 -bbox_m DW_ecc"
 
 set_prove_time_limit 12h
 

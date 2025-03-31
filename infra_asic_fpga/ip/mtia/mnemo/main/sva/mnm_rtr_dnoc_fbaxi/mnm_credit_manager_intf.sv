@@ -36,14 +36,7 @@ module credit_manager_constraints_input
     input                                                       reset_n
 );
 
-//------------------------------------------------------------------------------
-//-- Clock and Reset --
-//------------------------------------------------------------------------------
-
-    default clocking @(posedge clk); endclocking
-    default disable iff (!reset_n);
-
-
+logic   [NUM_VC-1:0]                                            credit_ok       ;
 logic   [NUM_VC-1:0][CRED_W-1:0]                                vc_rsvd         ;
 logic   [NUM_VC-1:0][CRED_W-1:0]                                vc_shrd         ;
 logic   [NUM_SHRD_GRP-1:0][CRED_W-1:0]                          per_grp_shrd    ;
@@ -54,6 +47,9 @@ logic   [NUM_VC-1:0]                                            vc_rsvd_full    
 logic   [NUM_VC-1:0]                                            vc_shrd_full    ;
 logic   [NUM_SHRD_GRP-1:0]                                      grp_shrd_full   ;
 logic   [NUM_RSVD_GRP-1:0]                                      vc_grp_rsvd_full;
+
+logic   [NUM_VC-1:0][CRED_W-1:0]                                credit_release_counter;
+
 
 logic   [CRED_W-1:0]                                            total_shrd_credits;
 logic   [CRED_W-1:0]                                            total_credits_taken;
@@ -80,78 +76,129 @@ for (genvar vc = 0 ; vc < NUM_VC ; vc ++ ) begin
     always_ff @(posedge clk or negedge reset_n) begin
         if (!reset_n) begin
 
+            credit_release_counter[vc] <= '0;
+
+        end else begin
+            if (crd_rel_vld) begin
+
+                if      (vc_shrd[vc]     != 0)    credit_release_counter[vc]      <= credit_release_counter[vc]   + (crd_rel_id == vc);
+                // else if (vc_grp_rsvd[vc] != 0)    vc_rsvd[vc]      <= vc_rsvd[vc]     + (crd_rel_id == vc);
+                else                              credit_release_counter[vc]      <= credit_release_counter[vc]   + (crd_rel_id == vc);
+
+            end
+        end
+    end
+
+    always_ff @(posedge clk or negedge reset_n) begin
+        if (!reset_n) begin
+
             vc_rsvd[vc]            <= '0;
             vc_grp_rsvd[vc]        <= '0;
             vc_shrd[vc]            <= '0;
+            credit_ok[vc]          <= '0;
 
         end else begin
         if (noc_in_vld) begin
 
-            if      (!vc_rsvd_full[vc])       vc_rsvd[vc]  <= vc_rsvd[vc] + (noc_in_vc == vc);
+            if      (!vc_rsvd_full[vc]) begin
+                    vc_rsvd[vc]    <= vc_rsvd[vc] + (noc_in_vc == vc);
+                    credit_ok[vc]  <= '1;
+
+            end
             // else if (!vc_grp_rsvd_full[vc])   vc_rsvd[vc]      <= vc_rsvd[vc]     + (noc_in_vc == vc);
-            else                              vc_shrd[vc]      <= vc_shrd[vc]     + (noc_in_vc == vc);        
+            else if (total_shrd_credits < total_shrd_max) begin
+                logic credit_grant = '0;
+                for (int vc = 0 ; vc < NUM_VC ; vc ++) begin
+                    for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
+                        if (!vc_shrd_full[vc]) begin
+                            
+                            if (vc_grp_shrd[vc][grp] && !grp_shrd_full[grp]) begin
+                            
+                                // vc_shrd[vc]  <= vc_shrd[vc] + (noc_in_vc == vc);
+                                // credit_ok    <= '1;
+                                credit_grant = '1;
 
+                            end else if (!vc_grp_shrd[vc][grp])  begin
+                            
+                                // vc_shrd[vc]  <= vc_shrd[vc] + (noc_in_vc == vc);
+                                // credit_ok    <= '1;
+                                credit_grant = '1;
+
+                            end
+
+                        end else begin
+                            credit_grant = '0;
+                        end
+                    end
+                end
+                if (credit_grant) begin
+                    vc_shrd[vc]   <= vc_shrd[vc] + (noc_in_vc == vc);
+                    credit_ok[vc] <= '1;
+                end
+            end else begin
+                credit_ok[vc] <= '0;
+            end     
         end
 
-        if (crd_rel_vld) begin
-
-            if      (vc_shrd[vc]     != 0)    vc_shrd[vc]      <= vc_shrd[vc]     - (crd_rel_id == vc);
-            // else if (vc_grp_rsvd[vc] != 0)    vc_rsvd[vc]      <= vc_rsvd[vc]     + (crd_rel_id == vc);
-            else if (vc_rsvd[vc]     != 0)    vc_rsvd[vc]      <= vc_rsvd[vc]     - (crd_rel_id == vc);
-
-        end
         end
         
     end 
 end
 
 endgenerate
-
-always_comb begin: per_grp_credits_calc
-    per_grp_shrd        = '0;
-    for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
+    
+always_ff @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+        per_grp_shrd      <= '0;
+    end else begin
         for (int vc = 0 ; vc < NUM_VC ; vc ++ ) begin
-            if (vc_grp_shrd[vc][grp]) per_grp_shrd[grp] = per_grp_shrd[grp] + vc_shrd[vc];
+            for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
+                if (vc_grp_shrd[vc][grp]) per_grp_shrd[grp] <= per_grp_shrd[grp] + vc_shrd[vc];
+            end
         end
     end
 end
 
-always_comb begin: total_shrd_credits_calc
-    total_shrd_credits     = '0;
-    for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
-        total_shrd_credits = total_shrd_credits + per_grp_shrd[grp];
+always_ff @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+        total_shrd_credits     <= '0;
+    end else begin
+        for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
+            total_shrd_credits <= total_shrd_credits + per_grp_shrd[grp];
+        end
     end
 end
 
-always_comb begin: total_credits_calc
-    total_credits_taken     = '0;
-    for (int vc = 0 ; vc < NUM_VC ; vc ++ ) begin
-        total_credits_taken = vc_rsvd[vc] + total_credits_taken;
+always_ff @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+        total_credits_taken     <= '0;
     end
-    total_credits_taken     = total_credits_taken + total_shrd_credits;
-end
+    else begin
+        for (int vc = 0 ; vc < NUM_VC ; vc ++ ) begin
+            total_credits_taken <= vc_rsvd[vc] + vc_shrd[vc];
+        end
+    end
 
+end
 //------------------------------------------------------------------------------
 //-- Assumptions --
 //------------------------------------------------------------------------------
 
 generate
-    for (genvar grp=0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
-        `SV_ASSERT (FVPH_RTR_FV_am_gropmax_not_reach_per_grp         ,   per_grp_shrd[grp]  <= vc_grp_shrd_max[grp]);
-    end
+    // for (genvar grp=0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
+    //     `SV_ASSERT (FVPH_RTR_FV_as_gropmax_not_reach_per_grp         ,   per_grp_shrd[grp]  <= vc_grp_shrd_max[grp]);
+    // end
 
-    for (genvar vc=0; vc < NUM_VC ; vc++) begin
-        `SV_ASSERT (FVPH_RTR_FV_am_vcmax_not_reach_per_vc            ,   vc_shrd[vc]        <= vc_shrd_max[vc]);
+    // for (genvar vc=0; vc < NUM_VC ; vc++) begin
+    //     `SV_ASSERT (FVPH_RTR_FV_am_vcmax_not_reach_per_vc            ,   vc_shrd[vc]        <= vc_shrd_max[vc]);
                          
-        `SV_ASSERT (FVPH_RTR_FV_am_vc_shrd_eventually_credit_back    ,   vc_shrd[vc] != 0                       |-> s_eventually vc_shrd[vc] == 0);
-        `SV_ASSERT (FVPH_RTR_FV_am_vc_rsvd_eventually_credit_back    ,   vc_rsvd[vc] != 0                       |-> s_eventually vc_rsvd[vc] == 0);
-        `SV_ASSERT (FVPH_RTR_FV_am_no_credit_release_when_no_taken   ,   vc_rsvd[vc] == 0 && vc_rsvd[vc] == 0   |-> !(crd_rel_vld && crd_rel_id == vc));
+    //     `SV_ASSERT (FVPH_RTR_FV_am_vc_shrd_eventually_credit_back    ,   vc_shrd[vc] != 0                       |-> s_eventually vc_shrd[vc] == 0);
+    //     `SV_ASSERT (FVPH_RTR_FV_am_vc_rsvd_eventually_credit_back    ,   vc_rsvd[vc] != 0                       |-> s_eventually vc_rsvd[vc] == 0);
+    //     `SV_ASSERT (FVPH_RTR_FV_am_no_credit_release_when_no_taken   ,   vc_rsvd[vc] == 0 && vc_rsvd[vc] == 0   |-> !(crd_rel_vld && crd_rel_id == vc));
 
-    end
+    // end
 
-    `SV_ASSERT (FVPH_RTR_FV_am_total_shrd_less_than_total_shrd_max   ,   total_shrd_credits  <= total_shrd_max);
-    `SV_ASSERT (FVPH_RTR_FV_am_total_taken_less_than_total           ,   total_credits_taken <= total_credits);
-
+        `SV_ASSERT (FVPH_RTR_FV_am_credit_ok_when_in_valid              ,   noc_in_vld && noc_in_last |=> credit_ok[noc_in_vc]);
 
 //------------------------------------------------------------------------------
 //-- Assertions --
@@ -159,7 +206,7 @@ generate
     for (genvar vc=0; vc < NUM_VC ; vc++) begin                         
         `SV_ASSERT (FVPH_RTR_FV_as_vc_shrd_eventually_credit_back    ,   vc_shrd[vc] != 0                       |-> s_eventually vc_shrd[vc] == 0);
         `SV_ASSERT (FVPH_RTR_FV_as_vc_rsvd_eventually_credit_back    ,   vc_rsvd[vc] != 0                       |-> s_eventually vc_rsvd[vc] == 0);
-        `SV_ASSERT (FVPH_RTR_FV_as_no_credit_release_when_no_taken   ,   vc_rsvd[vc] == 0 && vc_rsvd[vc] == 0   |-> !(crd_rel_vld && crd_rel_id == vc));
+        `SV_ASSERT (FVPH_RTR_FV_as_no_credit_release_when_no_taken   ,   vc_rsvd[vc] == 0 && vc_shrd[vc] == 0   |-> !(crd_rel_vld && crd_rel_id == vc));
 
     end
 endgenerate
@@ -203,14 +250,7 @@ module credit_manager_constraints_output
     input                                                       reset_n
 );
 
-//------------------------------------------------------------------------------
-//-- Clock and Reset --
-//------------------------------------------------------------------------------
-
-    default clocking @(posedge clk); endclocking
-    default disable iff (!reset_n);
-
-
+logic   [NUM_VC-1:0]                                            credit_ok       ;
 logic   [NUM_VC-1:0][CRED_W-1:0]                                vc_rsvd         ;
 logic   [NUM_VC-1:0][CRED_W-1:0]                                vc_shrd         ;
 logic   [NUM_SHRD_GRP-1:0][CRED_W-1:0]                          per_grp_shrd    ;
@@ -221,6 +261,9 @@ logic   [NUM_VC-1:0]                                            vc_rsvd_full    
 logic   [NUM_VC-1:0]                                            vc_shrd_full    ;
 logic   [NUM_SHRD_GRP-1:0]                                      grp_shrd_full   ;
 logic   [NUM_RSVD_GRP-1:0]                                      vc_grp_rsvd_full;
+
+logic   [NUM_VC-1:0][CRED_W-1:0]                                credit_release_counter;
+
 
 logic   [CRED_W-1:0]                                            total_shrd_credits;
 logic   [CRED_W-1:0]                                            total_credits_taken;
@@ -247,63 +290,117 @@ for (genvar vc = 0 ; vc < NUM_VC ; vc ++ ) begin
     always_ff @(posedge clk or negedge reset_n) begin
         if (!reset_n) begin
 
+            credit_release_counter[vc] <= '0;
+
+        end else begin
+            if (crd_rel_vld) begin
+
+                if      (vc_shrd[vc]     != 0)    credit_release_counter[vc]      <= credit_release_counter[vc]   + (crd_rel_id == vc);
+                // else if (vc_grp_rsvd[vc] != 0)    vc_rsvd[vc]      <= vc_rsvd[vc]     + (crd_rel_id == vc);
+                else                              credit_release_counter[vc]      <= credit_release_counter[vc]   + (crd_rel_id == vc);
+
+            end
+        end
+    end
+
+    always_ff @(posedge clk or negedge reset_n) begin
+        if (!reset_n) begin
+
             vc_rsvd[vc]            <= '0;
             vc_grp_rsvd[vc]        <= '0;
             vc_shrd[vc]            <= '0;
+            credit_ok[vc]          <= '0;
 
         end else begin
         if (noc_out_vld) begin
 
-            if      (!vc_rsvd_full[vc])       vc_rsvd[vc]  <= vc_rsvd[vc] + (noc_out_vc == vc);
+            if      (!vc_rsvd_full[vc]) begin
+                    vc_rsvd[vc]    <= vc_rsvd[vc] + (noc_out_vc == vc);
+                    credit_ok[vc]  <= '1;
+
+            end
             // else if (!vc_grp_rsvd_full[vc])   vc_rsvd[vc]      <= vc_rsvd[vc]     + (noc_out_vc == vc);
-            else                              vc_shrd[vc]      <= vc_shrd[vc]     + (noc_out_vc == vc);        
+            else if (total_shrd_credits < total_shrd_max) begin
+                logic credit_grant = '0;
+                for (int vc = 0 ; vc < NUM_VC ; vc ++) begin
+                    for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
+                        if (!vc_shrd_full[vc]) begin
+                            
+                            if (vc_grp_shrd[vc][grp] && !grp_shrd_full[grp]) begin
+                            
+                                // vc_shrd[vc]  <= vc_shrd[vc] + (noc_out_vc == vc);
+                                // credit_ok    <= '1;
+                                credit_grant = '1;
 
+                            end else if (!vc_grp_shrd[vc][grp])  begin
+                            
+                                // vc_shrd[vc]  <= vc_shrd[vc] + (noc_out_vc == vc);
+                                // credit_ok    <= '1;
+                                credit_grant = '1;
+
+                            end
+
+                        end else begin
+                            credit_grant = '0;
+                        end
+                    end
+                end
+                if (credit_grant) begin
+                    vc_shrd[vc]   <= vc_shrd[vc] + (noc_out_vc == vc);
+                    credit_ok[vc] <= '1;
+                end
+            end else begin
+                credit_ok[vc] <= '0;
+            end     
         end
 
-        if (crd_rel_vld) begin
-
-            if      (vc_shrd[vc]     != 0)    vc_shrd[vc]      <= vc_shrd[vc]     - (crd_rel_id == vc);
-            // else if (vc_grp_rsvd[vc] != 0)    vc_rsvd[vc]      <= vc_rsvd[vc]     + (crd_rel_id == vc);
-            else if (vc_rsvd[vc]     != 0)    vc_rsvd[vc]      <= vc_rsvd[vc]     - (crd_rel_id == vc);
-
-        end
         end
         
     end 
 end
 
 endgenerate
-
-always_comb begin: per_grp_credits_calc
-    per_grp_shrd        = '0;
-    for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
-        for (int vc = 0 ; vc < NUM_VC ; vc ++ ) begin
-            if (vc_grp_shrd[vc][grp]) per_grp_shrd[grp] = per_grp_shrd[grp] + vc_shrd[vc];
+    
+always_ff @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+        per_grp_shrd      <= '0;
+    end else begin
+        for (int vc = 0 ; vc < NUM_VC ; vc ++) begin
+            for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
+                if (vc_grp_shrd[vc][grp]) per_grp_shrd[grp] <= per_grp_shrd[grp] + vc_shrd[vc];
+            end
         end
     end
 end
 
-always_comb begin: total_shrd_credits_calc
-    total_shrd_credits     = '0;
-    for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
-        total_shrd_credits = total_shrd_credits + per_grp_shrd[grp];
+always_ff @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+        total_shrd_credits     <= '0;
+    end else begin
+        for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin
+            total_shrd_credits <= total_shrd_credits + per_grp_shrd[grp];
+        end
     end
 end
 
-always_comb begin: total_credits_calc
-    total_credits_taken     = '0;
-    for (int vc = 0 ; vc < NUM_VC ; vc ++ ) begin
-        total_credits_taken = vc_rsvd[vc] + total_credits_taken;
+always_ff @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+        total_credits_taken     <= '0;
     end
-    total_credits_taken     = total_credits_taken + total_shrd_credits;
+    else begin
+        for (int vc = 0 ; vc < NUM_VC ; vc ++ ) begin
+            total_credits_taken <= vc_rsvd[vc] + vc_shrd[vc];
+        end
+    end
+
 end
 
-
-generate
 
 //------------------------------------------------------------------------------
 //-- Assumptions --
 //------------------------------------------------------------------------------
+
+generate
 
 for (genvar vc=0; vc < NUM_VC ; vc++) begin
                      
@@ -316,6 +413,8 @@ end
 //-- Assertions --
 //------------------------------------------------------------------------------
 
+    `SV_ASSERT (FVPH_RTR_FV_as_no_credit_credit_ok_when_out_valid ,   noc_out_last && noc_out_vld |=> credit_ok[noc_out_vc]);
+
     for (genvar grp=0 ; grp < NUM_SHRD_GRP ; grp ++ ) begin: per_grp
         `SV_ASSERT (FVPH_RTR_FV_as_gropmax_not_reach_per_grp         ,   per_grp_shrd[grp]  <= vc_grp_shrd_max[grp]);
     end
@@ -325,7 +424,7 @@ end
                          
         `SV_ASSERT (FVPH_RTR_FV_as_vc_shrd_eventually_credit_back    ,   vc_shrd[vc] != 0                       |-> s_eventually vc_shrd[vc] == 0);
         `SV_ASSERT (FVPH_RTR_FV_as_vc_rsvd_eventually_credit_back    ,   vc_rsvd[vc] != 0                       |-> s_eventually vc_rsvd[vc] == 0);
-        `SV_ASSERT (FVPH_RTR_FV_as_no_credit_release_when_no_taken   ,   vc_rsvd[vc] == 0 && vc_rsvd[vc] == 0   |-> !(crd_rel_vld && crd_rel_id == vc));
+        `SV_ASSERT (FVPH_RTR_FV_as_no_credit_release_when_no_taken   ,   vc_rsvd[vc] == 0 && vc_shrd[vc] == 0   |-> !(crd_rel_vld && crd_rel_id == vc));
 
     end
 
