@@ -105,17 +105,17 @@ module mnm_dnoc_intf_constraints # (
     );
 
     if (LANE_NUM >= 8) begin: async_credit_constrains
-    credit_counter_RX_sva # (
+    credit_counter_TX_sva # (
     
-        .RX_CREDITS(12)
+        .TX_CREDITS(12)
     
     ) input_credit_constrains (
     
-        .noc_in_valid                (d_noc_in_valid),
-        .noc_in_credit_release       (noc_in_async_crd_release),
+        .noc_out_valid               (d_noc_in_crd_rel_valid),
+        .noc_out_credit_release      (noc_in_async_crd_release),
       
-        .noc_in_len                  (d_noc_in_is_aww_channel?d_noc_in_awlen:d_noc_in_rlen),
-        .noc_in_last                 (d_noc_in_last),
+        .noc_out_len                 (d_noc_in_is_aww_channel?d_noc_in_awlen:d_noc_in_rlen),
+        .noc_out_last                (d_noc_in_last),
     
         .clk                         (clk),
         .reset_n                     (reset_n)
@@ -127,7 +127,7 @@ module mnm_dnoc_intf_constraints # (
     
     ) output_credit_constrains (
     
-        .noc_out_valid                (d_noc_out_valid),
+        .noc_out_valid                (d_noc_out_crd_rel_valid),
         .noc_out_credit_release       (noc_out_async_crd_release),
       
         .noc_out_len                  (d_noc_out_is_aww_channel?d_noc_out_awlen:d_noc_out_rlen),
