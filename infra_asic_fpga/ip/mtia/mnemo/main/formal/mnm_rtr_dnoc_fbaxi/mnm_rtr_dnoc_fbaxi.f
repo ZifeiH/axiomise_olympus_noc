@@ -1,1 +1,0 @@
--f $WORKROOT/min_filelist.f
