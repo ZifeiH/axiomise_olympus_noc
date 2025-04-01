@@ -18,9 +18,9 @@
     
     logic [cip_pkg::CIP_DAXI_ID_IID_WIDTH-1:0]            d_noc_in_iid;
 
-		logic                                                d_noc_in_awvalid;
-		logic [cip_pkg::CIP_DAXI_ID_LEN_WIDTH-1:0]           d_noc_in_awlen;
-		logic                                                d_noc_in_wlast;
+		logic                                                 d_noc_in_awvalid;
+		logic [cip_pkg::CIP_DAXI_ID_LEN_WIDTH-1:0]            d_noc_in_awlen;
+		logic                                                 d_noc_in_wlast;
 
     logic [cip_pkg::CIP_DAXI_ID_LEN_WIDTH-1:0]         		d_noc_in_rlen;
     logic                                              		d_noc_in_rlast;

@@ -1,8 +1,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////
-// File: mnm_dnoc_fbaxi_intf_constraints.sv
+// File: mnm_dnoc_intf_constraints.sv
 // This file contains mnm fbaxi constraints
 /////////////////////////////////////////////////////////////////////////////////////////
-module mnm_dnoc_fbaxi_intf_constraints # (
+module mnm_dnoc_intf_constraints # (
   parameter DIR    = 11,
   parameter NUM_VC = 11,
   parameter LANE_NUM = 0
@@ -17,12 +17,15 @@ module mnm_dnoc_fbaxi_intf_constraints # (
   input     logic                [$clog2(NUM_VC)-1:0]      d_noc_out_crd_rel_id,
   input     logic                                          d_noc_out_crd_rel_valid,
 
+  input     logic                                          noc_out_async_crd_release,
+  input     logic                                          noc_in_async_crd_release,
+
   input     logic                                          clk,
   input     logic                                          reset_n
 );  
 
-  `include "mnm_dnoc_input_signal_defines.sv"
-  `include "mnm_dnoc_output_signal_defines.sv"
+    `include "mnm_dnoc_input_signal_defines.sv"
+    `include "mnm_dnoc_output_signal_defines.sv"
 
     `SV_ASSERT (FVPH_RTR_FV_am_noc_iid_tracking         ,   d_noc_in_iid     == LANE_NUM  );
     // TODO: need to remove once tb stable
@@ -56,7 +59,7 @@ module mnm_dnoc_fbaxi_intf_constraints # (
     
     mnm_dnoc_credit_manager_constraints_input (
 
-       .noc_in_len         (d_noc_in_is_AW_W_channel?d_noc_in_awlen:d_noc_in_rlen),
+       .noc_in_len         (d_noc_in_is_aww_channel?d_noc_in_awlen:d_noc_in_rlen),
        .noc_in_vc          (d_noc_in_read?d_noc_in_vc:(d_noc_in_vc+'d3)),
        .noc_in_last        (d_noc_in_last),
        .noc_in_vld         (d_noc_in_valid),
@@ -78,10 +81,9 @@ module mnm_dnoc_fbaxi_intf_constraints # (
     );
 
     credit_manager_constraints_output # (
-       .NUM_VC(NUM_VC)
     ) mnm_dnoc_credit_manager_constraints_output (
 
-       .noc_out_len         (d_noc_out_is_AW_W_channel?d_noc_out_awlen:d_noc_out_rlen),
+       .noc_out_len         (d_noc_out_is_aww_channel?d_noc_out_awlen:d_noc_out_rlen),
        .noc_out_vc          (d_noc_out_read?d_noc_out_vc:(d_noc_out_vc+'d3)),
        .noc_out_last        (d_noc_out_last),
        .noc_out_vld         (d_noc_out_valid),
@@ -101,4 +103,39 @@ module mnm_dnoc_fbaxi_intf_constraints # (
        .clk                (clk)    ,
        .reset_n            (reset_n)
     );
+
+    if (LANE_NUM >= 8) begin: async_credit_constrains
+    credit_counter_RX_sva # (
+    
+        .RX_CREDITS(12)
+    
+    ) input_credit_constrains (
+    
+        .noc_in_valid                (d_noc_in_valid),
+        .noc_in_credit_release       (noc_in_async_crd_release),
+      
+        .noc_in_len                  (d_noc_in_is_aww_channel?d_noc_in_awlen:d_noc_in_rlen),
+        .noc_in_last                 (d_noc_in_last),
+    
+        .clk                         (clk),
+        .reset_n                     (reset_n)
+    );
+
+    credit_counter_TX_sva # (
+    
+        .TX_CREDITS(12)
+    
+    ) output_credit_constrains (
+    
+        .noc_out_valid                (d_noc_out_valid),
+        .noc_out_credit_release       (noc_out_async_crd_release),
+      
+        .noc_out_len                  (d_noc_out_is_aww_channel?d_noc_out_awlen:d_noc_out_rlen),
+        .noc_out_last                 (d_noc_out_last),
+    
+        .clk                          (clk),
+        .reset_n                      (reset_n)
+    );
+    end
+
 endmodule

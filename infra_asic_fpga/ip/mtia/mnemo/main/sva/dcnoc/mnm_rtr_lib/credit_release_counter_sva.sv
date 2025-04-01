@@ -6,7 +6,7 @@
 module credit_counter_TX_sva # (
 
   parameter TX_CREDITS           = 4,
-  parameter LEN_WIDTH            = cip_pkg::CIP_DAXI_ID_LEN_WIDTH,
+  parameter LEN_WIDTH            = mnm_pkg::MNM_DAXI_AW_LEN_WIDTH,
   parameter CREDIT_RELEASE_OPT   = 0
 
 ) (
@@ -103,7 +103,7 @@ endmodule
 module credit_counter_RX_sva # (
 
   parameter RX_CREDITS   = 4,
-  parameter LEN_WIDTH    = cip_pkg::CIP_DAXI_ID_LEN_WIDTH
+  parameter LEN_WIDTH    = mnm_pkg::MNM_DAXI_AW_LEN_WIDTH
 
             
 ) (
