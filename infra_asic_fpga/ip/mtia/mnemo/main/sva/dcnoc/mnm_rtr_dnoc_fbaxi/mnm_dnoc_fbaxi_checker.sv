@@ -15,7 +15,7 @@ module mnm_dnoc_fbaxi_checker # (
 
 );
 
-  `include "mnm_dnoc_output_signal_defines.sv"
+  `include "../mnm_rtr_lib/mnm_dnoc_output_signal_defines.sv"
 
 	//------------------------------------------------------------------------------
 	//-- FBAXI Checker --

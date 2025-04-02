@@ -12,7 +12,7 @@ module mnm_dnoc_fbaxi_intf_checker # (
   input     logic                                          reset_n
 );  
 
-  `include "mnm_dnoc_output_signal_defines.sv"
+  `include "../mnm_rtr_lib/mnm_dnoc_output_signal_defines.sv"
 
 
 		mnm_dnoc_fbaxi_checker # (

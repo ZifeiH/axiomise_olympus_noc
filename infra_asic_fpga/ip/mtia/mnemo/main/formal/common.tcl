@@ -13,6 +13,9 @@ if {[info exists ::env(AXIOMISE)]} {
     set ANALYZE_OPTS                  {-sv09 +define+FB_BEH_MODE+FB_BEH_MEM+FB_BEH_CGC+FORMAL+FB_BEHV_CLKGATE+FB_BEH_CKG+FB_BEH_SIM+ENABLE_SVA_DVR_BIND+JG_ABVIP_STRONG_SEMANTICS+DONT_USE_PEC}
     set ELAB_OPTS                     {-sv09_strong_embedding}
 
+    # Engine by default if you want to change engine please modify in the tcl for compiling the tb
+    set_engine_mode {H B AD M N AM Tri}
+
 } else {
 
     puts "AXIOMISE not defined"
