@@ -72,8 +72,30 @@ module shrd_crd_mgr_sva #(
 
   logic [NUM_VC-1:0][MAX_LEN-1:0] tb_credit_ok
 
-
+  logic [CRD_W-1:0] vc_rsvd_max_val = 'h2;
+  logic [RSVD_GROUP_W-1:0] vc_rd_grp_val = 'h0;
+  logic [RSVD_GROUP_W-1:0] vc_wr_grp_val = 'h1;
   genvar vc, grp;
+
+  // Assumptions for default configuration
+  `SV_ASSERT(FVPH_RTR_FV_am_cfg_total_credits_set, cfg_total_credits == mnm_pkg::MNM_RTR_NS_INTF_CREDITS_DNOC);
+  `SV_ASSERT(FVPH_RTR_FV_am_cfg_vc_rsvd_max_set, cfg_vc_rsvd_max == `{NUM_VC{vc_rsvd_max_val}}); // Can use `{default:8'h2} as well
+  `SV_ASSERT(FVPH_RTR_FV_am_cfg_vc_group_rsvd_en_set, cfg_vc_group_rsvd_en == `{NUM_VC{1}});
+  `SV_ASSERT(FVPH_RTR_FV_am_cfg_vc_group_rsvd_id_set, cfg_vc_group_rsvd_id == `{});
+
+
+  // generate
+  //   for (vc = 0; i < NUM_VC; vc++) begin
+  //     `SV_ASSERT(FVPH_RTR_FV_am_cfg_vc_group_rsvd_id_set, cfg_vc_group_rsvd_id[vc] < 'h3);
+  //   end
+  // endgenerate
+
+  // `SV_ASSERT(FVPH_RTR_FV_am_cfg_vc_group_rsvd_id_stable, ##1 $stable(cfg_vc_group_rsvd_id));
+  `SV_ASSERT(FVPH_RTR_FV_am_cfg_total_shrd_max_set, cfg_total_shrd_max == cfg_total_credits - (NUM_VC * vc_rsvd_max_val));
+  
+
+
+  cfg_total_shrd_max
 
   generate begin
 
