@@ -44,7 +44,7 @@ logic   [NUM_VC-1:0]                                            vc_rsvd_decr;
 logic   [NUM_VC-1:0]                                            vc_shrd_incr;
 logic   [NUM_VC-1:0]                                            vc_shrd_decr;
 
-
+logic   [NUM_VC-1:0]                                            grant;
 
 logic   [CRED_W-1:0]                                            total_shrd_credits;
 logic   [CRED_W-1:0]                                            total_credits_taken;
@@ -74,6 +74,7 @@ always_comb begin
     vc_rsvd_decr = '0;
     vc_shrd_incr = '0;
     vc_shrd_decr = '0;
+    grant        = '1;
 
     for (int vc = 0 ; vc < NUM_VC ; vc++) begin
         credit_ok[vc] = 0;
@@ -84,12 +85,11 @@ always_comb begin
                 credit_ok[vc]    = 1;
             end
             else if (total_shrd_credits < total_shrd_max && !vc_shrd_full[vc]) begin
-                logic grant = 0;
                 for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++) begin
-                    if (vc_grp_shrd[vc][grp] && !grp_shrd_full[grp])
-                        grant = 1;
+                    if (vc_grp_shrd[vc][grp])
+                        grant[vc] &= (!grp_shrd_full[grp]);
                 end
-                if (grant) begin
+                if (grant[vc]) begin
                     vc_shrd_incr[vc] = 1;
                     credit_ok[vc]    = 1;
                 end
@@ -151,12 +151,21 @@ always_ff @(posedge clk or negedge reset_n) begin
     end
 
 end
+
+generate
+
+//------------------------------------------------------------------------------
+//-- Covers --
+//------------------------------------------------------------------------------
+    for (genvar vc=0; vc < NUM_VC ; vc++) begin   
+        `SV_COVER (FVPH_RTR_FV_co_vc_rsvd_full                       ,   vc_rsvd_full[vc] == '1);
+    end
+
 //------------------------------------------------------------------------------
 //-- Assumptions --
 //------------------------------------------------------------------------------
 
-generate
-        `SV_ASSERT (FVPH_RTR_FV_am_credit_ok_when_in_valid              ,   noc_in_vld && noc_in_last |-> credit_ok[noc_in_vc]);
+        `SV_ASSERT (FVPH_RTR_FV_am_credit_ok_when_in_valid           ,   noc_in_vld && noc_in_last |-> credit_ok[noc_in_vc]);
 
 //------------------------------------------------------------------------------
 //-- Assertions --
@@ -164,7 +173,7 @@ generate
     for (genvar vc=0; vc < NUM_VC ; vc++) begin                         
         `SV_ASSERT (FVPH_RTR_FV_as_vc_shrd_eventually_credit_back    ,   vc_shrd[vc] != 0                       |-> s_eventually vc_shrd[vc] == 0);
         `SV_ASSERT (FVPH_RTR_FV_as_vc_rsvd_eventually_credit_back    ,   vc_rsvd[vc] != 0                       |-> s_eventually vc_rsvd[vc] == 0);
-        `SV_ASSERT (FVPH_RTR_FV_as_vc_no_credit_release_when_no_taken   ,   vc_rsvd[vc] == 0 && vc_shrd[vc] == 0   |-> !(crd_rel_vld && crd_rel_id == vc));
+        `SV_ASSERT (FVPH_RTR_FV_as_vc_no_credit_release_when_no_taken,   vc_rsvd[vc] == 0 && vc_shrd[vc] == 0   |-> !(crd_rel_vld && crd_rel_id == vc));
     end
 
     `SV_ASSERT (FVPH_RTR_FV_as_no_credit_release_when_no_taken       ,   total_credits_taken == '0              |-> !crd_rel_vld);
@@ -220,7 +229,7 @@ logic   [NUM_VC-1:0]                                            vc_rsvd_decr;
 logic   [NUM_VC-1:0]                                            vc_shrd_incr;
 logic   [NUM_VC-1:0]                                            vc_shrd_decr;
 
-
+logic   [NUM_VC-1:0]                                            grant;
 
 logic   [CRED_W-1:0]                                            total_shrd_credits;
 logic   [CRED_W-1:0]                                            total_credits_taken;
@@ -250,6 +259,7 @@ always_comb begin
     vc_rsvd_decr = '0;
     vc_shrd_incr = '0;
     vc_shrd_decr = '0;
+    grant        = '1;
 
     for (int vc = 0 ; vc < NUM_VC ; vc++) begin
         credit_ok[vc] = 0;
@@ -260,12 +270,11 @@ always_comb begin
                 credit_ok[vc]    = 1;
             end
             else if (total_shrd_credits < total_shrd_max && !vc_shrd_full[vc]) begin
-                logic grant = 0;
                 for (int grp = 0 ; grp < NUM_SHRD_GRP ; grp ++) begin
-                    if (vc_grp_shrd[vc][grp] && !grp_shrd_full[grp])
-                        grant = 1;
+                    if (vc_grp_shrd[vc][grp])
+                        grant[vc] &= (!grp_shrd_full[grp]);
                 end
-                if (grant) begin
+                if (grant[vc]) begin
                     vc_shrd_incr[vc] = 1;
                     credit_ok[vc]    = 1;
                 end

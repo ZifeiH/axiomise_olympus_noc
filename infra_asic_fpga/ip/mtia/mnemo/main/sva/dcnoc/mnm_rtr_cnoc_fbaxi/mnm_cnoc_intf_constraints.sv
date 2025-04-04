@@ -10,11 +10,11 @@ module mnm_cnoc_intf_constraints # (
   input     mnm_pkg::control_noc_t                         c_noc_in,
   input     logic                                          c_noc_in_valid,
   input     credit_cfg_t                                   csr_cfg,
-  input     logic                [$clog2(NUM_VC)-1:0]      c_noc_in_crd_rel_id,
+  input     logic                [VCID_W-1:0]              c_noc_in_crd_rel_id,
   input     logic                                          c_noc_in_crd_rel_valid,
   input     mnm_pkg::control_noc_t                         c_noc_out,
   input     logic                                          c_noc_out_valid,
-  input     logic                [$clog2(NUM_VC)-1:0]      c_noc_out_crd_rel_id,
+  input     logic                [VCID_W-1:0]              c_noc_out_crd_rel_id,
   input     logic                                          c_noc_out_crd_rel_valid,
 
   input     logic                                          noc_out_async_crd_release,
@@ -29,18 +29,16 @@ module mnm_cnoc_intf_constraints # (
 
     `SV_ASSERT (FVPH_RTR_FV_am_noc_iid_tracking         ,   c_noc_in_iid     == LANE_NUM  );
     // TODO: need to remove once tb stable
-    `SV_ASSERT (FVPH_RTR_FV_am_noc_rd_vc_valid_range    ,   c_noc_in_is_b_channel   |-> c_noc_in_vc <= 2  );
-    `SV_ASSERT (FVPH_RTR_FV_am_noc_wr_vc_valid_range    ,   c_noc_in_is_ar_channel  |-> c_noc_in_vc <= 7  );
     
     `SV_ASSERT(FVPH_RTR_FV_am_group_shrd_fixed          ,   csr_cfg.vc_grp_shrd == 33'h092492449  );
  
     `SV_ASSERT (FVPH_RTR_FV_am_vc_grp_rsvd_fixed        ,   csr_cfg.vc_grp_rsvd_en     == '0                     );
-    `SV_ASSERT (FVPH_RTR_FV_am_total_shrd_max_fixed     ,   csr_cfg.total_shrd_max     == 8'h35                     );
-    `SV_ASSERT (FVPH_RTR_FV_am_total_max_fixed          ,   csr_cfg.total_credits      == 8'h80                     );
-    `SV_ASSERT (FVPH_RTR_FV_am_group_shrd_max_fixed     ,   csr_cfg.vc_grp_shrd_max    == 24'h353535                );
-    `SV_ASSERT (FVPH_RTR_FV_am_group_rsvd_max_fixed     ,   csr_cfg.vc_grp_rsvd_max    == 24'h000000                );
-    `SV_ASSERT (FVPH_RTR_FV_am_vc_shrd_max_fixed        ,   csr_cfg.vc_shrd_max        == 88'h3535353535353535353535);
-    `SV_ASSERT (FVPH_RTR_FV_am_vc_rsvd_max_fixed        ,   csr_cfg.vc_rsvd_max        == 88'h0202020202020202020202);
+    `SV_ASSERT (FVPH_RTR_FV_am_total_shrd_max_fixed     ,   csr_cfg.total_shrd_max     == 7'h2e                     );
+    `SV_ASSERT (FVPH_RTR_FV_am_total_max_fixed          ,   csr_cfg.total_credits      == 7'h68                     );
+    `SV_ASSERT (FVPH_RTR_FV_am_group_shrd_max_fixed     ,   csr_cfg.vc_grp_shrd_max    == 21'h0b972e                );
+    `SV_ASSERT (FVPH_RTR_FV_am_group_rsvd_max_fixed     ,   csr_cfg.vc_grp_rsvd_max    == 21'h000000                );
+    `SV_ASSERT (FVPH_RTR_FV_am_vc_shrd_max_fixed        ,   csr_cfg.vc_shrd_max        == 77'h0b972e5cb972e5cb972e  );
+    `SV_ASSERT (FVPH_RTR_FV_am_vc_rsvd_max_fixed        ,   csr_cfg.vc_rsvd_max        == 77'h00408102040810204081  );
      
 
 		mnm_cnoc_fbaxi_constraints # (
@@ -59,8 +57,8 @@ module mnm_cnoc_intf_constraints # (
     
     mnm_cnoc_credit_manager_constraints_input (
 
-       .noc_in_len         (c_noc_in_is_ar_channel?c_noc_in_arlen:c_noc_in_blen),
-       .noc_in_vc          (c_noc_in_read?c_noc_in_vc:(c_noc_in_vc+'d8)),
+       .noc_in_len         ('b0),
+       .noc_in_vc          (c_noc_in_read?c_noc_in_vc:(c_noc_in_vc+(mnm_pkg::MNM_CNOC_AR_NUM_VC))),
        .noc_in_last        ('b1),
        .noc_in_vld         (c_noc_in_valid),
        .crd_rel_vld        (c_noc_in_crd_rel_valid),
@@ -83,8 +81,8 @@ module mnm_cnoc_intf_constraints # (
     credit_manager_constraints_output # (
     ) mnm_cnoc_credit_manager_constraints_output (
 
-       .noc_out_len         (c_noc_out_is_ar_channel?c_noc_out_arlen:c_noc_out_blen),
-       .noc_out_vc          (c_noc_out_read?c_noc_out_vc:(c_noc_out_vc+'d8)),
+       .noc_out_len         ('b0),
+       .noc_out_vc          (c_noc_out_read?c_noc_out_vc:(c_noc_out_vc+(mnm_pkg::MNM_CNOC_AR_NUM_VC))),
        .noc_out_last        ('b1),
        .noc_out_vld         (c_noc_out_valid),
        .crd_rel_vld         (c_noc_out_crd_rel_valid),
@@ -104,17 +102,17 @@ module mnm_cnoc_intf_constraints # (
        .reset_n             (reset_n)
     );
 
-    if (LANE_NUM >= 8) begin: async_credit_constrains
+    if (LANE_NUM >= 8) begin: async_credit_constraints
     credit_counter_TX_sva # (
     
         .TX_CREDITS(12)
     
-    ) input_credit_constrains (
+    ) input_credit_constraints (
     
         .noc_out_valid               (c_noc_in_crd_rel_valid),
         .noc_out_credit_release      (noc_in_async_crd_release),
       
-        .noc_out_len                 (c_noc_in_is_ar_channel?c_noc_in_arlen:c_noc_in_blen),
+        .noc_out_len                 ('b0),
         .noc_out_last                ('b1),
     
         .clk                         (clk),
@@ -125,12 +123,12 @@ module mnm_cnoc_intf_constraints # (
     
         .TX_CREDITS(12)
     
-    ) output_credit_constrains (
+    ) output_credit_constraints (
     
         .noc_out_valid                (c_noc_out_crd_rel_valid),
         .noc_out_credit_release       (noc_out_async_crd_release),
       
-        .noc_out_len                  (c_noc_out_is_ar_channel?c_noc_out_arlen:c_noc_out_blen),
+        .noc_out_len                  ('b0),
         .noc_out_last                 ('b1),
     
         .clk                          (clk),

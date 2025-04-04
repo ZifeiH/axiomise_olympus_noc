@@ -25,15 +25,6 @@ module mnm_cnoc_fbaxi_constraints # (
 	generate
 	
     //------------------------------------------------------------------------------
-	  //-- ttl --
-	  //------------------------------------------------------------------------------
-
-    // Couldn't find c_noc_in.ttl
-    // `SV_ASSERT (FVPH_RTR_FV_am_cnoc_ttl_always_at_least_1,     c_noc_in_valid |-> c_noc_in.ttl != '0);
-    // `SV_ASSERT (FVPH_RTR_FV_am_cnoc_ttl_always_within_maximum, c_noc_in_valid |-> c_noc_in.ttl <= mnm_pkg::MNM_NOC_TTL_DEFAULT);
-    
-
-    //------------------------------------------------------------------------------
 	  //-- AXI AR Channel --
 	  //------------------------------------------------------------------------------
 

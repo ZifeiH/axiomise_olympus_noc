@@ -1,11 +1,14 @@
 /////////////////////////////////////////////////////////////////////////////////////////
-// File: mnm_cnoc_input_signal_defines.sv
-// This file contains mnm cnoc input signal defines
+// File: mnm_cnoc_output_signal_defines.sv
+// This file contains mnm cnoc output signal defines
 /////////////////////////////////////////////////////////////////////////////////////////
+  logic [mnm_pkg::MNM_CONTROL_NOC_CHANNEL_WIDTH-1:0]                c_noc_out_channel;
   logic                                                             c_noc_out_is_ar_channel;
   logic                                                             c_noc_out_is_b_channel;
 
   logic [mnm_pkg::MNM_DAXI_ARUSER_VC_WIDTH-1:0]                     c_noc_out_vc;
+  logic [mnm_pkg::MNM_DAXI_ID_IID_WIDTH-1:0]                        c_noc_out_iid;
+  logic                                                             c_noc_out_read;
 
   logic                                                             c_noc_out_arvalid;
   logic [mnm_pkg::MNM_DAXI_AR_ID_WIDTH-1:0]                         c_noc_out_arid;
@@ -30,9 +33,10 @@
   assign c_noc_out_is_ar_channel = (c_noc_out.channel == mnm_pkg::CNOC_CHANNEL_E_AR);
   assign c_noc_out_is_b_channel  = (c_noc_out.channel == mnm_pkg::CNOC_CHANNEL_E_B);
 
-  assign c_noc_out_vc                                    = c_noc_out_is_ar_channel ? c_noc_out.payload.daxi_ar.user.vc:
-                                                           c_noc_out_is_b_channel   ? c_noc_out.payload.daxi_b.user.vc : 0;
-  
+  assign c_noc_out_vc                                    = c_noc_out_is_ar_channel ? c_noc_out.payload.daxi_ar.user.vc : c_noc_out.payload.daxi_b.user.vc;
+  assign c_noc_out_iid                                   = c_noc_out_is_ar_channel ? c_noc_out.payload.daxi_ar.id.iid  : c_noc_out.payload.daxi_b.id.iid; 
+  assign c_noc_out_read                                  = c_noc_out.channel == mnm_pkg::CNOC_CHANNEL_E_AR;
+
   assign c_noc_out_arvalid       = c_noc_out_valid && c_noc_out_is_ar_channel;
   assign c_noc_out_arid          = c_noc_out.payload.daxi_ar.id.iid;
   assign c_noc_out_arlen         = c_noc_out.payload.daxi_ar.len;
