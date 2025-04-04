@@ -5,7 +5,8 @@
 module mnm_cnoc_intf_constraints # (
   parameter DIR    = 11,
   parameter NUM_VC = 11,
-  parameter LANE_NUM = 0
+  parameter LANE_NUM = 0,
+  parameter VCID_W   = 5
 ) (
   input     mnm_pkg::control_noc_t                         c_noc_in,
   input     logic                                          c_noc_in_valid,

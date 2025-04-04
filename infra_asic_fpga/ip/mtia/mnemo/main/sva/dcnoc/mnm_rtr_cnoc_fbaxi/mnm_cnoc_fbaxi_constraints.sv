@@ -45,8 +45,8 @@ module mnm_cnoc_fbaxi_constraints # (
     `SV_ASSERT (FVPH_RTR_FV_am_cnoc_artgtid_coords_within_grid, c_noc_in_arvalid |-> (c_noc_in_artgtid.xcoord >= mnm_pkg::MNM_RTR_GRID_COORD_X_START-1) && (c_noc_in_artgtid.xcoord <= mnm_pkg::MNM_RTR_GRID_COORD_X_END+1) &&
                																														 					 (c_noc_in_artgtid.ycoord >= mnm_pkg::MNM_RTR_GRID_COORD_Y_START-1) && (c_noc_in_artgtid.ycoord <= mnm_pkg::MNM_RTR_GRID_COORD_Y_END+1));
 
-    // // AM  CNOC AR channel: noc_id has legal values
-    // `SV_ASSERT (FVPH_RTR_FV_am_cnoc_arnocid_is_legal,           c_noc_in_arvalid |-> (c_noc_in_arnocid >= 0) && ((c_noc_in_arnocid <= 11)));
+    // AM  CNOC AR channel: noc_id has legal values
+    `SV_ASSERT (FVPH_RTR_FV_am_cnoc_arnocid_is_legal,           c_noc_in_arvalid |-> (c_noc_in_arnocid >= 0) && ((c_noc_in_arnocid <= 11)));
 
   	// AM  CNOC AR channel: user.vc only has legal values  
     `SV_ASSERT (FVPH_RTR_FV_am_cnoc_aruser_vc_is_legal,         c_noc_in_arvalid |-> c_noc_in_aruservc < mnm_pkg::MNM_CNOC_AR_NUM_VC);
@@ -64,8 +64,8 @@ module mnm_cnoc_fbaxi_constraints # (
     `SV_ASSERT (FVPH_RTR_FV_am_cnoc_btgtid_coords_within_grid,  c_noc_in_bvalid |->  (c_noc_in_btgtid.xcoord >= mnm_pkg::MNM_RTR_GRID_COORD_X_START-1) && (c_noc_in_btgtid.xcoord <= mnm_pkg::MNM_RTR_GRID_COORD_X_END+1) &&
                  																													           (c_noc_in_btgtid.ycoord >= mnm_pkg::MNM_RTR_GRID_COORD_Y_START-1) && (c_noc_in_btgtid.ycoord <= mnm_pkg::MNM_RTR_GRID_COORD_Y_END+1));
 
-    // // AM  CNOC B channel: noc_id has legal values
-    // `SV_ASSERT (FVPH_RTR_FV_am_cnoc_bnocid_is_legal,            c_noc_in_bvalid |-> (c_noc_in_bnocid >= 0) && ((c_noc_in_bnocid <= 11)));
+    // AM  CNOC B channel: noc_id has legal values
+    `SV_ASSERT (FVPH_RTR_FV_am_cnoc_bnocid_is_legal,            c_noc_in_bvalid |-> (c_noc_in_bnocid >= 0) && ((c_noc_in_bnocid <= 11)));
 
 		// AM  CNOC B channel: user.vc only has legal values
     `SV_ASSERT (FVPH_RTR_FV_am_cnoc_buser_vc_is_legal,          c_noc_in_bvalid |->  c_noc_in_buservc < mnm_pkg::MNM_CNOC_B_NUM_VC);
