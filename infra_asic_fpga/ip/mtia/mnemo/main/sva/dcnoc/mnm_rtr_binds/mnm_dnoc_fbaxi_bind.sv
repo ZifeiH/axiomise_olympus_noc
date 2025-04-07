@@ -18,12 +18,12 @@ bind mnm_rtr_ca_dnoc_top mnm_dnoc_fbaxi_sva  #(.NUM_LANES(NUM_LANES),
 // ) u_fb_dw_rr_arb_sva (
 //     .*
 // );
-// bind fb_rr_arb fb_rr_arb_sva_lib 
-// # (
-//     .N                  (N)
-// ) u_fb_rr_arb_sva (
-//     .*
-// );
+bind fb_rr_arb fb_rr_arb_sva_lib 
+# (
+    .N                  (N)
+) u_fb_rr_arb_sva (
+    .*
+);
 
 bind fb_fifo fb_fifo_tb 
 # (
