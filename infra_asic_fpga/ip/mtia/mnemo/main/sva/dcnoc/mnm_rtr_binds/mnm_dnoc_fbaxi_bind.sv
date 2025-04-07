@@ -9,3 +9,26 @@ bind mnm_rtr_ca_dnoc_top mnm_dnoc_fbaxi_sva  #(.NUM_LANES(NUM_LANES),
                                                .STUB(STUB),
                                                .REMOVE_LANE(REMOVE_LANE)) 
                                                u_mnm_rtr_dnoc_fbaxi_sva (.*);
+
+// bind fb_rtr_dw_rr_arb fb_dw_rr_arb_sva_lib
+// # (
+//     .N                  (N),
+//     .LW                 (LW),
+//     .WW                 (WW)
+// ) u_fb_dw_rr_arb_sva (
+//     .*
+// );
+// bind fb_rr_arb fb_rr_arb_sva_lib 
+// # (
+//     .N                  (N)
+// ) u_fb_rr_arb_sva (
+//     .*
+// );
+
+// bind fb_fifo fb_fifo_tb 
+// # (
+//     .DEPTH              (DEPTH),
+//     .WIDTH              (WIDTH)
+// ) u_fb_fifo_tb (
+//     .*
+// );

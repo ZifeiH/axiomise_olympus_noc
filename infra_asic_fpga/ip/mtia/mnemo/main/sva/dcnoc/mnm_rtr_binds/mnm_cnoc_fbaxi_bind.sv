@@ -1,4 +1,4 @@
-bind mnm_rtr_ca_cnoc_top mnm_cnoc_fbaxi_sva  #(.NUM_LANES(NUM_LANES),
+bind mnm_rtr_dc_slice_b mnm_cnoc_fbaxi_sva  #(.NUM_LANES(NUM_LANES),
                                                .NUM_VC(NUM_VC),
                                                .VCID_W(VCID_W),
                                                .RX_DEPTH_W(RX_DEPTH_W),

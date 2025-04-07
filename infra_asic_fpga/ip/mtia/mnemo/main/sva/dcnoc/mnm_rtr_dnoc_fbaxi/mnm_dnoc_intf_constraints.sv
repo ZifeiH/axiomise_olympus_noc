@@ -27,6 +27,8 @@ module mnm_dnoc_intf_constraints # (
     `include "../mnm_rtr_lib/mnm_dnoc_input_signal_defines.sv"
     `include "../mnm_rtr_lib/mnm_dnoc_output_signal_defines.sv"
 
+    `SV_ASSERT (FVPH_RTR_FV_am_ecc_in_equals_to_out     ,   main.genblk1[LANE_NUM].in_ecc_chk.out_data     == $past(main.genblk1[LANE_NUM].in_ecc_chk.in_data,2)  );
+
     `SV_ASSERT (FVPH_RTR_FV_am_noc_iid_tracking         ,   d_noc_in_iid     == LANE_NUM  );
     // TODO: need to remove once tb stable
     `SV_ASSERT (FVPH_RTR_FV_am_noc_rd_vc_valid_range    ,   d_noc_in_is_r_channel   |-> d_noc_in_vc <= 2  );

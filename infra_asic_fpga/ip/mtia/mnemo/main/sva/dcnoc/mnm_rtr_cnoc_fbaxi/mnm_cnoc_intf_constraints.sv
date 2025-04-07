@@ -35,12 +35,12 @@ module mnm_cnoc_intf_constraints # (
     `SV_ASSERT(FVPH_RTR_FV_am_group_shrd_fixed          ,   csr_cfg.vc_grp_shrd == 33'h092492449  );
  
     `SV_ASSERT (FVPH_RTR_FV_am_vc_grp_rsvd_fixed        ,   csr_cfg.vc_grp_rsvd_en     == '0                     );
-    `SV_ASSERT (FVPH_RTR_FV_am_total_shrd_max_fixed     ,   csr_cfg.total_shrd_max     == 8'h35                     );
-    `SV_ASSERT (FVPH_RTR_FV_am_total_max_fixed          ,   csr_cfg.total_credits      == 8'h80                     );
-    `SV_ASSERT (FVPH_RTR_FV_am_group_shrd_max_fixed     ,   csr_cfg.vc_grp_shrd_max    == 24'h353535                );
-    `SV_ASSERT (FVPH_RTR_FV_am_group_rsvd_max_fixed     ,   csr_cfg.vc_grp_rsvd_max    == 24'h000000                );
-    `SV_ASSERT (FVPH_RTR_FV_am_vc_shrd_max_fixed        ,   csr_cfg.vc_shrd_max        == 88'h3535353535353535353535);
-    `SV_ASSERT (FVPH_RTR_FV_am_vc_rsvd_max_fixed        ,   csr_cfg.vc_rsvd_max        == 88'h0202020202020202020202);
+    `SV_ASSERT (FVPH_RTR_FV_am_total_shrd_max_fixed     ,   csr_cfg.total_shrd_max     == 7'h2e                     );
+    `SV_ASSERT (FVPH_RTR_FV_am_total_max_fixed          ,   csr_cfg.total_credits      == 7'h68                     );
+    `SV_ASSERT (FVPH_RTR_FV_am_group_shrd_max_fixed     ,   csr_cfg.vc_grp_shrd_max    == 21'h0b972e                );
+    `SV_ASSERT (FVPH_RTR_FV_am_group_rsvd_max_fixed     ,   csr_cfg.vc_grp_rsvd_max    == 21'h000000                );
+    `SV_ASSERT (FVPH_RTR_FV_am_vc_shrd_max_fixed        ,   csr_cfg.vc_shrd_max        == 77'h0b972e5cb972e5cb972e  );
+    `SV_ASSERT (FVPH_RTR_FV_am_vc_rsvd_max_fixed        ,   csr_cfg.vc_rsvd_max        == 77'h00408102040810204081  );
      
 
 		mnm_cnoc_fbaxi_constraints # (
@@ -59,7 +59,7 @@ module mnm_cnoc_intf_constraints # (
     
     mnm_cnoc_credit_manager_constraints_input (
 
-       .noc_in_len         (c_noc_in_is_ar_channel?c_noc_in_arlen:c_noc_in_blen),
+       .noc_in_len         ('0),
        .noc_in_vc          (c_noc_in_read?c_noc_in_vc:(c_noc_in_vc+'d8)),
        .noc_in_last        ('b1),
        .noc_in_vld         (c_noc_in_valid),
@@ -83,8 +83,8 @@ module mnm_cnoc_intf_constraints # (
     credit_manager_constraints_output # (
     ) mnm_cnoc_credit_manager_constraints_output (
 
-       .noc_out_len         (c_noc_out_is_ar_channel?c_noc_out_arlen:c_noc_out_blen),
-       .noc_out_vc          (c_noc_out_read?c_noc_out_vc:(c_noc_out_vc+'d8)),
+       .noc_out_len         ('0),
+       .noc_out_vc          (c_noc_out_is_ar_channel?c_noc_out_vc:(c_noc_out_vc+'d8)),
        .noc_out_last        ('b1),
        .noc_out_vld         (c_noc_out_valid),
        .crd_rel_vld         (c_noc_out_crd_rel_valid),

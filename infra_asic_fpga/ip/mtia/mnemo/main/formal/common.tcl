@@ -10,8 +10,11 @@ if {[info exists ::env(AXIOMISE)]} {
 
 #  +define+FB_BEH_SIM +define+FB_BEH_MEM +define+BRCM_CONTINUE_ON_HIGHCURRENT_STATE +define+brcm_apd_n3p +define+DS03P_SBUS_RX_CNTL32_01_DONT_USE_BRCM_APD_WMK +define+DS03P_LIB_PM_TS3FFP_S0_V1_DONT_USE_BRCM_APD_WMK +define+cln03_apb2sbuscore +define+APB2SBUSCORE_NBR_DONT_USE_BRCM_APD_WMK +define+FB_BEH_SYNC2 +define+FB_BEH_SYNC3   +define+PROJ_DEF_CSR_AWIDTH=32 +define+USE_RANDOM_DELAY_SYNC
 
-    set ANALYZE_OPTS                  {-sv09 +define+FB_BEH_SIM+FB_BEH_SYNC2+FB_BEH_SYNC2+FB_BEH_MODE+FB_BEH_MEM+FB_BEH_CGC+FORMAL+FB_BEHV_CLKGATE+FB_BEH_CKG+FB_BEH_SIM+ENABLE_SVA_DVR_BIND+JG_ABVIP_STRONG_SEMANTICS+DONT_USE_PEC}
+#  +define+FB_BEH_SIM +define+FB_BEH_MEM +define+BRCM_CONTINUE_ON_HIGHCURRENT_STATE +define+brcm_apd_n3p +define+DS03P_SBUS_RX_CNTL32_01_DONT_USE_BRCM_APD_WMK +define+DS03P_LIB_PM_TS3FFP_S0_V1_DONT_USE_BRCM_APD_WMK +define+cln03_apb2sbuscore +define+APB2SBUSCORE_NBR_DONT_USE_BRCM_APD_WMK +define+FB_BEH_SYNC2 +define+FB_BEH_SYNC3   +define+PROJ_DEF_CSR_AWIDTH=32 +define+USE_RANDOM_DELAY_SYNC
+
+    set ANALYZE_OPTS                  {-sv09 +define+FORMAL+FB_BEH_SIM +define+FB_BEH_MODE+FB_BEH_CGC +define+FB_BEH_MEM +define+BRCM_CONTINUE_ON_HIGHCURRENT_STATE +define+DS03P_SBUS_RX_CNTL32_01_DONT_USE_BRCM_APD_WMK +define+DS03P_LIB_PM_TS3FFP_S0_V1_DONT_USE_BRCM_APD_WMK +define+cln03_apb2sbuscore +define+APB2SBUSCORE_NBR_DONT_USE_BRCM_APD_WMK +define+FB_BEH_SYNC2 +define+FB_BEH_SYNC3   +define+PROJ_DEF_CSR_AWIDTH=32 +define+USE_RANDOM_DELAY_SYNC}
     set ELAB_OPTS                     {-sv09_strong_embedding}
+    # set ANALYZE_OPTS                  {-sv09 +define+FORMAL+FB_BEH_SIM +define+FB_BEH_MEM +define+BRCM_CONTINUE_ON_HIGHCURRENT_STATE +define+DS03P_SBUS_RX_CNTL32_01_DONT_USE_BRCM_APD_WMK +define+DS03P_LIB_PM_TS3FFP_S0_V1_DONT_USE_BRCM_APD_WMK +define+cln03_apb2sbuscore +define+APB2SBUSCORE_NBR_DONT_USE_BRCM_APD_WMK +define+FB_BEH_SYNC2 +define+FB_BEH_SYNC3   +define+PROJ_DEF_CSR_AWIDTH=32 +define+USE_RANDOM_DELAY_SYNC}
 
     # Engine by default if you want to change engine please modify in the tcl for compiling the tb
     set_engine_mode {H B AD M N AM Tri}
