@@ -25,10 +25,10 @@ bind mnm_rtr_ca_dnoc_top mnm_dnoc_fbaxi_sva  #(.NUM_LANES(NUM_LANES),
 //     .*
 // );
 
-// bind fb_fifo fb_fifo_tb 
-// # (
-//     .DEPTH              (DEPTH),
-//     .WIDTH              (WIDTH)
-// ) u_fb_fifo_tb (
-//     .*
-// );
+bind fb_fifo fb_fifo_tb 
+# (
+    .DEPTH              (DEPTH),
+    .WIDTH              (WIDTH)
+) u_fb_fifo_tb (
+    .*
+);
