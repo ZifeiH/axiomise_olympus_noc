@@ -91,7 +91,8 @@ assign reset_n = soc_reset_n;
 
                     mnm_cnoc_intf_constraints #(
                         .NUM_VC                          (NUM_VC),
-                        .LANE_NUM                        (lane)
+                        .LANE_NUM                        (lane),
+                        .VCID_W                          (VCID_W)
                     ) mnm_cnoc_intf_constraints (
 
                         .c_noc_in                        (noc_in[lane]),
