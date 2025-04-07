@@ -15,13 +15,8 @@ module mnm_dnoc_fbaxi_checker # (
 
 );
 
-  `ifdef ASSERT_OFF
-    `define SV_ASSERT(name, prop) AST_``name : assert property (@(posedge clk) disable iff (!reset_n) prop); 
-  `endif
-
   `include "mnm_dnoc_output_signal_defines.sv"
   
-
 	//------------------------------------------------------------------------------
 	//-- FBAXI Checker --
 	//------------------------------------------------------------------------------

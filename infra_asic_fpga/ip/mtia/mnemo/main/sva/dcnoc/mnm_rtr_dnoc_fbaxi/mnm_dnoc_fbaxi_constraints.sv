@@ -15,10 +15,6 @@ module mnm_dnoc_fbaxi_constraints # (
     
 );
 
-  `ifdef ASSERT_OFF
-    `define SV_ASSERT(name, prop) AST_``name : assert property (@(posedge clk) disable iff (!reset_n) prop); 
-  `endif
-
   `include "mnm_dnoc_input_signal_defines.sv"
 
 
