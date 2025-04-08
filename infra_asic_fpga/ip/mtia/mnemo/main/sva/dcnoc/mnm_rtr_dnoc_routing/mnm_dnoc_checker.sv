@@ -26,7 +26,6 @@ module mnm_dnoc_checker # (
 );  
 
     
-
     if (!REMOVE_LANE[north0] && !REMOVE_LANE[east0]) begin: n2e_checker
 		mnm_dnoc_routing_checker #(
             .NUM_VC                           (NUM_VC),

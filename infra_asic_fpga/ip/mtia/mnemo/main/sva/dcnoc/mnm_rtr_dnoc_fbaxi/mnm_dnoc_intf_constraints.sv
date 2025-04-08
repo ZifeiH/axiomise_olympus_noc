@@ -28,15 +28,10 @@ module mnm_dnoc_intf_constraints # (
     `include "mnm_dnoc_input_signal_defines.sv"
     `include "mnm_dnoc_output_signal_defines.sv"
 
-    // `SV_ASSERT (FVPH_RTR_FV_am_noc_iid_tracking         ,   d_noc_in_iid     == LANE_NUM  );
     `SV_ASSERT (FVPH_RTR_FV_am_ecc_in_equals_to_out     ,   main.genblk1[LANE_NUM].in_ecc_chk.in_data     == main.genblk1[LANE_NUM].in_ecc_chk.out_data  );
     // TODO: need to remove once tb stable
-    // `SV_ASSERT (FVPH_RTR_FV_am_noc_rd_vc_valid_range    ,   d_noc_in_is_r_channel   |-> d_noc_in_ruservc  < mnm_pkg::MNM_DNOC_R_NUM_VC   );
-    // `SV_ASSERT (FVPH_RTR_FV_am_noc_wr_vc_valid_range    ,   d_noc_in_is_aww_channel |-> d_noc_in_awuservc < mnm_pkg::MNM_DNOC_AWW_NUM_VC );
-    
-    `SV_ASSERT(FVPH_RTR_FV_am_group_shrd_fixed         ,    csr_cfg.vc_grp_shrd == 33'h092492449  );
-
-    `SV_ASSERT (FVPH_RTR_FV_am_vc_grp_rsvd_fixed        ,   csr_cfg.vc_grp_rsvd_en     == '0                     );
+    `SV_ASSERT (FVPH_RTR_FV_am_group_shrd_fixed         ,   csr_cfg.vc_grp_shrd        == 33'h092492449             );
+    `SV_ASSERT (FVPH_RTR_FV_am_vc_grp_rsvd_fixed        ,   csr_cfg.vc_grp_rsvd_en     == '0                        );
     `SV_ASSERT (FVPH_RTR_FV_am_total_shrd_max_fixed     ,   csr_cfg.total_shrd_max     == 8'h35                     );
     `SV_ASSERT (FVPH_RTR_FV_am_total_max_fixed          ,   csr_cfg.total_credits      == 8'h80                     );
     `SV_ASSERT (FVPH_RTR_FV_am_group_shrd_max_fixed     ,   csr_cfg.vc_grp_shrd_max    == 24'h353535                );

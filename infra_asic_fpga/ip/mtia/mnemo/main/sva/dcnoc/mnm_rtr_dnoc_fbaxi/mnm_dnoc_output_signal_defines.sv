@@ -6,7 +6,7 @@
     logic                                                             d_noc_out_is_aww_channel;
     logic                                                             d_noc_out_is_r_channel;
 
-    logic [mnm_pkg::MNM_DAXI_AWUSER_VC_WIDTH-1:0]                     d_noc_out_vc;
+    logic [$clog2(mnm_pkg::MNM_DNOC_TOTAL_NUM_VC)-1:0]                d_noc_out_vc;
 		logic [mnm_pkg::MNM_DAXI_AW_LEN_WIDTH-1:0]                        d_noc_out_len;
     logic [mnm_pkg::MNM_DAXI_ID_IID_WIDTH-1:0]                        d_noc_out_iid;
     logic                                                             d_noc_out_read;
@@ -44,8 +44,8 @@
     assign d_noc_out_is_aww_channel                        = d_noc_out.channel == mnm_pkg::DNOC_CHANNEL_E_WRITE;
     assign d_noc_out_is_r_channel                          = d_noc_out.channel == mnm_pkg::DNOC_CHANNEL_E_READ ;
     
-    assign d_noc_out_vc                                    = d_noc_out_is_aww_channel ? (d_noc_out.payload.daxi_combo_aw_w.aw.user.vc+ mnm_pkg::MNM_DNOC_R_NUM_VC):
-                                                             d_noc_out_is_r_channel   ?  d_noc_out.payload.daxi_r.user.vc : 
+    assign d_noc_out_vc                                    = d_noc_out_is_aww_channel ? (4'd0 + d_noc_out.payload.daxi_combo_aw_w.aw.user.vc+ mnm_pkg::MNM_DNOC_R_NUM_VC):
+                                                             d_noc_out_is_r_channel   ? (4'd0 + d_noc_out.payload.daxi_r.user.vc) : 
                                                              '0;
     assign d_noc_out_len                                   = d_noc_out_is_aww_channel ? d_noc_out.payload.daxi_combo_aw_w.aw.len:
                                                              d_noc_out_is_r_channel   ? d_noc_out.payload.daxi_r.user.len: 
