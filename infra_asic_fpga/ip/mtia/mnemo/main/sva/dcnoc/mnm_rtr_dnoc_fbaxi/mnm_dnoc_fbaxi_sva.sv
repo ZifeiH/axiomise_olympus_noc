@@ -92,8 +92,7 @@ module mnm_dnoc_fbaxi_sva # (
 
                     mnm_dnoc_intf_constraints #(
                         .NUM_VC                          (NUM_VC),
-                        .LANE_NUM                        (lane),
-                        .VCID_W                          (VCID_W)
+                        .LANE_NUM                        (lane)
                     ) mnm_dnoc_intf_constraints (
 
                         .d_noc_in                        (noc_in[lane]),
@@ -106,8 +105,8 @@ module mnm_dnoc_fbaxi_sva # (
                         .d_noc_out_crd_rel_id            (noc_out_credit_release_id[lane]),
                         .d_noc_out_crd_rel_valid         (noc_out_credit_release_valid[lane]),
 
-                        .d_noc_out_async_crd_release     (noc_out_async_crd_release[lane]),
-                        .d_noc_in_async_crd_release      (noc_in_async_crd_release[lane]),
+                        .noc_out_async_crd_release       (noc_out_async_crd_release[lane]),
+                        .noc_in_async_crd_release        (noc_in_async_crd_release[lane]),
                         
                         .clk                             (clk),
                         .reset_n                         (reset_n)
@@ -116,38 +115,22 @@ module mnm_dnoc_fbaxi_sva # (
                 
             end
 
-            begin: intf_checkers
-            mnm_dnoc_intf_checker #(
-                .NUM_LANES                        (NUM_LANES),
-                .NUM_VC                           (NUM_VC),
-                .VCID_W                           (VCID_W),
-                .RX_DEPTH_W                       (RX_DEPTH_W),
-                .NUM_SHRD_CRD_GROUPS              (NUM_SHRD_CRD_GROUPS),
-                .NUM_RSVD_CRD_GROUPS              (NUM_RSVD_CRD_GROUPS),
-                .RSVD_CRD_GROUP_ID_W              (RSVD_CRD_GROUP_ID_W),
-                .REMOVE_LANE                      (REMOVE_LANE)
-            ) mnm_dnoc_intf_checker (
-            
-                .d_noc_in                        (noc_in),
-                .d_noc_in_valid                  (noc_in_valid),
-                .d_noc_in_crd_rel_id             (noc_in_credit_release_id),
-                .d_noc_in_crd_rel_valid          (noc_in_credit_release_valid),
+            for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: intf_checkers
+                if (!REMOVE_LANE[lane]) begin
 
-                .d_noc_out                       (noc_out),
-                .d_noc_out_valid                 (noc_out_valid),
-                .d_noc_out_crd_rel_id            (noc_out_credit_release_id),
-                .d_noc_out_crd_rel_valid         (noc_out_credit_release_valid),
+                    mnm_dnoc_fbaxi_checker #(
+                        .NUM_VC                           (NUM_VC)
+                    ) mnm_dnoc_fbaxi_checker (
 
-                .d_noc_out_async_crd_release       (noc_out_async_crd_release),
-                .d_noc_in_async_crd_release        (noc_in_async_crd_release),
+                        .d_noc_out                        (noc_out[lane]),
+                        .d_noc_out_valid                  (noc_out_valid[lane]),
 
-                .d_noc_rtr_location              (rtr_location),
-                        
-                .clk                             (clk),
-                .reset_n                         (reset_n)
-                ); 
+                        .clk                              (clk),
+                        .reset_n                          (reset_n)
+
+                    ); 
+                end
             end
-            
         endgenerate
     `endif
     
