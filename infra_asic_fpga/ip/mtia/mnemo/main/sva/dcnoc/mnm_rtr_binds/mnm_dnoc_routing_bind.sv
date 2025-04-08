@@ -1,4 +1,4 @@
-bind mnm_rtr_ca_cnoc_top mnm_cnoc_fbaxi_sva  #(.NUM_LANES(NUM_LANES),
+bind mnm_rtr_ca_dnoc_top mnm_dnoc_routing_sva  #(.NUM_LANES(NUM_LANES),
                                                .NUM_VC(NUM_VC),
                                                .VCID_W(VCID_W),
                                                .RX_DEPTH_W(RX_DEPTH_W),
@@ -8,4 +8,4 @@ bind mnm_rtr_ca_cnoc_top mnm_cnoc_fbaxi_sva  #(.NUM_LANES(NUM_LANES),
                                                .SEQN_W(SEQN_W),
                                                .STUB(STUB),
                                                .REMOVE_LANE(REMOVE_LANE)) 
-                                               u_mnm_rtr_cnoc_fbaxi_sva (.*);
+                                               u_mnm_dnoc_routing_sva (.*);

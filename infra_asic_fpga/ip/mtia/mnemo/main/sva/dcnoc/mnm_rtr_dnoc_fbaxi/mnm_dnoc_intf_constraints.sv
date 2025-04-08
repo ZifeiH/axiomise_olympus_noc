@@ -5,33 +5,34 @@
 module mnm_dnoc_intf_constraints # (
   parameter DIR    = 11,
   parameter NUM_VC = 11,
-  parameter LANE_NUM = 0
+  parameter LANE_NUM = 0,
+  parameter VCID_W   = 4
 ) (
   input     mnm_pkg::data_noc_t                            d_noc_in,
   input     logic                                          d_noc_in_valid,
   input     credit_cfg_t                                   csr_cfg,
-  input     logic                [$clog2(NUM_VC)-1:0]      d_noc_in_crd_rel_id,
+  input     logic                [VCID_W-1:0]              d_noc_in_crd_rel_id,
   input     logic                                          d_noc_in_crd_rel_valid,
   input     mnm_pkg::data_noc_t                            d_noc_out,
   input     logic                                          d_noc_out_valid,
-  input     logic                [$clog2(NUM_VC)-1:0]      d_noc_out_crd_rel_id,
+  input     logic                [VCID_W-1:0]              d_noc_out_crd_rel_id,
   input     logic                                          d_noc_out_crd_rel_valid,
 
-  input     logic                                          noc_out_async_crd_release,
-  input     logic                                          noc_in_async_crd_release,
+  input     logic                                          d_noc_out_async_crd_release,
+  input     logic                                          d_noc_in_async_crd_release,
 
   input     logic                                          clk,
   input     logic                                          reset_n
 );  
 
-    `include "../mnm_rtr_lib/mnm_dnoc_input_signal_defines.sv"
-    `include "../mnm_rtr_lib/mnm_dnoc_output_signal_defines.sv"
+    `include "mnm_dnoc_input_signal_defines.sv"
+    `include "mnm_dnoc_output_signal_defines.sv"
 
-    `SV_ASSERT (FVPH_RTR_FV_am_noc_iid_tracking         ,   d_noc_in_iid     == LANE_NUM  );
+    // `SV_ASSERT (FVPH_RTR_FV_am_noc_iid_tracking         ,   d_noc_in_iid     == LANE_NUM  );
     `SV_ASSERT (FVPH_RTR_FV_am_ecc_in_equals_to_out     ,   main.genblk1[LANE_NUM].in_ecc_chk.in_data     == main.genblk1[LANE_NUM].in_ecc_chk.out_data  );
     // TODO: need to remove once tb stable
-    `SV_ASSERT (FVPH_RTR_FV_am_noc_rd_vc_valid_range    ,   d_noc_in_is_r_channel   |-> d_noc_in_vc < mnm_pkg::MNM_DNOC_R_NUM_VC   );
-    `SV_ASSERT (FVPH_RTR_FV_am_noc_wr_vc_valid_range    ,   d_noc_in_is_aww_channel |-> d_noc_in_vc < mnm_pkg::MNM_DNOC_AWW_NUM_VC );
+    // `SV_ASSERT (FVPH_RTR_FV_am_noc_rd_vc_valid_range    ,   d_noc_in_is_r_channel   |-> d_noc_in_ruservc  < mnm_pkg::MNM_DNOC_R_NUM_VC   );
+    // `SV_ASSERT (FVPH_RTR_FV_am_noc_wr_vc_valid_range    ,   d_noc_in_is_aww_channel |-> d_noc_in_awuservc < mnm_pkg::MNM_DNOC_AWW_NUM_VC );
     
     `SV_ASSERT(FVPH_RTR_FV_am_group_shrd_fixed         ,    csr_cfg.vc_grp_shrd == 33'h092492449  );
 
@@ -60,8 +61,8 @@ module mnm_dnoc_intf_constraints # (
     
     mnm_dnoc_credit_manager_constraints_input (
 
-       .noc_in_len         (d_noc_in_is_aww_channel?d_noc_in_awlen:d_noc_in_rlen),
-       .noc_in_vc          (d_noc_in_read?d_noc_in_vc:(d_noc_in_vc+'d3)),
+       .noc_in_len         (d_noc_in_len),
+       .noc_in_vc          (d_noc_in_vc),
        .noc_in_last        (d_noc_in_last),
        .noc_in_vld         (d_noc_in_valid),
        .crd_rel_vld        (d_noc_in_crd_rel_valid),
@@ -84,8 +85,8 @@ module mnm_dnoc_intf_constraints # (
     credit_manager_constraints_output # (
     ) mnm_dnoc_credit_manager_constraints_output (
 
-       .noc_out_len         (d_noc_out_is_aww_channel?d_noc_out_awlen:d_noc_out_rlen),
-       .noc_out_vc          (d_noc_out_read?d_noc_out_vc:(d_noc_out_vc+'d3)),
+       .noc_out_len         (d_noc_out_len),
+       .noc_out_vc          (d_noc_out_vc),
        .noc_out_last        (d_noc_out_last),
        .noc_out_vld         (d_noc_out_valid),
        .crd_rel_vld         (d_noc_out_crd_rel_valid),
@@ -113,7 +114,7 @@ module mnm_dnoc_intf_constraints # (
     ) input_credit_constrains (
     
         .noc_out_valid               (d_noc_in_crd_rel_valid),
-        .noc_out_credit_release      (noc_in_async_crd_release),
+        .noc_out_credit_release      (d_noc_in_async_crd_release),
       
         .noc_out_len                 (d_noc_in_is_aww_channel?d_noc_in_awlen:d_noc_in_rlen),
         .noc_out_last                (d_noc_in_last),
@@ -129,7 +130,7 @@ module mnm_dnoc_intf_constraints # (
     ) output_credit_constrains (
     
         .noc_out_valid                (d_noc_out_crd_rel_valid),
-        .noc_out_credit_release       (noc_out_async_crd_release),
+        .noc_out_credit_release       (d_oc_out_async_crd_release),
       
         .noc_out_len                  (d_noc_out_is_aww_channel?d_noc_out_awlen:d_noc_out_rlen),
         .noc_out_last                 (d_noc_out_last),

@@ -7,6 +7,7 @@
     logic                                                             d_noc_out_is_r_channel;
 
     logic [mnm_pkg::MNM_DAXI_AWUSER_VC_WIDTH-1:0]                     d_noc_out_vc;
+		logic [mnm_pkg::MNM_DAXI_AW_LEN_WIDTH-1:0]                        d_noc_out_len;
     logic [mnm_pkg::MNM_DAXI_ID_IID_WIDTH-1:0]                        d_noc_out_iid;
     logic                                                             d_noc_out_read;
     logic                                                             d_noc_out_last;
@@ -36,15 +37,19 @@
     logic [mnm_pkg::MNM_DAXI_R_USER_WIDTH-1:0]                        d_noc_out_ruser;
     logic [mnm_pkg::MNM_DAXI_RUSER_NOC_ID_WIDTH-1:0]                  d_noc_out_rnocid;
     mnm_pkg::coord_id_t                                               d_noc_out_rtgtid;
+    mnm_pkg::coord_id_t                                               d_noc_out_rsrcid;
     logic [mnm_pkg::MNM_DAXI_RUSER_VC_WIDTH-1:0]                      d_noc_out_ruservc;
 
     assign d_noc_out_channel                               = d_noc_out.channel;
     assign d_noc_out_is_aww_channel                        = d_noc_out.channel == mnm_pkg::DNOC_CHANNEL_E_WRITE;
     assign d_noc_out_is_r_channel                          = d_noc_out.channel == mnm_pkg::DNOC_CHANNEL_E_READ ;
     
-    assign d_noc_out_vc                                    = d_noc_out_is_aww_channel ? d_noc_out.payload.daxi_combo_aw_w.aw.user.vc:
-                                                             d_noc_out_is_r_channel   ? d_noc_out.payload.daxi_r.user.vc : 
+    assign d_noc_out_vc                                    = d_noc_out_is_aww_channel ? (d_noc_out.payload.daxi_combo_aw_w.aw.user.vc+ mnm_pkg::MNM_DNOC_R_NUM_VC):
+                                                             d_noc_out_is_r_channel   ?  d_noc_out.payload.daxi_r.user.vc : 
                                                              '0;
+    assign d_noc_out_len                                   = d_noc_out_is_aww_channel ? d_noc_out.payload.daxi_combo_aw_w.aw.len:
+                                                             d_noc_out_is_r_channel   ? d_noc_out.payload.daxi_r.user.len: 
+                                                             '0;                                                        
     assign d_noc_out_iid                                   = d_noc_out_is_aww_channel ? d_noc_out.payload.daxi_combo_aw_w.aw.id.iid :
                                                              d_noc_out_is_r_channel   ? d_noc_out.payload.daxi_r.id.iid : 
                                                              '0;      
@@ -79,4 +84,5 @@
     assign d_noc_out_ruser                                 = d_noc_out.payload.daxi_r.user;
     assign d_noc_out_rnocid                                = d_noc_out.payload.daxi_r.user.noc_id;
     assign d_noc_out_rtgtid                                = d_noc_out.payload.daxi_r.user.tgt_id;
+    assign d_noc_out_rsrcid                                = d_noc_out.payload.daxi_r.user.src_id;
     assign d_noc_out_ruservc                               = d_noc_out.payload.daxi_r.user.vc;

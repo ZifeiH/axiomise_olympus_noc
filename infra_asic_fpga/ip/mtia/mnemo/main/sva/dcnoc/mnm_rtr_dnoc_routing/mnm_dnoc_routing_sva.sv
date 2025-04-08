@@ -1,8 +1,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////
-// File: mnm_dnoc_fbaxi_sva.sv
+// File: mnm_dnoc_routing_sva.sv
 // This file contains 
 /////////////////////////////////////////////////////////////////////////////////////////
-module mnm_dnoc_fbaxi_sva # (
+module mnm_dnoc_routing_sva # (
   parameter NUM_LANES           = mnm_rtr_pkg::MNM_RTR_DNOC_SLICE_NUM_LANES,
             NUM_VC              = mnm_pkg::MNM_DNOC_TOTAL_NUM_VC,
             VCID_W              = mnm_rtr_pkg::MNM_RTR_DNOC_VCID_W,
@@ -116,22 +116,32 @@ module mnm_dnoc_fbaxi_sva # (
                 
             end
 
-            for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: intf_checkers
-                if (!REMOVE_LANE[lane]) begin
+            begin: checkers
+            mnm_dnoc_checker #(
+                .NUM_LANES                        (NUM_LANES),
+                .NUM_VC                           (NUM_VC),
+                .VCID_W                           (VCID_W),
+                .RX_DEPTH_W                       (RX_DEPTH_W),
+                .NUM_SHRD_CRD_GROUPS              (NUM_SHRD_CRD_GROUPS),
+                .NUM_RSVD_CRD_GROUPS              (NUM_RSVD_CRD_GROUPS),
+                .RSVD_CRD_GROUP_ID_W              (RSVD_CRD_GROUP_ID_W),
+                .REMOVE_LANE                      (REMOVE_LANE)
+            ) mnm_dnoc_checker (
+            
+                .d_noc_in                        (noc_in),
+                .d_noc_in_valid                  (noc_in_valid),
 
-                    mnm_dnoc_fbaxi_checker #(
-                        .NUM_VC                           (NUM_VC)
-                    ) mnm_dnoc_fbaxi_checker (
+                .d_noc_out                       (noc_out),
+                .d_noc_out_valid                 (noc_out_valid),
 
-                        .d_noc_out                        (noc_out[lane]),
-                        .d_noc_out_valid                  (noc_out_valid[lane]),
-
-                        .clk                              (clk),
-                        .reset_n                          (reset_n)
-
-                    ); 
-                end
+                .rtr_location                    (rtr_location),
+                .is_y_first                      (csr_cfg_dwrr_vc_weights),
+                        
+                .clk                             (clk),
+                .reset_n                         (reset_n)
+                ); 
             end
+            
         endgenerate
     `endif
     

@@ -7,10 +7,12 @@
     logic                                                             d_noc_in_is_r_channel;
 
     logic [mnm_pkg::MNM_DAXI_AWUSER_VC_WIDTH-1:0]                     d_noc_in_vc;
+		logic [mnm_pkg::MNM_DAXI_AW_LEN_WIDTH-1:0]                        d_noc_in_len;
     logic [mnm_pkg::MNM_DAXI_ID_IID_WIDTH-1:0]                        d_noc_in_iid;
     logic                                                             d_noc_in_read;
     logic                                                             d_noc_in_last;
     mnm_pkg::coord_id_t                                               d_noc_in_tgtid;
+    mnm_pkg::coord_id_t                                               d_noc_in_srcid;
 
 		logic                                                             d_noc_in_awvalid;
 		logic [mnm_pkg::MNM_DAXI_AW_LEN_WIDTH-1:0]                        d_noc_in_awlen;
@@ -35,6 +37,7 @@
     logic [mnm_pkg::MNM_DAXI_R_ID_WIDTH-1:0]                          d_noc_in_rid;
     logic [mnm_pkg::MNM_DAXI_R_USER_WIDTH-1:0]                        d_noc_in_ruser;
     logic [mnm_pkg::MNM_DAXI_RUSER_NOC_ID_WIDTH-1:0]                  d_noc_in_rnocid;
+    mnm_pkg::coord_id_t                                               d_noc_in_rsrcid;
     mnm_pkg::coord_id_t                                               d_noc_in_rtgtid;
     logic [mnm_pkg::MNM_DAXI_RUSER_VC_WIDTH-1:0]                      d_noc_in_ruservc;
     
@@ -42,9 +45,12 @@
     assign d_noc_in_is_aww_channel                        = d_noc_in.channel == mnm_pkg::DNOC_CHANNEL_E_WRITE;
     assign d_noc_in_is_r_channel                          = d_noc_in.channel == mnm_pkg::DNOC_CHANNEL_E_READ ;
    
-    assign d_noc_in_vc                                    = d_noc_in_is_aww_channel ? d_noc_in.payload.daxi_combo_aw_w.aw.user.vc:
-                                                            d_noc_in_is_r_channel   ? d_noc_in.payload.daxi_r.user.vc : 
+    assign d_noc_in_vc                                    = d_noc_in_is_aww_channel ? (d_noc_in.payload.daxi_combo_aw_w.aw.user.vc+ mnm_pkg::MNM_DNOC_R_NUM_VC):
+                                                            d_noc_in_is_r_channel   ?  d_noc_in.payload.daxi_r.user.vc : 
                                                             '0;
+    assign d_noc_in_len                                   = d_noc_in_is_aww_channel ? d_noc_in.payload.daxi_combo_aw_w.aw.len:
+                                                            d_noc_in_is_r_channel   ? d_noc_in.payload.daxi_r.user.len : 
+                                                            '0;                                                          
     assign d_noc_in_iid                                   = d_noc_in_is_aww_channel ? d_noc_in.payload.daxi_combo_aw_w.aw.id.iid :
                                                             d_noc_in_is_r_channel   ? d_noc_in.payload.daxi_r.id.iid : 
                                                             '0; 
@@ -52,6 +58,9 @@
     assign d_noc_in_last                                  = d_noc_in_read ? d_noc_in.payload.daxi_r.last : d_noc_in.payload.daxi_combo_aw_w.w.last;
     assign d_noc_in_tgtid                                 = d_noc_in_is_aww_channel ? d_noc_in.payload.daxi_combo_aw_w.aw.user.tgt_id:
                                                             d_noc_in_is_r_channel   ? d_noc_in.payload.daxi_r.user.tgt_id: 
+                                                            '0;
+    assign d_noc_in_srcid                                 = d_noc_in_is_aww_channel ? d_noc_in.payload.daxi_combo_aw_w.aw.user.src_id:
+                                                            d_noc_in_is_r_channel   ? d_noc_in.payload.daxi_r.user.src_id: 
                                                             '0;
 
     assign d_noc_in_awvalid                               = d_noc_in_valid && d_noc_in_is_aww_channel;
@@ -79,4 +88,5 @@
     assign d_noc_in_ruser                                 = d_noc_in.payload.daxi_r.user;
     assign d_noc_in_rnocid                                = d_noc_in.payload.daxi_r.user.noc_id;
     assign d_noc_in_rtgtid                                = d_noc_in.payload.daxi_r.user.tgt_id;
+    assign d_noc_in_rsrcid                                = d_noc_in.payload.daxi_r.user.src_id;
     assign d_noc_in_ruservc                               = d_noc_in.payload.daxi_r.user.vc;
