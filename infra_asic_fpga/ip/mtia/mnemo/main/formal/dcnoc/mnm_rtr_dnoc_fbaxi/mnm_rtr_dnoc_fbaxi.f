@@ -2,7 +2,7 @@
 -f $WORKROOT/mnm_rtr_ca_dnoc_top_filelist.txt
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/mnm_dnoc_params.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/fb_rr_arb_sva_lib.sv
-$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/fb_dw_rr_arb_sva_lib.sv
+$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/fb_rtr_dw_rr_arb_sva.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/fifo_sva.sv
 
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/dnoc_macro_defines.sv
