@@ -22,6 +22,7 @@ module mnm_dnoc_intf_constraints # (
   input     logic                                          d_noc_in_async_crd_release,
 
   input   mnm_pkg::mnm_grid_location_t                     rtr_location,
+  input   logic                  [NUM_VC-1:0]              is_y_first,
 
   input     logic                                          clk,
   input     logic                                          reset_n
@@ -44,9 +45,7 @@ module mnm_dnoc_intf_constraints # (
      
 
 		mnm_dnoc_fbaxi_constraints # (
-
             .NUM_VC   (NUM_VC)
-
       ) dnoc_fbaxi_constraints 
       (
           .d_noc_in                    (d_noc_in),
@@ -57,13 +56,15 @@ module mnm_dnoc_intf_constraints # (
       );
     
     mnm_dnoc_routing_constraints # (
-            .LANE_NUM (LANE_NUM)
+            .LANE_NUM (LANE_NUM),
+            .NUM_VC   (NUM_VC)
     ) dnoc_routing_constraints 
       (
           .d_noc_in                    (d_noc_in),
           .d_noc_in_valid              (d_noc_in_valid),
 
           .rtr_location                (rtr_location),
+          .is_y_first                  (is_y_first),
 
           .d_noc_in_tgtid              (d_noc_in_tgtid),
           .d_noc_in_srcid              (d_noc_in_srcid),

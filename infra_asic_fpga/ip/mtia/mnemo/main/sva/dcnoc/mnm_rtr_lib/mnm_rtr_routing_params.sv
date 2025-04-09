@@ -6,7 +6,7 @@
 //-- Parameters --
 //------------------------------------------------------------------------------
 
-  parameter north0 = 0;
+    parameter north0 = 0;
 	parameter north1 = 1;
 	parameter east0  = 2;
 	parameter east1  = 3;

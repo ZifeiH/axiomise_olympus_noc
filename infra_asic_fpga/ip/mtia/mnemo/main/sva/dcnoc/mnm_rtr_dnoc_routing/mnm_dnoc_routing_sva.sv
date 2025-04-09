@@ -123,7 +123,8 @@ module mnm_dnoc_routing_sva # (
                         .d_noc_in_async_crd_release      (noc_in_async_crd_release[lane]),
 
                         .rtr_location                    (rtr_location),
-                        
+                        .is_y_first                      (csr_cfg_vc_y_first_routing),
+
                         .clk                             (clk),
                         .reset_n                         (reset_n)
                     );    
@@ -132,27 +133,32 @@ module mnm_dnoc_routing_sva # (
             end
 
             begin: checkers
-            if (!REMOVE_LANE[north0] && !REMOVE_LANE[east0]) begin: n2e_checker
-		        mnm_dnoc_routing_checker #(
-                    .NUM_VC                           (NUM_VC),
-                    .d_noc_in_lane                    (north0),
-                    .d_noc_out_lane                   (east0)
-                ) mnm_dnoc_routing_checker(
-          	        .d_noc_in             (noc_in[north0]),
-          	        .d_noc_in_valid       (noc_in_valid[north0]),
+            for (genvar in_lane = 0; in_lane < NUM_LANES; in_lane++ ) begin      
+                if (!REMOVE_LANE[in_lane]) begin
+                    for (genvar out_lane = 0; out_lane < NUM_LANES; out_lane++ ) begin
+                        if (!REMOVE_LANE[out_lane]) begin
+                            mnm_dnoc_routing_checker #(
+                                .NUM_VC                           (NUM_VC),
+                                .d_noc_in_lane                    (in_lane),
+                                .d_noc_out_lane                   (out_lane)
+                            ) mnm_dnoc_routing_checker(
+                                .d_noc_in             (noc_in[in_lane]),
+                                .d_noc_in_valid       (noc_in_valid[in_lane]),
 
-          	        .d_noc_out            (noc_out[east0]),
-         	        .d_noc_out_valid      (noc_out_valid[east0]),
+                                .d_noc_out            (noc_out[out_lane]),
+                                .d_noc_out_valid      (noc_out_valid[out_lane]),
 
-                    .rtr_location         (rtr_location),
-                    .is_y_first           (is_y_first),
+                                .rtr_location         (rtr_location),
+                                .is_y_first           (csr_cfg_vc_y_first_routing),
 
-        	        .clk                  (clk),
-          	        .reset_n              (reset_n)
-    	        );
-	        end
+                                .clk                  (clk),
+                                .reset_n              (reset_n)
+                            );     
+                        end
+                    end
+                end  
+            end      
             end
-            
         endgenerate
     `endif
     
