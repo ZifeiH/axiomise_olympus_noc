@@ -45,10 +45,17 @@ module mnm_dnoc_routing_sva # (
 //-- Router location  --
 //------------------------------------------------------------------------------
 //   TODO: to setup the rtr locations
-    localparam  rtr_location_x_coord          = 1;
-    localparam  rtr_location_y_coord          = 1;
-    localparam  rtr_location_cip_id           = 0;
-    localparam  rtr_slice_id                  = 0;
+    localparam  [3-1: 0]              rtr_location_x_coord          = 2;
+    localparam  [3-1: 0]              rtr_location_y_coord          = 2;
+    localparam  [1-1: 0]              rtr_location_cip_id_x         = 0;
+    localparam  [1-1: 0]              rtr_location_cip_id_y         = 0;
+    localparam  [1-1: 0]              rtr_location_cip_id_z         = 0;
+
+    localparam  mnm_pkg::chip_id_t    current_cip_id                =  {rtr_location_cip_id_x,
+                                                                        rtr_location_cip_id_y,
+                                                                        rtr_location_cip_id_z};
+
+    localparam                        rtr_slice_id                  = 0;
 
 //------------------------------------------------------------------------------
 //-- Interface Assumption --
@@ -56,7 +63,13 @@ module mnm_dnoc_routing_sva # (
   
 `ifdef FORMAL
 
-    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_stable       , ##1 $stable(rtr_location)                               );
+    
+    // Fix router location
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_cip_id_fixed , (rtr_location.chip_id == current_cip_id)                );
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_xcoord_fixed , (rtr_location.xcoord  == rtr_location_x_coord)          );
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_ycoord_fixed , (rtr_location.ycoord  == rtr_location_y_coord)          );
+
+    // 
     `SV_ASSERT (FVPH_RTR_FV_am_vc_y_first_routing_fixed  , csr_cfg_vc_y_first_routing == 11'h1fc                   );
     `SV_ASSERT (FVPH_RTR_FV_am_dwrr_vc_weights_fixed     , csr_cfg_dwrr_vc_weights    == 88'h0202020202020202020202);
 
@@ -84,9 +97,9 @@ module mnm_dnoc_routing_sva # (
                     assign noc_in_config[lane].vc_shrd_max     = csr_cfg_vc_shrd_max_th[lane]    ;
                     assign noc_in_config[lane].vc_grp_rsvd_en  = csr_cfg_vc_group_rsvd_en[lane]  ;
                     assign noc_in_config[lane].vc_grp_rsvd_id  = csr_cfg_vc_group_rsvd_id[lane]  ;
-                    assign noc_in_config[lane].vc_grp_rsvd_max = csr_cfg_group_rsvd_max_th[lane]     ;
+                    assign noc_in_config[lane].vc_grp_rsvd_max = csr_cfg_group_rsvd_max_th[lane] ;
                     assign noc_in_config[lane].vc_grp_shrd_max = csr_cfg_group_shrd_max_th[lane] ;
-                    assign noc_in_config[lane].vc_grp_shrd     = csr_cfg_vc_group_shrd[lane] ;
+                    assign noc_in_config[lane].vc_grp_shrd     = csr_cfg_vc_group_shrd[lane]     ;
                     assign noc_in_config[lane].total_shrd_max  = csr_cfg_total_shrd_max_th[lane] ;
                     assign noc_in_config[lane].total_credits   = csr_cfg_total_credits[lane]     ; 
 
@@ -108,6 +121,8 @@ module mnm_dnoc_routing_sva # (
 
                         .d_noc_out_async_crd_release     (noc_out_async_crd_release[lane]),
                         .d_noc_in_async_crd_release      (noc_in_async_crd_release[lane]),
+
+                        .rtr_location                    (rtr_location),
                         
                         .clk                             (clk),
                         .reset_n                         (reset_n)
@@ -117,29 +132,25 @@ module mnm_dnoc_routing_sva # (
             end
 
             begin: checkers
-            mnm_dnoc_checker #(
-                .NUM_LANES                        (NUM_LANES),
-                .NUM_VC                           (NUM_VC),
-                .VCID_W                           (VCID_W),
-                .RX_DEPTH_W                       (RX_DEPTH_W),
-                .NUM_SHRD_CRD_GROUPS              (NUM_SHRD_CRD_GROUPS),
-                .NUM_RSVD_CRD_GROUPS              (NUM_RSVD_CRD_GROUPS),
-                .RSVD_CRD_GROUP_ID_W              (RSVD_CRD_GROUP_ID_W),
-                .REMOVE_LANE                      (REMOVE_LANE)
-            ) mnm_dnoc_checker (
-            
-                .d_noc_in                        (noc_in),
-                .d_noc_in_valid                  (noc_in_valid),
+            if (!REMOVE_LANE[north0] && !REMOVE_LANE[east0]) begin: n2e_checker
+		        mnm_dnoc_routing_checker #(
+                    .NUM_VC                           (NUM_VC),
+                    .d_noc_in_lane                    (north0),
+                    .d_noc_out_lane                   (east0)
+                ) mnm_dnoc_routing_checker(
+          	        .d_noc_in             (noc_in[north0]),
+          	        .d_noc_in_valid       (noc_in_valid[north0]),
 
-                .d_noc_out                       (noc_out),
-                .d_noc_out_valid                 (noc_out_valid),
+          	        .d_noc_out            (noc_out[east0]),
+         	        .d_noc_out_valid      (noc_out_valid[east0]),
 
-                .rtr_location                    (rtr_location),
-                .is_y_first                      (csr_cfg_dwrr_vc_weights),
-                        
-                .clk                             (clk),
-                .reset_n                         (reset_n)
-                ); 
+                    .rtr_location         (rtr_location),
+                    .is_y_first           (is_y_first),
+
+        	        .clk                  (clk),
+          	        .reset_n              (reset_n)
+    	        );
+	        end
             end
             
         endgenerate

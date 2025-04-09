@@ -8,9 +8,9 @@ $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/transaction_tracker
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_dnoc_params.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_credit_manager_intf.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_dnoc_fbaxi_constraints.sv
-$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_dnoc_intf_constraints.sv
+$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_routing/mnm_dnoc_routing_constraints.sv
+$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_routing/mnm_dnoc_intf_constraints.sv
 
-$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_routing/mnm_dnoc_checker.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_routing/mnm_dnoc_routing_checker_bak.sv
 
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_routing/mnm_dnoc_routing_sva.sv

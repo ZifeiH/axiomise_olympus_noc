@@ -26,24 +26,6 @@ module mnm_dnoc_checker # (
 );  
 
     
-    if (!REMOVE_LANE[north0] && !REMOVE_LANE[east0]) begin: n2e_checker
-		mnm_dnoc_routing_checker #(
-            .NUM_VC                           (NUM_VC),
-            .d_noc_in_lane                    (north0),
-            .d_noc_out_lane                   (east0)
-        ) mnm_dnoc_routing_checker(
-          	.d_noc_in             (d_noc_in[north0]),
-          	.d_noc_in_valid       (d_noc_in_valid[north0]),
-
-          	.d_noc_out            (d_noc_out[east0]),
-         	.d_noc_out_valid      (d_noc_out_valid[east0]),
-
-            .rtr_location         (rtr_location),
-            .is_y_first           (is_y_first),
-
-        	.clk                  (clk),
-          	.reset_n              (reset_n)
-    	);
-	end
+    
    
 endmodule
