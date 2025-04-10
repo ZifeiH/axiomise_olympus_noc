@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wavelist version="3">
-  <insertion-point-position>6</insertion-point-position>
+  <insertion-point-position>4</insertion-point-position>
   <wave>
     <expr>clk</expr>
     <label/>
@@ -10,159 +10,159 @@
     <expr>&lt;&lt;Target&gt;&gt;::tx</expr>
     <label>&lt;&lt;Target&gt;&gt;::tx</label>
     <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.genblk1[0].r_checker.r_2e_checker.transaction_tracker_sva_r_2e.sampled_out_d</expr>
+      <expr>noc_in[0].channel</expr>
       <label/>
-      <radix/>
+      <radix>noc_in[0].channel</radix>
     </wave>
     <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.genblk1[0].r_checker.r_2e_checker.transaction_tracker_sva_r_2e.reset_n</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.genblk1[0].r_checker.r_2e_checker.transaction_tracker_sva_r_2e.ready_to_sample_out_d</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.genblk1[0].r_checker.r_2e_checker.transaction_tracker_sva_r_2e.sampled_in_d</expr>
+      <expr>noc_in_valid[0]</expr>
       <label/>
       <radix/>
     </wave>
   </group>
-  <wave collapsed="true">
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_y_first</expr>
-    <label/>
-    <radix/>
-  </wave>
-  <wave collapsed="true">
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first</expr>
-    <label/>
-    <radix/>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[10]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[9]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[8]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[7]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[6]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[5]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[4]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[3]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[2]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[1]</expr>
-      <label/>
-      <radix/>
-    </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[0]</expr>
-      <label/>
-      <radix/>
-    </wave>
-  </wave>
   <wave>
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.is_x_first[0]</expr>
+    <expr>u_mnm_dnoc_routing_sva.noc_in[0].channel</expr>
+    <label/>
+    <radix>noc_in[0].channel</radix>
+  </wave>
+  <wave collapsed="true">
+    <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.vc</expr>
     <label/>
     <radix/>
   </wave>
-  <wave collapsed="true">
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.rtr_location.xcoord</expr>
-    <label/>
-    <radix>dec</radix>
-  </wave>
-  <wave collapsed="true">
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.d_noc_in_tgtid.ycoord</expr>
-    <label/>
-    <radix>dec</radix>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.d_noc_in_tgtid.ycoord[2]</expr>
+  <group collapsed="false">
+    <expr>rtr_location</expr>
+    <label>rtr_location</label>
+    <radix/>
+    <group collapsed="true">
+      <expr>rtr_location.chip_id</expr>
+      <label>rtr_location.chip_id</label>
+      <radix/>
+      <wave>
+        <expr>rtr_location.chip_id.x</expr>
+        <label/>
+        <radix/>
+      </wave>
+      <wave>
+        <expr>rtr_location.chip_id.y</expr>
+        <label/>
+        <radix/>
+      </wave>
+      <wave>
+        <expr>rtr_location.chip_id.z</expr>
+        <label/>
+        <radix/>
+      </wave>
+    </group>
+    <wave collapsed="true">
+      <expr>rtr_location.xcoord</expr>
+      <label/>
+      <radix>dec</radix>
+    </wave>
+    <wave collapsed="true">
+      <expr>rtr_location.ycoord</expr>
+      <label/>
+      <radix>dec</radix>
+    </wave>
+    <group collapsed="false">
+      <expr>rtr_location.orientation</expr>
+      <label>rtr_location.orientation</label>
+      <radix/>
+      <wave>
+        <expr>rtr_location.orientation.flip_ew</expr>
+        <label/>
+        <radix/>
+      </wave>
+      <wave>
+        <expr>rtr_location.orientation.flip_ns</expr>
+        <label/>
+        <radix/>
+      </wave>
+    </group>
+  </group>
+  <group collapsed="true">
+    <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id</expr>
+    <label>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id</label>
+    <radix/>
+    <group collapsed="true">
+      <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id.chip_id</expr>
+      <label>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id.chip_id</label>
+      <radix/>
+      <wave>
+        <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id.chip_id.x</expr>
+        <label/>
+        <radix/>
+      </wave>
+      <wave>
+        <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id.chip_id.y</expr>
+        <label/>
+        <radix/>
+      </wave>
+      <wave>
+        <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id.chip_id.z</expr>
+        <label/>
+        <radix/>
+      </wave>
+    </group>
+    <wave collapsed="true">
+      <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id.xcoord</expr>
       <label/>
       <radix/>
     </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.d_noc_in_tgtid.ycoord[1]</expr>
+    <wave collapsed="true">
+      <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id.ycoord</expr>
       <label/>
       <radix/>
     </wave>
-    <wave>
-      <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.d_noc_in_tgtid.ycoord[0]</expr>
+    <wave collapsed="true">
+      <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.src_id.zcoord</expr>
       <label/>
       <radix/>
     </wave>
-  </wave>
+  </group>
+  <group collapsed="false">
+    <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id</expr>
+    <label>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id</label>
+    <radix/>
+    <group collapsed="true">
+      <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id.chip_id</expr>
+      <label>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id.chip_id</label>
+      <radix/>
+      <wave>
+        <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id.chip_id.x</expr>
+        <label/>
+        <radix/>
+      </wave>
+      <wave>
+        <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id.chip_id.y</expr>
+        <label/>
+        <radix/>
+      </wave>
+      <wave>
+        <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id.chip_id.z</expr>
+        <label/>
+        <radix/>
+      </wave>
+    </group>
+    <wave collapsed="true">
+      <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id.xcoord</expr>
+      <label/>
+      <radix>dec</radix>
+    </wave>
+    <wave collapsed="true">
+      <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id.ycoord</expr>
+      <label/>
+      <radix>dec</radix>
+    </wave>
+    <wave collapsed="true">
+      <expr>u_mnm_dnoc_routing_sva.noc_in[0].payload.daxi_combo_aw_w.aw.user.tgt_id.zcoord</expr>
+      <label/>
+      <radix>dec</radix>
+    </wave>
+  </group>
   <wave collapsed="true">
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.d_noc_in_tgtid.xcoord</expr>
+    <expr>main.east0_lane.rx_east0.rx_destid</expr>
     <label/>
-    <radix>dec</radix>
-  </wave>
-  <wave collapsed="true">
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.d_noc_in_tgtid.ycoord</expr>
-    <label/>
-    <radix>dec</radix>
-  </wave>
-  <wave>
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.genblk1[0].r_checker.r_2e_checker.transaction_tracker_sva_r_2e.data_in</expr>
-    <label/>
-    <radix/>
-  </wave>
-  <wave>
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.genblk1[0].r_checker.r_2e_checker.transaction_tracker_sva_r_2e.in_valid</expr>
-    <label/>
-    <radix/>
-  </wave>
-  <wave>
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.d_noc_in_rvalid</expr>
-    <label/>
-    <radix/>
-  </wave>
-  <wave>
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.genblk1[0].r_checker.r_2e_checker.transaction_tracker_sva_r_2e.out_valid</expr>
-    <label/>
-    <radix/>
-  </wave>
-  <wave>
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.genblk1[0].r_checker.r_2e_checker.transaction_tracker_sva_r_2e.data_out</expr>
-    <label/>
-    <radix/>
-  </wave>
-  <wave collapsed="true">
-    <expr>u_mnm_dnoc_routing_sva.checkers.n02_checker.n02e0_checker.mnm_dnoc_routing_checker_n02e0.d_noc_out_iid</expr>
-    <label/>
-    <radix>bin</radix>
+    <radix>main.east0_lane.rx_east0.rx_destid</radix>
   </wave>
 </wavelist>

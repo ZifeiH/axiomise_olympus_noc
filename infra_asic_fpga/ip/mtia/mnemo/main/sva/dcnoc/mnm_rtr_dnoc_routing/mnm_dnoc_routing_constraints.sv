@@ -51,43 +51,65 @@ module mnm_dnoc_routing_constraints # (
     logic [NUM_VC-1:0] d_noc_west_in_src_id;
     logic [NUM_VC-1:0] d_noc_north_in_src_id;
     logic [NUM_VC-1:0] d_noc_south_in_src_id;
-    logic [NUM_VC-1:0] d_noc_llc_in_src_id;
-    logic [NUM_VC-1:0] d_noc_peg_in_src_id;
+    logic              d_noc_llc_in_src_id;
+    logic              d_noc_peg_in_src_id;
 
 
+	assign    d_noc_llc_in_src_id   = (d_noc_in_srcid.xcoord == rtr_location.xcoord) && (d_noc_in_srcid.ycoord == rtr_location.ycoord) && (d_noc_in_srcid.chip_id.z == rtr_location.chip_id.z);
+	assign    d_noc_peg_in_src_id   = (d_noc_in_srcid.xcoord == rtr_location.xcoord) && (d_noc_in_srcid.ycoord == rtr_location.ycoord) && (d_noc_in_srcid.chip_id.z != rtr_location.chip_id.z);
+	
     for (genvar vc = 0; vc < (mnm_pkg::MNM_DNOC_R_NUM_VC + mnm_pkg::MNM_DNOC_AWW_NUM_VC) ; vc ++ ) begin
 
       	assign is_x_first[vc] = !is_y_first[vc];
 
-		assign    d_noc_east_in_tgt_id[vc]  = is_y_first[vc]  ? (d_noc_in_tgtid.xcoord <= rtr_location.xcoord) && (d_noc_in_tgtid.ycoord == rtr_location.ycoord):
-										      is_x_first[vc]  ? (d_noc_in_tgtid.xcoord <= rtr_location.xcoord): '0;
-		
-		assign    d_noc_west_in_tgt_id[vc]  = is_y_first[vc]  ? (d_noc_in_tgtid.xcoord >= rtr_location.xcoord) && (d_noc_in_tgtid.ycoord == rtr_location.ycoord):
-										      is_x_first[vc]  ? (d_noc_in_tgtid.xcoord >= rtr_location.xcoord): '0;
+		assign    d_noc_north_in_tgt_id[vc] = is_y_first[vc]  ? (((d_noc_in_tgtid.ycoord >= rtr_location.ycoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y)) || (d_noc_in_tgtid.chip_id.y != rtr_location.chip_id.y)):
+										      is_x_first[vc]  ? ((d_noc_in_tgtid.xcoord == rtr_location.xcoord) && (d_noc_in_tgtid.ycoord >= rtr_location.ycoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y)) || (d_noc_in_tgtid.chip_id.y != rtr_location.chip_id.y): '0; 
 
-		assign    d_noc_north_in_tgt_id[vc] = is_y_first[vc]  ? (d_noc_in_tgtid.ycoord >= rtr_location.ycoord) || (d_noc_in_tgtid.chip_id.y != rtr_location.chip_id.y):
-										      is_x_first[vc]  ? (d_noc_in_tgtid.xcoord == rtr_location.xcoord) || (d_noc_in_tgtid.chip_id.y != rtr_location.chip_id.y): '0;  
-
-		assign    d_noc_south_in_tgt_id[vc] = is_y_first[vc]  ? (d_noc_in_tgtid.ycoord <= rtr_location.ycoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y):
-										      is_x_first[vc]  ? (d_noc_in_tgtid.ycoord <= rtr_location.ycoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y) && (d_noc_in_tgtid.xcoord == rtr_location.xcoord): '0;  
-
-
-		assign    d_noc_east_in_src_id[vc]  = is_y_first[vc]  ? (d_noc_in_srcid.xcoord > rtr_location.xcoord):
-										      is_x_first[vc]  ? (d_noc_in_srcid.xcoord > rtr_location.xcoord) && (d_noc_in_srcid.ycoord == rtr_location.ycoord): '0;
-
-		assign    d_noc_west_in_src_id[vc]  = is_y_first[vc]  ? (d_noc_in_srcid.xcoord < rtr_location.xcoord):
-										      is_x_first[vc]  ? (d_noc_in_srcid.xcoord < rtr_location.xcoord) && (d_noc_in_srcid.ycoord == rtr_location.ycoord): '0';
-
-		assign    d_noc_north_in_src_id[vc] = is_y_first[vc]  ? (d_noc_in_srcid.ycoord < rtr_location.ycoord) && (d_noc_in_srcid.xcoord == rtr_location.xcoord):
-										      is_x_first[vc]  ? (d_noc_in_srcid.ycoord < rtr_location.ycoord): '0';
-
-		assign    d_noc_south_in_src_id[vc] = is_y_first[vc]  ? ((d_noc_in_srcid.ycoord > rtr_location.ycoord) && (d_noc_in_srcid.xcoord == rtr_location.xcoord)) || (d_noc_in_srcid.chip_id.y != rtr_location.chip_id.y):
-										  	  is_x_first[vc]  ?  (d_noc_in_srcid.ycoord > rtr_location.ycoord): '0';
-
-		assign    d_noc_llc_in_src_id[vc]   = (d_noc_in_srcid.xcoord == rtr_location.xcoord) && (d_noc_in_srcid.ycoord == rtr_location.ycoord) && (d_noc_in_srcid.zcoord == rtr_location.zcoord);
-
-		assign    d_noc_peg_in_src_id[vc]   = (d_noc_in_srcid.xcoord == rtr_location.xcoord) && (d_noc_in_srcid.ycoord == rtr_location.ycoord) && (d_noc_in_srcid.zcoord != rtr_location.zcoord);
+		assign    d_noc_east_in_tgt_id[vc]  = is_y_first[vc]  ? ((d_noc_in_tgtid.xcoord <= rtr_location.xcoord) && (d_noc_in_tgtid.ycoord == rtr_location.ycoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y)):
+										      is_x_first[vc]  ? ((d_noc_in_tgtid.xcoord <= rtr_location.xcoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y)): '0;
 	
+		assign    d_noc_south_in_tgt_id[vc] = is_y_first[vc]  ? ((d_noc_in_tgtid.ycoord <= rtr_location.ycoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y)):
+										      is_x_first[vc]  ? ((d_noc_in_tgtid.ycoord <= rtr_location.ycoord) && (d_noc_in_tgtid.xcoord == rtr_location.xcoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y)): '0;  
+
+		assign    d_noc_west_in_tgt_id[vc]  = is_y_first[vc]  ? ((d_noc_in_tgtid.xcoord >= rtr_location.xcoord) && (d_noc_in_tgtid.ycoord == rtr_location.ycoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y)):
+										      is_x_first[vc]  ? ((d_noc_in_tgtid.xcoord >= rtr_location.xcoord) && (d_noc_in_tgtid.chip_id.y == rtr_location.chip_id.y)): '0;
+
+
+		assign    d_noc_north_in_src_id[vc] = is_y_first[vc]  ? ((d_noc_in_srcid.ycoord < rtr_location.ycoord) && (d_noc_in_srcid.xcoord == rtr_location.xcoord) && (d_noc_in_srcid.chip_id.y == rtr_location.chip_id.y)):
+										      is_x_first[vc]  ? ((d_noc_in_srcid.ycoord < rtr_location.ycoord) && (d_noc_in_srcid.chip_id.y == rtr_location.chip_id.y)): '0;
+
+		assign    d_noc_east_in_src_id[vc]  = is_y_first[vc]  ? (((d_noc_in_srcid.xcoord > rtr_location.xcoord) && (d_noc_in_srcid.chip_id.y == rtr_location.chip_id.y)) || ((d_noc_in_srcid.xcoord <= rtr_location.xcoord) && (d_noc_in_srcid.chip_id.y != rtr_location.chip_id.y))):
+										      is_x_first[vc]  ? ((d_noc_in_srcid.xcoord > rtr_location.xcoord) && (d_noc_in_srcid.ycoord == rtr_location.ycoord) && (d_noc_in_srcid.chip_id.y == rtr_location.chip_id.y)) : '0;
+
+		assign    d_noc_south_in_src_id[vc] = is_y_first[vc]  ? (((d_noc_in_srcid.ycoord > rtr_location.ycoord) && (d_noc_in_srcid.xcoord == rtr_location.xcoord) && (d_noc_in_srcid.chip_id.y == rtr_location.chip_id.y)) || ((d_noc_in_srcid.chip_id.y != rtr_location.chip_id.y) && (d_noc_in_srcid.xcoord == (mnm_pkg::MNM_RTR_GRID_COORD_X_END+1-rtr_location.xcoord)))):
+										  	  is_x_first[vc]  ? (((d_noc_in_srcid.ycoord > rtr_location.ycoord) && (d_noc_in_srcid.chip_id.y == rtr_location.chip_id.y)) || (d_noc_in_srcid.chip_id.y != rtr_location.chip_id.y)): '0;
+
+		assign    d_noc_west_in_src_id[vc]  = is_y_first[vc]  ? (((d_noc_in_srcid.xcoord < rtr_location.xcoord) && (d_noc_in_srcid.chip_id.y == rtr_location.chip_id.y)) || ((d_noc_in_srcid.xcoord > (mnm_pkg::MNM_RTR_GRID_COORD_X_END+1-rtr_location.xcoord) && (d_noc_in_srcid.chip_id.y != rtr_location.chip_id.y)))) :
+										      is_x_first[vc]  ? ((d_noc_in_srcid.xcoord < rtr_location.xcoord) && (d_noc_in_srcid.ycoord == rtr_location.ycoord) && (d_noc_in_srcid.chip_id.y == rtr_location.chip_id.y)): '0;
+
+
+		if ((LANE_NUM == north0)  || (LANE_NUM == north1))      begin:north
+    		`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_north , d_noc_in_valid |-> d_noc_north_in_tgt_id[vc]);
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_north , d_noc_in_valid |-> d_noc_north_in_src_id[vc]);
+		end
+		else if ((LANE_NUM == east0)  || (LANE_NUM == east1))   begin: east
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_east  , d_noc_in_valid |-> d_noc_east_in_tgt_id[vc]);
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_east  , d_noc_in_valid |-> d_noc_east_in_src_id[vc]);
+		end
+		else if ((LANE_NUM == south0)  || (LANE_NUM == south1)) begin: south
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_south , d_noc_in_valid |-> d_noc_south_in_tgt_id[vc]);
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_south , d_noc_in_valid |-> d_noc_south_in_src_id[vc]);
+		end
+		else if ((LANE_NUM == west0)  || (LANE_NUM == west1))   begin: west
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_west  , d_noc_in_valid |-> d_noc_west_in_tgt_id[vc] );
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_west  , d_noc_in_valid |-> d_noc_west_in_src_id[vc] );
+		end
+		else if ((LANE_NUM == llc0)  || (LANE_NUM == llc1))		begin: llc
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_llc   , d_noc_in_valid |-> d_noc_llc_in_src_id      );
+		end
+		else if (LANE_NUM == peg)                               begin: peg
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_peg   , d_noc_in_valid |-> d_noc_peg_in_src_id      );
+		end
 	end
 
 endmodule
