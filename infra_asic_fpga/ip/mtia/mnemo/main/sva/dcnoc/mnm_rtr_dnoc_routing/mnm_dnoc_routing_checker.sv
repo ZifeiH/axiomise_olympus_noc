@@ -39,7 +39,7 @@ module mnm_dnoc_routing_checker# (
     assign _2peg       = off_chip_2s? '0 : ((d_noc_in_tgtid.chip_id.z == '1)? ((d_noc_in_tgtid.xcoord == rtr_location.xcoord) && (d_noc_in_tgtid.ycoord == rtr_location.ycoord)) : '0);
     assign _2llc       = off_chip_2s? '0 : ((d_noc_in_tgtid.chip_id.z == rtr_location.chip_id.z) && (d_noc_in_tgtid.xcoord == rtr_location.xcoord) && (d_noc_in_tgtid.ycoord == rtr_location.ycoord));
     
-    for (genvar vc = 0; vc < (mnm_pkg::MNM_DNOC_R_NUM_VC + mnm_pkg::MNM_DNOC_AWW_NUM_VC) ; vc ++ ) begin
+    for (genvar vc = 0; vc < (mnm_pkg::MNM_DNOC_R_NUM_VC + mnm_pkg::MNM_DNOC_AWW_NUM_VC) ; vc ++ ) begin: per_vc
 
       assign is_x_first[vc] = !is_y_first[vc];
 

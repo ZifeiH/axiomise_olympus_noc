@@ -68,7 +68,8 @@ module mnm_dnoc_routing_sva # (
     `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_cip_id_fixed , (rtr_location.chip_id == current_cip_id)                );
     `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_xcoord_fixed , (rtr_location.xcoord  == rtr_location_x_coord)          );
     `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_ycoord_fixed , (rtr_location.ycoord  == rtr_location_y_coord)          );
-    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_flip_fixed   , {rtr_location.orientation.flip_ew, rtr_location.orientation.flip_ns} inside {{1'b0, 1'b0},{1'b1, 1'b1}});
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_flip_fixed   , (rtr_location.orientation == 2'b00 && rtr_location.chip_id == 3'b000 )|| 
+                                                           (rtr_location.orientation == 2'b11 && rtr_location.chip_id == 3'b010));
 
     // 
     `SV_ASSERT (FVPH_RTR_FV_am_vc_y_first_routing_fixed  , csr_cfg_vc_y_first_routing == 11'h1fc                   );
@@ -134,10 +135,10 @@ module mnm_dnoc_routing_sva # (
             end
 
             begin: checkers
-            for (genvar in_lane = 0; in_lane < NUM_LANES; in_lane++ ) begin      
-                if (!REMOVE_LANE[in_lane]) begin
-                    for (genvar out_lane = 0; out_lane < NUM_LANES; out_lane++ ) begin
-                        if (!REMOVE_LANE[out_lane]) begin
+            for (genvar in_lane = 0; in_lane < NUM_LANES; in_lane++ ) begin: per_input_lane      
+                if (!REMOVE_LANE[in_lane]) begin: not_removed_lane
+                    for (genvar out_lane = 0; out_lane < NUM_LANES; out_lane++ ) begin: per_output_lane
+                        if (!REMOVE_LANE[out_lane]) begin: not_removed_lane
                             mnm_dnoc_routing_checker #(
                                 .NUM_VC                           (NUM_VC),
                                 .d_noc_in_lane                    (in_lane),

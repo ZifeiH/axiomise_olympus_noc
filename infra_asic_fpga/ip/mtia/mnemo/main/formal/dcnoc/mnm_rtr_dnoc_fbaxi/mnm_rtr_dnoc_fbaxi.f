@@ -11,7 +11,7 @@ $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/credit_release_coun
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_lib/mnm_credit_manager_intf.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_dnoc_fbaxi_sva.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_dnoc_intf_constraints.sv
-$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_dnoc_fbaxi_constraints.sv
+$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_trt_lib/mnm_dnoc_fbaxi_constraints.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_dnoc_fbaxi_intf_checker.sv
 $INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/sva/dcnoc/mnm_rtr_dnoc_fbaxi/mnm_dnoc_fbaxi_checker.sv
 
