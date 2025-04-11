@@ -33,7 +33,7 @@ module mnm_dnoc_intf_constraints # (
 
     `SV_ASSERT (FVPH_RTR_FV_am_noc_iid_tracking         , (d_noc_in_iid   == LANE_NUM) );
     `SV_ASSERT (FVPH_RTR_FV_am_ecc_in_equals_to_out     , main.genblk1[LANE_NUM].in_ecc_chk.out_data     == $past(main.genblk1[LANE_NUM].in_ecc_chk.in_data,2));
-    // TODO: need to remove once tb stable
+
     `SV_ASSERT (FVPH_RTR_FV_am_group_shrd_fixed         ,   csr_cfg.vc_grp_shrd        == 33'h092492449             );
     `SV_ASSERT (FVPH_RTR_FV_am_vc_grp_rsvd_fixed        ,   csr_cfg.vc_grp_rsvd_en     == '0                        );
     `SV_ASSERT (FVPH_RTR_FV_am_group_rsvd_max_fixed     ,   csr_cfg.vc_grp_rsvd_max    == 24'h000000                );

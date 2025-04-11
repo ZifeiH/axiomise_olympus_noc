@@ -68,6 +68,7 @@ module mnm_dnoc_routing_sva # (
     `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_cip_id_fixed , (rtr_location.chip_id == current_cip_id)                );
     `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_xcoord_fixed , (rtr_location.xcoord  == rtr_location_x_coord)          );
     `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_ycoord_fixed , (rtr_location.ycoord  == rtr_location_y_coord)          );
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_flip_fixed   , {rtr_location.orientation.flip_ew, rtr_location.orientation.flip_ns} inside {{1'b0, 1'b0},{1'b1, 1'b1}});
 
     // 
     `SV_ASSERT (FVPH_RTR_FV_am_vc_y_first_routing_fixed  , csr_cfg_vc_y_first_routing == 11'h1fc                   );

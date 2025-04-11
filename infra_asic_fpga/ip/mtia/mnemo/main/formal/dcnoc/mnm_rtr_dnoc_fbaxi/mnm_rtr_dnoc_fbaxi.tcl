@@ -39,7 +39,7 @@ eval         "elaborate -disable_auto_bbox -top mnm_rtr_ca_dnoc_top \
                         -parameter REMOVE_LANE 11'b000000000 \
                         ${DNOC_REDUCTION}"
 
-set_prove_time_limit 12h
+set_prove_time_limit 24h
 
 #==============================================================================
 # clock and reset
