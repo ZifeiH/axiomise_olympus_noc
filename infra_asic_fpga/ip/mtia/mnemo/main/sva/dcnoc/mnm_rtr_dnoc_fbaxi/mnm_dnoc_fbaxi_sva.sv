@@ -54,7 +54,11 @@ module mnm_dnoc_fbaxi_sva # (
   
 `ifdef FORMAL
 
-    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_stable       , ##1 $stable(rtr_location)                               );
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_stable              , ##1 $stable(rtr_location)                               );
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_chip_id_fixed       , ##1 rtr_location.chip_id inside {3'b000, 3'b010}        );
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_xcoord_fixed        , ##1 rtr_location.xcoord  inside {'d1, 'd2, 'd3, 'd4}    );
+    `SV_ASSERT (FVPH_RTR_FV_am_rtr_location_ycoord_fixed        , ##1 rtr_location.ycoord  inside {'d1, 'd2, 'd3, 'd4}    );
+
     `SV_ASSERT (FVPH_RTR_FV_am_vc_y_first_routing_fixed  , csr_cfg_vc_y_first_routing == 11'h1fc                   );
     `SV_ASSERT (FVPH_RTR_FV_am_dwrr_vc_weights_fixed     , csr_cfg_dwrr_vc_weights    == 88'h0202020202020202020202);
 
@@ -130,7 +134,6 @@ module mnm_dnoc_fbaxi_sva # (
                 end
             end
         endgenerate
-    `endif
     
 //------------------------------------------------------------------------------
 //-- Flow Control --
@@ -139,5 +142,13 @@ module mnm_dnoc_fbaxi_sva # (
 // If convergence needed will apply
 
 
+//------------------------------------------------------------------------------
+//-- UARC checks  --
+//------------------------------------------------------------------------------
+
+  `include "mnm_dnoc_uarch_checks.sv"
+
+//   `SV_ASSERT (test, main.north0_lane.rx_north0.rx_valid_i)
+    `endif
 
 endmodule

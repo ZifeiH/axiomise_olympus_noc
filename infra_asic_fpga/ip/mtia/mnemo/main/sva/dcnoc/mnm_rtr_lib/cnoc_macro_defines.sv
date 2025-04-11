@@ -1,2 +1,0 @@
-`define SV_ASSERT(name, prop) AST_``name : assert property (@(posedge clk) disable iff (!reset_n) prop); 
-`define SV_COVER(name, prop) CO_``name : cover property (@(posedge clk) disable iff (!reset_n) prop); 

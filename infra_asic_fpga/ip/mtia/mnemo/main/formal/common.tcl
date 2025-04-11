@@ -30,3 +30,8 @@ if {[info exists ::env(AXIOMISE)]} {
     set_parallel_synthesis_partition_method dynamic
 
 }
+set DNOC_REDUCTION " \
+    -parameter mnm_pkg::MNM_GLOBAL_DAXI_DATA_W          1 \
+    -parameter mnm_pkg::MNM_GLOBAL_DAXI_ADDR_W          1 \
+    -parameter mnm_pkg::MNM_GLOBAL_DAXI_UPPER_ADDR_W    1
+"
