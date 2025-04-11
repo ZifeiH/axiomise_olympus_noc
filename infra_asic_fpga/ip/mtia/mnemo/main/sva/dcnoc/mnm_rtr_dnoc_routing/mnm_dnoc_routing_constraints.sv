@@ -89,26 +89,26 @@ module mnm_dnoc_routing_constraints # (
 
 
 		if ((LANE_NUM == north0)  || (LANE_NUM == north1))      begin:north
-    		`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_north , d_noc_in_valid |-> d_noc_north_in_tgt_id[vc]);
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_north , d_noc_in_valid |-> d_noc_north_in_src_id[vc]);
+    		`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_north , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_north_in_tgt_id[vc]);
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_north , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_north_in_src_id[vc]);
 		end
 		else if ((LANE_NUM == east0)  || (LANE_NUM == east1))   begin: east
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_east  , d_noc_in_valid |-> d_noc_east_in_tgt_id[vc]);
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_east  , d_noc_in_valid |-> d_noc_east_in_src_id[vc]);
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_east  , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_east_in_tgt_id[vc]);
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_east  , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_east_in_src_id[vc]);
 		end
 		else if ((LANE_NUM == south0)  || (LANE_NUM == south1)) begin: south
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_south , d_noc_in_valid |-> d_noc_south_in_tgt_id[vc]);
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_south , d_noc_in_valid |-> d_noc_south_in_src_id[vc]);
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_south , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_south_in_tgt_id[vc]);
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_south , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_south_in_src_id[vc]);
 		end
 		else if ((LANE_NUM == west0)  || (LANE_NUM == west1))   begin: west
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_west  , d_noc_in_valid |-> d_noc_west_in_tgt_id[vc] );
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_west  , d_noc_in_valid |-> d_noc_west_in_src_id[vc] );
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_tgt_id_west  , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_west_in_tgt_id[vc] );
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_west  , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_west_in_src_id[vc] );
 		end
 		else if ((LANE_NUM == llc0)  || (LANE_NUM == llc1))		begin: llc
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_llc   , d_noc_in_valid |-> d_noc_llc_in_src_id      );
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_llc   , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_llc_in_src_id      );
 		end
 		else if (LANE_NUM == peg)                               begin: peg
-			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_peg   , d_noc_in_valid |-> d_noc_peg_in_src_id      );
+			`SV_ASSERT (FVPH_RTR_FV_am_valid_src_id_peg   , d_noc_in_valid && d_noc_in_vc == vc |-> d_noc_peg_in_src_id      );
 		end
 	end
 
