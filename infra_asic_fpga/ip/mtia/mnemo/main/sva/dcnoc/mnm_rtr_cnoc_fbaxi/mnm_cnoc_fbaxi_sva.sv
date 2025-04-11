@@ -1,6 +1,10 @@
-module mnm_dnoc_fbaxi_sva # (
-  parameter NUM_LANES = 11,
-            NUM_VC = 11,
+/////////////////////////////////////////////////////////////////////////////////////////
+// File: mnm_cnoc_fbaxi_sva.sv
+// This file contains 
+/////////////////////////////////////////////////////////////////////////////////////////
+module mnm_cnoc_fbaxi_sva # (
+  parameter NUM_LANES = mnm_rtr_pkg::MNM_RTR_CNOC_SLICE_NUM_LANES,
+            NUM_VC = mnm_pkg::MNM_CNOC_TOTAL_NUM_VC,
             VCID_W = 5,
             RX_DEPTH_W = 7,
             NUM_SHRD_CRD_GROUPS = 3,
@@ -14,30 +18,27 @@ module mnm_dnoc_fbaxi_sva # (
     input   logic                                                                                clk,
     input   rtr_dc_csr_pkg::registers_for_default_struct                                         csr_in,
     input   rtr_dc_csr_pkg::registers_for_default_inputs_struct                                  csr_out,
-    input   mnm_pkg::data_noc_t                                     [NUM_LANES-1:0]              noc_in,
+    input   mnm_pkg::control_noc_t                                  [NUM_LANES-1:0]              noc_in,
     input   logic                                                   [NUM_LANES-1:0]              noc_in_async_crd_release,
     input   logic                                                   [NUM_LANES-1:0][VCID_W-1:0]  noc_in_credit_release_id,
     input   logic                                                   [NUM_LANES-1:0]              noc_in_credit_release_valid,
     input   logic                                                   [NUM_LANES-1:0]              noc_in_valid,
-    input   mnm_pkg::data_noc_t                                     [NUM_LANES-1:0]              noc_out,
+    input   mnm_pkg::control_noc_t                                  [NUM_LANES-1:0]              noc_out,
     input   logic                                                   [NUM_LANES-1:0]              noc_out_async_crd_release,
     input   logic                                                   [NUM_LANES-1:0][VCID_W-1:0]  noc_out_credit_release_id,
     input   logic                                                   [NUM_LANES-1:0]              noc_out_credit_release_valid,
     input   logic                                                   [NUM_LANES-1:0]              noc_out_valid,
     input   mnm_pkg::mnm_grid_location_t                                                         rtr_location,
     input   logic                                                                                soc_reset_n
-
-
 ); 
 
-  wire reset_n;
-  assign reset_n = soc_reset_n;
+logic  reset_n;
+assign reset_n = soc_reset_n;
 
 //------------------------------------------------------------------------------
 //-- CSR intf defines  --
 //------------------------------------------------------------------------------
-
-  `include "../mnm_rtr_lib/csr_signal_defines.sv"
+  `include "../mnm_rtr_lib/cnoc_csr_signal_defines.sv"
 
 //------------------------------------------------------------------------------
 //-- Router location  --
@@ -88,20 +89,21 @@ module mnm_dnoc_fbaxi_sva # (
                     assign noc_in_config[lane].total_shrd_max  = csr_cfg_total_shrd_max_th[lane] ;
                     assign noc_in_config[lane].total_credits   = csr_cfg_total_credits[lane]     ; 
 
-                    mnm_dnoc_intf_constraints #(
+                    mnm_cnoc_intf_constraints #(
                         .NUM_VC                          (NUM_VC),
-                        .LANE_NUM                        (lane)
-                    ) mnm_dnoc_intf_constraints (
+                        .LANE_NUM                        (lane),
+                        .VCID_W                          (VCID_W)
+                    ) mnm_cnoc_intf_constraints (
 
-                        .d_noc_in                        (noc_in[lane]),
-                        .d_noc_in_valid                  (noc_in_valid[lane]),
+                        .c_noc_in                        (noc_in[lane]),
+                        .c_noc_in_valid                  (noc_in_valid[lane]),
                         .csr_cfg                         (noc_in_config[lane]),
-                        .d_noc_in_crd_rel_id             (noc_in_credit_release_id[lane]),
-                        .d_noc_in_crd_rel_valid          (noc_in_credit_release_valid[lane]),
-                        .d_noc_out                       (noc_out[lane]),
-                        .d_noc_out_valid                 (noc_out_valid[lane]),
-                        .d_noc_out_crd_rel_id            (noc_out_credit_release_id[lane]),
-                        .d_noc_out_crd_rel_valid         (noc_out_credit_release_valid[lane]),
+                        .c_noc_in_crd_rel_id             (noc_in_credit_release_id[lane]),
+                        .c_noc_in_crd_rel_valid          (noc_in_credit_release_valid[lane]),
+                        .c_noc_out                       (noc_out[lane]),
+                        .c_noc_out_valid                 (noc_out_valid[lane]),
+                        .c_noc_out_crd_rel_id            (noc_out_credit_release_id[lane]),
+                        .c_noc_out_crd_rel_valid         (noc_out_credit_release_valid[lane]),
 
                         .noc_out_async_crd_release       (noc_out_async_crd_release[lane]),
                         .noc_in_async_crd_release        (noc_in_async_crd_release[lane]),
@@ -116,12 +118,12 @@ module mnm_dnoc_fbaxi_sva # (
             for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: intf_checkers
                 if (!REMOVE_LANE[lane]) begin
 
-                    mnm_dnoc_fbaxi_checker #(
+                    mnm_cnoc_fbaxi_checker #(
                         .NUM_VC                           (NUM_VC)
-                    ) mnm_dnoc_fbaxi_checker (
+                    ) mnm_cnoc_fbaxi_checker (
 
-                        .d_noc_out                        (noc_out[lane]),
-                        .d_noc_out_valid                  (noc_out_valid[lane]),
+                        .c_noc_out                        (noc_out[lane]),
+                        .c_noc_out_valid                  (noc_out_valid[lane]),
 
                         .clk                              (clk),
                         .reset_n                          (reset_n)

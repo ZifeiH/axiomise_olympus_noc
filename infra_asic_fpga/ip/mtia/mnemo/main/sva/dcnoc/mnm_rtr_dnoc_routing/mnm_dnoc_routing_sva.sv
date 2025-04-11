@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////
+// File: mnm_dnoc_fbaxi_sva.sv
+// This file contains 
+/////////////////////////////////////////////////////////////////////////////////////////
 module mnm_dnoc_fbaxi_sva # (
   parameter NUM_LANES = 11,
             NUM_VC = 11,
@@ -113,22 +117,6 @@ module mnm_dnoc_fbaxi_sva # (
                 
             end
 
-            for (genvar lane = 0; lane < NUM_LANES; lane++ ) begin: intf_checkers
-                if (!REMOVE_LANE[lane]) begin
-
-                    mnm_dnoc_fbaxi_checker #(
-                        .NUM_VC                           (NUM_VC)
-                    ) mnm_dnoc_fbaxi_checker (
-
-                        .d_noc_out                        (noc_out[lane]),
-                        .d_noc_out_valid                  (noc_out_valid[lane]),
-
-                        .clk                              (clk),
-                        .reset_n                          (reset_n)
-
-                    ); 
-                end
-            end
         endgenerate
     `endif
     
