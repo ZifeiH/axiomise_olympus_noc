@@ -35,6 +35,12 @@ module mnm_rtr_xprop_sva # (
   wire reset_n;
   assign reset_n = soc_reset_n;
 
+  generate 
+    for(genvar LANE_NUM = 0; LANE_NUM < NUM_LANES; LANE_NUM++) begin
+      `SV_ASSERT (FVPH_RTR_FV_am_ecc_in_equals_to_out     ,   
+                  main.genblk1[LANE_NUM].in_ecc_chk.out_data  == $past(main.genblk1[LANE_NUM].in_ecc_chk.in_data,2)  );
+    end 
+  endgenerate 
 
   `SV_ASSERT (FVPH_as_not_unknow_csr_out, !$isunknown(csr_out));
   `SV_ASSERT (FVPH_as_not_unknow_init_done, !$isunknown(init_done));

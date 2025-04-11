@@ -1,91 +1,91 @@
 /////////////////////////////////////////////////////////////////////////////////////////
-// File: mnm_rtr_unoc_FBAXI_bind.sv
+// File: mnm_rtr_u_unoc_FBAXI_bind.sv
 // This file bind UNOC FBAXI testbench with rtl
 /////////////////////////////////////////////////////////////////////////////////////////
 
-module mnm_rtr_unoc_fbaxi_bind;
+module mnm_rtr_u_unoc_fbaxi_bind;
       
-  //crtr
-  bind mnm_rtr fbaxi_unoc_protocol_checker
-  #(
-    .UNOC_MASTER(1)
-  )
-  u_unoc_fi_crtr_master_e2e
-  (
-    .clk(clk),
-    .reset_n(soc_unoc_reset_n),
+//   //crtr
+//   bind mnm_rtr_u fbaxi_unoc_protocol_checker
+//   #(
+//     .UNOC_MASTER(1)
+//   )
+//   u_unoc_fi_crtr_master_e2e
+//   (
+//     .clk(clk),
+//     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(fi_crtr_unoc_valid[0][0]),
-    .unoc_resp_bundle(fi_crtr_unoc[0][0]),
+//     .unoc_resp_valid(fi_crtr_unoc_valid[0]),
+//     .unoc_resp_bundle(fi_crtr_unoc[0]),
 
-    .unoc_req_valid(crtr_fi_unoc_valid[0][0]),
-    .unoc_req_bundle(crtr_fi_unoc[0][0]),
-
-
-    .rtr_location(rtr_location)
-  );
-
-  bind mnm_rtr fbaxi_unoc_protocol_checker
-  #(
-    .UNOC_MASTER(0)
-  )
-  u_unoc_fi_crtr_slave_e2e
-  (
-    .clk(clk),
-    .reset_n(soc_unoc_reset_n),
-
-    .unoc_resp_valid(crtr_fi_unoc_valid[0][0]),
-    .unoc_resp_bundle(crtr_fi_unoc[0][0]),
-
-    .unoc_req_valid(fi_crtr_unoc_valid[0][0]),
-    .unoc_req_bundle(fi_crtr_unoc[0][0]),
+//     .unoc_req_valid(crtr_fi_unoc_valid[0]),
+//     .unoc_req_bundle(crtr_fi_unoc[0]),
 
 
-    .rtr_location(rtr_location)
-  );
+//     .rtr_location(rtr_location)
+//   );
 
-//irtr
-  bind mnm_rtr fbaxi_unoc_protocol_checker
-  #(
-    .UNOC_MASTER(1)
-  )
-  u_unoc_fi_irtr_master_e2e
-  (
-    .clk(clk),
-    .reset_n(soc_unoc_reset_n),
+//   bind mnm_rtr_u fbaxi_unoc_protocol_checker
+//   #(
+//     .UNOC_MASTER(0)
+//   )
+//   u_unoc_fi_crtr_slave_e2e
+//   (
+//     .clk(clk),
+//     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(fi_irtr_unoc_valid[0][0]),
-    .unoc_resp_bundle(fi_irtr_unoc[0][0]),
+//     .unoc_resp_valid(crtr_fi_unoc_valid[0]),
+//     .unoc_resp_bundle(crtr_fi_unoc[0]),
 
-    .unoc_req_valid(irtr_fi_unoc_valid[0][0]),
-    .unoc_req_bundle(irtr_fi_unoc[0][0]),
-
-
-    .rtr_location(rtr_location)
-  );
-
-  bind mnm_rtr fbaxi_unoc_protocol_checker
-  #(
-    .UNOC_MASTER(0)
-  )
-  u_unoc_fi_irtr_slave_e2e
-  (
-    .clk(clk),
-    .reset_n(soc_unoc_reset_n),
-
-    .unoc_resp_valid(irtr_fi_unoc_valid[0][0]),
-    .unoc_resp_bundle(irtr_fi_unoc[0][0]),
-
-    .unoc_req_valid(fi_irtr_unoc_valid[0][0]),
-    .unoc_req_bundle(fi_irtr_unoc[0][0]),
+//     .unoc_req_valid(fi_crtr_unoc_valid[0]),
+//     .unoc_req_bundle(fi_crtr_unoc[0]),
 
 
-    .rtr_location(rtr_location)
-  );
+//     .rtr_location(rtr_location)
+//   );
+
+// //irtr
+//   bind mnm_rtr_u fbaxi_unoc_protocol_checker
+//   #(
+//     .UNOC_MASTER(1)
+//   )
+//   u_unoc_fi_irtr_master_e2e
+//   (
+//     .clk(clk),
+//     .reset_n(soc_unoc_reset_n),
+
+//     .unoc_resp_valid(fi_slice_unoc_valid[0]),
+//     .unoc_resp_bundle(fi_slice_unoc[0]),
+
+//     .unoc_req_valid(irtr_fi_unoc_valid[0]),
+//     .unoc_req_bundle(irtr_fi_unoc[0]),
+
+
+//     .rtr_location(rtr_location)
+//   );
+
+//   bind mnm_rtr_u fbaxi_unoc_protocol_checker
+//   #(
+//     .UNOC_MASTER(0)
+//   )
+//   u_unoc_fi_irtr_slave_e2e
+//   (
+//     .clk(clk),
+//     .reset_n(soc_unoc_reset_n),
+
+//     .unoc_resp_valid(irtr_fi_unoc_valid[0]),
+//     .unoc_resp_bundle(irtr_fi_unoc[0]),
+
+//     .unoc_req_valid(fi_slice_unoc_valid[0]),
+//     .unoc_req_bundle(fi_slice_unoc[0]),
+
+
+//     .rtr_location(rtr_location)
+//   );
 
 
   //unoc_east    
-  bind mnm_rtr fbaxi_unoc_protocol_checker
+  bind mnm_rtr_u fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(1)
   )
@@ -94,17 +94,17 @@ module mnm_rtr_unoc_fbaxi_bind;
     .clk(clk),
     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(irtr_u_noc_east_in_valid[0]),
-    .unoc_resp_bundle(irtr_u_noc_east_in[0]),
+    .unoc_resp_valid(slice_u_noc_east_in_valid),
+    .unoc_resp_bundle(slice_u_noc_east_in),
 
-    .unoc_req_valid(irtr_u_noc_east_out_valid[0]),
-    .unoc_req_bundle(irtr_u_noc_east_out[0]),
+    .unoc_req_valid(slice_u_noc_east_out_valid),
+    .unoc_req_bundle(slice_u_noc_east_out),
 
 
     .rtr_location(rtr_location)
   );
 
-  bind mnm_rtr fbaxi_unoc_protocol_checker
+  bind mnm_rtr_u fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(0)
   )
@@ -113,11 +113,11 @@ module mnm_rtr_unoc_fbaxi_bind;
     .clk(clk),
     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(irtr_u_noc_east_out_valid[0]),
-    .unoc_resp_bundle(irtr_u_noc_east_out[0]),
+    .unoc_resp_valid(slice_u_noc_east_out_valid),
+    .unoc_resp_bundle(slice_u_noc_east_out),
 
-    .unoc_req_valid(irtr_u_noc_east_in_valid[0]),
-    .unoc_req_bundle(irtr_u_noc_east_in[0]),
+    .unoc_req_valid(slice_u_noc_east_in_valid),
+    .unoc_req_bundle(slice_u_noc_east_in),
 
 
     .rtr_location(rtr_location)
@@ -125,7 +125,7 @@ module mnm_rtr_unoc_fbaxi_bind;
 
 
   //unoc_west
-  bind mnm_rtr fbaxi_unoc_protocol_checker
+  bind mnm_rtr_u fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(1)
   )
@@ -134,17 +134,17 @@ module mnm_rtr_unoc_fbaxi_bind;
     .clk(clk),
     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(irtr_u_noc_west_in_valid[0]),
-    .unoc_resp_bundle(irtr_u_noc_west_in[0]),
+    .unoc_resp_valid(slice_u_noc_west_in_valid),
+    .unoc_resp_bundle(slice_u_noc_west_in),
 
-    .unoc_req_valid(irtr_u_noc_west_out_valid[0]),
-    .unoc_req_bundle(irtr_u_noc_west_out[0]),
+    .unoc_req_valid(slice_u_noc_west_out_valid),
+    .unoc_req_bundle(slice_u_noc_west_out),
 
 
     .rtr_location(rtr_location)
   );
 
-  bind mnm_rtr fbaxi_unoc_protocol_checker
+  bind mnm_rtr_u fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(0)
   )
@@ -153,18 +153,18 @@ module mnm_rtr_unoc_fbaxi_bind;
     .clk(clk),
     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(irtr_u_noc_west_out_valid[0]),
-    .unoc_resp_bundle(irtr_u_noc_west_out[0]),
+    .unoc_resp_valid(slice_u_noc_west_out_valid),
+    .unoc_resp_bundle(slice_u_noc_west_out),
 
-    .unoc_req_valid(irtr_u_noc_west_in_valid[0]),
-    .unoc_req_bundle(irtr_u_noc_west_in[0]),
+    .unoc_req_valid(slice_u_noc_west_in_valid),
+    .unoc_req_bundle(slice_u_noc_west_in),
 
 
     .rtr_location(rtr_location)
   );
 
   //unoc_south
-  bind mnm_rtr fbaxi_unoc_protocol_checker
+  bind mnm_rtr_u fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(1)
   )
@@ -173,17 +173,17 @@ module mnm_rtr_unoc_fbaxi_bind;
     .clk(clk),
     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(irtr_u_noc_south_in_valid[0]),
-    .unoc_resp_bundle(irtr_u_noc_south_in[0]),
+    .unoc_resp_valid(slice_u_noc_south_in_valid),
+    .unoc_resp_bundle(slice_u_noc_south_in),
 
-    .unoc_req_valid(irtr_u_noc_south_out_valid[0]),
-    .unoc_req_bundle(irtr_u_noc_south_out[0]),
+    .unoc_req_valid(slice_u_noc_south_out_valid),
+    .unoc_req_bundle(slice_u_noc_south_out),
 
 
     .rtr_location(rtr_location)
   );
 
-  bind mnm_rtr fbaxi_unoc_protocol_checker
+  bind mnm_rtr_u fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(0)
   )
@@ -192,11 +192,11 @@ module mnm_rtr_unoc_fbaxi_bind;
     .clk(clk),
     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(irtr_u_noc_south_out_valid[0]),
-    .unoc_resp_bundle(irtr_u_noc_south_out[0]),
+    .unoc_resp_valid(slice_u_noc_south_out_valid),
+    .unoc_resp_bundle(slice_u_noc_south_out),
 
-    .unoc_req_valid(irtr_u_noc_south_in_valid[0]),
-    .unoc_req_bundle(irtr_u_noc_south_in[0]),
+    .unoc_req_valid(slice_u_noc_south_in_valid),
+    .unoc_req_bundle(slice_u_noc_south_in),
 
 
     .rtr_location(rtr_location)
@@ -204,7 +204,7 @@ module mnm_rtr_unoc_fbaxi_bind;
 
 
   //unoc_north
-  bind mnm_rtr fbaxi_unoc_protocol_checker
+  bind mnm_rtr_u fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(1)
   )
@@ -213,17 +213,17 @@ module mnm_rtr_unoc_fbaxi_bind;
     .clk(clk),
     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(irtr_u_noc_north_in_valid[0]),
-    .unoc_resp_bundle(irtr_u_noc_north_in[0]),
+    .unoc_resp_valid(slice_u_noc_north_in_valid),
+    .unoc_resp_bundle(slice_u_noc_north_in),
 
-    .unoc_req_valid(irtr_u_noc_north_out_valid[0]),
-    .unoc_req_bundle(irtr_u_noc_north_out[0]),
+    .unoc_req_valid(slice_u_noc_north_out_valid),
+    .unoc_req_bundle(slice_u_noc_north_out),
 
 
     .rtr_location(rtr_location)
   );
 
-  bind mnm_rtr fbaxi_unoc_protocol_checker
+  bind mnm_rtr_u fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(0)
   )
@@ -232,29 +232,29 @@ module mnm_rtr_unoc_fbaxi_bind;
     .clk(clk),
     .reset_n(soc_unoc_reset_n),
 
-    .unoc_resp_valid(irtr_u_noc_north_out_valid[0]),
-    .unoc_resp_bundle(irtr_u_noc_north_out[0]),
+    .unoc_resp_valid(slice_u_noc_north_out_valid),
+    .unoc_resp_bundle(slice_u_noc_north_out),
 
-    .unoc_req_valid(irtr_u_noc_north_in_valid[0]),
-    .unoc_req_bundle(irtr_u_noc_north_in[0]),
+    .unoc_req_valid(slice_u_noc_north_in_valid),
+    .unoc_req_bundle(slice_u_noc_north_in),
 
 
     .rtr_location(rtr_location)
   );
 
 
- bind mnm_rtr mnm_rtr_unoc_FBAXI_sva #(
+ bind mnm_rtr_u mnm_rtr_u_unoc_FBAXI_sva #(
         .STUB_FULL       (STUB_FULL),
         .STUB_DCNOC      (STUB_DCNOC),
         .STUB_CRTR       (STUB_CRTR),
         .STUB_IRTR       (STUB_IRTR),
         .MNM_RTR_DRIVE_0 (MNM_RTR_DRIVE_0) 
-  ) u_mnm_rtr_unoc_FBAXI_sva  (.*);
+  ) u_mnm_rtr_u_unoc_FBAXI_sva  (.*);
 
 /////////////////
 //// RX
 /////////////////
-
+/* TODO: VU: Change the RX, TX, protocol checker
   bind `UNOC_IRTR_N_RX fbaxi_unoc_protocol_checker
   #(
     .UNOC_MASTER(1),
@@ -745,7 +745,7 @@ module mnm_rtr_unoc_fbaxi_bind;
     .ASSERT_ONLY(1),
     .BURST_ON(0)
   )
-  u_mnm_rtr_u_irtr2n_unoc_slave_e2e
+  u_mnm_rtr_u_u_irtr2n_unoc_slave_e2e
   (
     .clk(clk),
     .reset_n(reset_n),
@@ -768,7 +768,7 @@ module mnm_rtr_unoc_fbaxi_bind;
     .ASSERT_ONLY(1),
     .BURST_ON(0)
   )
-  u_mnm_rtr_u_irtr2s_unoc_slave_e2e
+  u_mnm_rtr_u_u_irtr2s_unoc_slave_e2e
   (
     .clk(clk),
     .reset_n(reset_n),
@@ -790,7 +790,7 @@ module mnm_rtr_unoc_fbaxi_bind;
     .ASSERT_ONLY(1),
     .BURST_ON(0)
   )
-  u_mnm_rtr_u_irtr2e_unoc_slave_e2e
+  u_mnm_rtr_u_u_irtr2e_unoc_slave_e2e
   (
     .clk(clk),
     .reset_n(reset_n),
@@ -812,7 +812,7 @@ module mnm_rtr_unoc_fbaxi_bind;
     .ASSERT_ONLY(1),
     .BURST_ON(0)
   )
-  u_mnm_rtr_u_irtr2w_unoc_slave_e2e
+  u_mnm_rtr_u_u_irtr2w_unoc_slave_e2e
   (
     .clk(clk),
     .reset_n(reset_n),
@@ -834,7 +834,7 @@ module mnm_rtr_unoc_fbaxi_bind;
     .ASSERT_ONLY(1),
     .BURST_ON(0)
   )
-  u_mnm_rtr_u_irtr2lf0_unoc_slave_e2e
+  u_mnm_rtr_u_u_irtr2lf0_unoc_slave_e2e
   (
     .clk(clk),
     .reset_n(reset_n),
@@ -856,7 +856,7 @@ module mnm_rtr_unoc_fbaxi_bind;
     .ASSERT_ONLY(1),
     .BURST_ON(0)
   )
-  u_mnm_rtr_u_irtr2lf1_unoc_slave_e2e
+  u_mnm_rtr_u_u_irtr2lf1_unoc_slave_e2e
   (
     .clk(clk),
     .reset_n(reset_n),
@@ -879,7 +879,7 @@ module mnm_rtr_unoc_fbaxi_bind;
     .ASSERT_ONLY(1),
     .BURST_ON(0)
   )
-  u_mnm_rtr_u_crtr2lf0_unoc_slave_e2e
+  u_mnm_rtr_u_u_crtr2lf0_unoc_slave_e2e
   (
     .clk(clk),
     .reset_n(reset_n),
@@ -901,7 +901,7 @@ module mnm_rtr_unoc_fbaxi_bind;
     .ASSERT_ONLY(1),
     .BURST_ON(0)
   )
-  u_mnm_rtr_u_crtr2lf1_unoc_slave_e2e
+  u_mnm_rtr_u_u_crtr2lf1_unoc_slave_e2e
   (
     .clk(clk),
     .reset_n(reset_n),
@@ -1044,5 +1044,5 @@ module mnm_rtr_unoc_fbaxi_bind;
 
   `endif
 `endif
-
-endmodule : mnm_rtr_unoc_fbaxi_bind
+*/
+endmodule : mnm_rtr_u_unoc_fbaxi_bind
