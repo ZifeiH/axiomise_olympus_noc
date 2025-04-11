@@ -26,7 +26,14 @@ include    "$INFRA_ASIC_FPGA_TB/ip/mtia/mnemo/main/formal/common.tcl"
 #==============================================================================
 # Analyze phase
 #==============================================================================
-eval       "analyze -f $MODELDIR/mnm_rtr_dnoc_fbaxi.f $ANALYZE_OPTS"
+# eval       "analyze -f $MODELDIR/mnm_rtr_dnoc_fbaxi.f $ANALYZE_OPTS"
+
+set ANALYZE_F $MODELDIR/trl_rxpt.f if {[info exists IS_VENDOR_ENV] && $IS_VENDOR_ENV == 1} {     
+  # This IS_VENDOR_ENV variable is only set in the git workflow (aka vendor env).     
+  # Similarly MODELDIR has a different value in the git workflow.     
+  set ANALYZE_F $MODELDIR/min_filelist.f 
+} 
+eval "analyze -f $ANALYZE_F $ANALYZE_OPTS"
 
 #==============================================================================
 # Elaborate phase
